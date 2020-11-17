@@ -9,16 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@SuppressWarnings("serial")
+import lombok.Data;
+
+
+
+
 @Entity
 @Table(name = "items")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Item implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +27,16 @@ public class Item implements Serializable{
 	private String name;
 	@Column(nullable = false)
 	private Integer price;
+	
 	private String imgPath;
+/*	
+	   @ManyToOne
+	    @JoinTable(
+	            name="department_employee",
+	            joinColumns=@JoinColumn(name="employee_id"),
+	            inverseJoinColumns=@JoinColumn(name="department_code")
+	        )
+*/	
+
+	
 }

@@ -3,11 +3,16 @@ package com.example;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/*
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class,})
+@ComponentScan
+*/
+
 @SpringBootApplication
-public class RestApiSS7Application {
+public class RestApiSSnApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RestApiSS7Application.class, args);
+		SpringApplication.run(RestApiSSnApplication.class, args);
 	}
 
 }

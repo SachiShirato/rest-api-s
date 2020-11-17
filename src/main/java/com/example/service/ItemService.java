@@ -10,11 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.domain.Item;
 import com.example.repository.ItemRepository;
 
+
 @Service
 @Transactional
 public class ItemService {
 	@Autowired
 	ItemRepository itemRepository;
+
 	
 	/**
 	 * 商品一覧取得サービス
@@ -53,6 +55,29 @@ public class ItemService {
 	public Optional<Item> findById(Integer id) {
 		// TODO 自動生成されたメソッド・スタブ
 		return itemRepository.findById(id);
+	}
+
+	/** 名前検索  
+	public Optional<Item> findByName(String name) {
+
+		// TODO 自動生成されたメソッド・スタブ
+		
+		return itemRepository.findByName(name);
+
+	}
+ */	
+/*	
+	public Optional<Item> findByIdAndName(String name) {
+
+		// TODO 自動生成されたメソッド・スタブ
+		
+		return itemRepository.findByIdAndName(idandname);
+
+	}
+*/
+	public Optional<Item> findByNamePrice(String name,Integer price) {
+		// TODO 自動生成されたメソッド・スタブ
+		return itemRepository.findByNameAndPrice(name,price);
 	}
 
 
