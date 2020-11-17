@@ -2,3 +2,5 @@ spring :
   datasource : 
     driver-class-name : org.h2.Driver
     url : jdbc:h2:./h2db/sampledb
+server:
+  port : 7777

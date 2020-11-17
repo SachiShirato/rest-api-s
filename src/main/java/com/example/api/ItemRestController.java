@@ -20,7 +20,7 @@ import com.example.domain.Item;
 import com.example.service.ItemService;
 
 @RestController
-@RequestMapping("api/items")
+@RequestMapping("xml")
 public class ItemRestController {
 	@Autowired
 	ItemService itemService;
@@ -73,6 +73,14 @@ public class ItemRestController {
 		return itemService.create(item);
 	}
 
+	@PostMapping(path = "/DF200")
+	@ResponseStatus(HttpStatus.CREATED)
+	String postItem(@RequestBody String body) {
+		return body;
+	}
+	
+	
+	
 	/**
 	 * 商品削除API
 	 * 
