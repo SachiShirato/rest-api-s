@@ -1,0 +1,3792 @@
+{\rtf1\ansi\ansicpg932\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Bold;
+\f3\fnil\fcharset128 HiraginoSans-W3;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red202\green51\blue35;\red170\green171\blue37;
+\red252\green50\blue32;\red57\green200\blue37;\red77\green109\blue255;\red45\green255\blue255;\red0\green0\blue0;
+\red28\green214\blue4;}
+{\*\expandedcolortbl;;\csgray\c0;\cssrgb\c83898\c28665\c18024;\cssrgb\c72330\c71683\c18597;
+\cssrgb\c100000\c29541\c16201;\cssrgb\c25314\c80714\c19150;\cssrgb\c37427\c52839\c100000;\cssrgb\c14670\c100000\c100000;\cspthree\c0\c0\c0;
+\cssrgb\c0\c85000\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh15100\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf2 \CocoaLigature0 Last login: Wed Nov  4 21:41:34 on ttys000\
+natsumi@Natsumis-PC ~ % ls \
+Applications	Downloads	Music		VirtualBox VMs\
+Desktop		Library		Pictures	vagrant\
+Documents	Movies		Public\
+natsumi@Natsumis-PC ~ % cd vagrant \
+natsumi@Natsumis-PC vagrant % cd centos6 \
+natsumi@Natsumis-PC centos6 % vagrant up\
+\
+\
+\
+Bringing machine 'default' up with 'virtualbox' provider...\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+\f1\b0 \
+
+\f2\b ==> default: flag to force provisioning. Provisioners marked to run always will still run.
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant ssh\
+natsumi@Natsumis-PC centos6 % \
+natsumi@Natsumis-PC centos6 % \
+natsumi@Natsumis-PC centos6 % vagrant halt\
+\
+\
+\
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+    default: Guest communication could not be established! This is usually because\
+    default: SSH is not running, the authentication information was changed,\
+    default: or some other networking issue. Vagrant will force halt, if\
+    default: capable.\
+
+\f2\b ==> default: Forcing shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up  \
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set forwarded ports...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+\cf3 Timed out while waiting for the machine to boot. This means that\cf2 \
+\cf3 Vagrant was unable to communicate with the guest machine within\cf2 \
+\cf3 the configured ("config.vm.boot_timeout" value) time period.\cf2 \
+\
+\cf3 If you look above, you should be able to see the error(s) that\cf2 \
+\cf3 Vagrant had when attempting to connect to the machine. These errors\cf2 \
+\cf3 are usually good hints as to what may be wrong.\cf2 \
+\
+\cf3 If you're using a custom box, make sure that networking is properly\cf2 \
+\cf3 working and you're able to connect to the machine. It is a common\cf2 \
+\cf3 problem that networking isn't setup properly in these boxes.\cf2 \
+\cf3 Verify that authentication configurations are also setup properly,\cf2 \
+\cf3 as well.\cf2 \
+\
+\cf3 If the box appears to be booting properly, you may want to increase\cf2 \
+\cf3 the timeout ("config.vm.boot_timeout") value.\cf2 \
+natsumi@Natsumis-PC centos6 % vagrant up --provision\
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant halt          \
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+    default: Guest communication could not be established! This is usually because\
+    default: SSH is not running, the authentication information was changed,\
+    default: or some other networking issue. Vagrant will force halt, if\
+    default: capable.\
+
+\f2\b ==> default: Forcing shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up --provision\
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set forwarded ports...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+^C
+\f2\b \cf4 ==> default: Waiting for cleanup before exiting...
+\f1\b0 \cf2 \
+\cf3 Vagrant exited after cleanup due to external interrupt.\cf2 \
+natsumi@Natsumis-PC centos6 % vagrant halt          \
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+    default: Guest communication could not be established! This is usually because\
+    default: SSH is not running, the authentication information was changed,\
+    default: or some other networking issue. Vagrant will force halt, if\
+    default: capable.\
+
+\f2\b ==> default: Forcing shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up --provision\
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set forwarded ports...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+^C
+\f2\b \cf4 ==> default: Waiting for cleanup before exiting...
+\f1\b0 \cf2 \
+    default: Warning: Connection refused. Retrying...\
+\cf3 Vagrant exited after cleanup due to external interrupt.\cf2 \
+natsumi@Natsumis-PC centos6 % vagrant halt          \
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+    default: Guest communication could not be established! This is usually because\
+    default: SSH is not running, the authentication information was changed,\
+    default: or some other networking issue. Vagrant will force halt, if\
+    default: capable.\
+
+\f2\b ==> default: Forcing shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up --provision=virtualbox\
+
+\f2\b Traceback
+\f1\b0  (most recent call last):\
+	4: from /opt/vagrant/embedded/gems/2.2.10/gems/vagrant-2.2.10/bin/vagrant:205:in `<main>'\
+	3: from /opt/vagrant/embedded/gems/2.2.10/gems/vagrant-2.2.10/lib/vagrant/environment.rb:290:in `cli'\
+	2: from /opt/vagrant/embedded/gems/2.2.10/gems/vagrant-2.2.10/lib/vagrant/cli.rb:67:in `execute'\
+	1: from /opt/vagrant/embedded/gems/2.2.10/gems/vagrant-2.2.10/plugins/commands/up/command.rb:54:in `execute'\
+/opt/vagrant/embedded/gems/2.2.10/gems/vagrant-2.2.10/lib/vagrant/plugin/v2/command.rb:62:in `parse_options': 
+\f2\b needless argument: --provision=virtualbox (\ul OptionParser::NeedlessArgument\ulnone )
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up --provider=virtualbox\
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set forwarded ports...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+^C
+\f2\b \cf4 ==> default: Waiting for cleanup before exiting...
+\f1\b0 \cf2 \
+    default: Warning: Connection refused. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+\cf3 Vagrant exited after cleanup due to external interrupt.\cf2 \
+natsumi@Natsumis-PC centos6 % vagrant halt                     \
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+    default: Guest communication could not be established! This is usually because\
+    default: SSH is not running, the authentication information was changed,\
+    default: or some other networking issue. Vagrant will force halt, if\
+    default: capable.\
+
+\f2\b ==> default: Forcing shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up                      \
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set forwarded ports...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+^C
+\f2\b \cf4 ==> default: Waiting for cleanup before exiting...
+\f1\b0 \cf2 \
+    default: Warning: Connection refused. Retrying...\
+\cf3 Vagrant exited after cleanup due to external interrupt.\cf2 \
+natsumi@Natsumis-PC centos6 % vagrant halt\
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+    default: Guest communication could not be established! This is usually because\
+    default: SSH is not running, the authentication information was changed,\
+    default: or some other networking issue. Vagrant will force halt, if\
+    default: capable.\
+
+\f2\b ==> default: Forcing shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up  \
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set forwarded ports...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Running 'pre-boot' VM customizations...
+\f1\b0 \
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+^C
+\f2\b \cf4 ==> default: Waiting for cleanup before exiting...
+\f1\b0 \cf2 \
+    default: Warning: Connection refused. Retrying...\
+\cf3 Vagrant exited after cleanup due to external interrupt.\cf2 \
+natsumi@Natsumis-PC centos6 % vagrant halt\
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+    default: Guest communication could not be established! This is usually because\
+    default: SSH is not running, the authentication information was changed,\
+    default: or some other networking issue. Vagrant will force halt, if\
+    default: capable.\
+
+\f2\b ==> default: Forcing shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up  \
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set forwarded ports...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Running 'pre-boot' VM customizations...
+\f1\b0 \
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+^C
+\f2\b \cf4 ==> default: Waiting for cleanup before exiting...
+\f1\b0 \cf2 \
+\cf3 Vagrant exited after cleanup due to external interrupt.\cf2 \
+natsumi@Natsumis-PC centos6 % vagrant halt\
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+    default: Guest communication could not be established! This is usually because\
+    default: SSH is not running, the authentication information was changed,\
+    default: or some other networking issue. Vagrant will force halt, if\
+    default: capable.\
+
+\f2\b ==> default: Forcing shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant destroy\
+\
+\
+\
+\
+\
+\
+\
+    default: Are you sure you want to destroy the 'default' VM? [y/N] y\
+
+\f2\b ==> default: Destroying VM and associated drives...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up     \
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Importing base box 'bento/centos-6.10'...
+\f1\b0 \
+
+\f2\b ==> default: Matching MAC address for NAT networking...
+\f1\b0 \
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Setting the name of the VM: centos6_default_1604495967224_62123
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Running 'pre-boot' VM customizations...
+\f1\b0 \
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+    default: \
+    default: Vagrant insecure key detected. Vagrant will automatically replace\
+    default: this with a newly generated keypair for better security.\
+    default: \
+    default: Inserting generated public key within guest...\
+    default: Removing insecure key from the guest if it's present...\
+    default: Key inserted! Disconnecting and reconnecting using new SSH key...\
+
+\f2\b ==> default: Machine booted and ready!
+\f1\b0 \
+
+\f2\b ==> default: Checking for guest additions in VM...
+\f1\b0 \
+
+\f2\b ==> default: Mounting shared folders...
+\f1\b0 \
+    default: /vagrant => /Users/natsumi/vagrant/centos6\
+natsumi@Natsumis-PC centos6 % vagrant ssh\
+\
+This system is built by the Bento project by Chef Software\
+More information can be found at https://github.com/chef/bento\
+[vagrant@localhost ~]$ logout\
+Connection to 127.0.0.1 closed.\
+natsumi@Natsumis-PC centos6 % vagrant halt\
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up  \
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set forwarded ports...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Running 'pre-boot' VM customizations...
+\f1\b0 \
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+    default: Warning: Connection reset. Retrying...\
+    default: Warning: Remote connection disconnect. Retrying...\
+    default: Warning: Connection reset. Retrying...\
+
+\f2\b ==> default: Machine booted and ready!
+\f1\b0 \
+
+\f2\b ==> default: Checking for guest additions in VM...
+\f1\b0 \
+
+\f2\b ==> default: Mounting shared folders...
+\f1\b0 \
+    default: /vagrant => /Users/natsumi/vagrant/centos6\
+
+\f2\b ==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+\f1\b0 \
+
+\f2\b ==> default: flag to force provisioning. Provisioners marked to run always will still run.
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % \
+natsumi@Natsumis-PC centos6 % \
+natsumi@Natsumis-PC centos6 % vagrant ssh\
+Last login: Wed Nov  4 13:19:56 2020 from 10.0.2.2\
+\
+This system is built by the Bento project by Chef Software\
+More information can be found at https://github.com/chef/bento\
+[vagrant@localhost ~]$ \
+[vagrant@localhost ~]$ \
+[vagrant@localhost ~]$ \
+[vagrant@localhost ~]$ cd /vagrant/mq/\
+[vagrant@localhost mq]$ ls -l\
+total 459732\
+-rw-r--r--. 1 vagrant vagrant 470588402 2020-11-02 10:58 \cf5 MQ_7.5.0.2_TRIAL_LNX_ON_X86_64_ML.tar.gz\cf2 \
+-rw-r--r--. 1 vagrant vagrant       353 2020-11-04 11:30 define.mqsc\
+-rwxrwxrwx. 1 vagrant vagrant       644 2020-11-02 11:21 \cf6 install.sh\cf2 \
+[vagrant@localhost mq]$ sudo ./install.sh \
+++ dirname ./install.sh\
++ base=.\
+++ whoami\
++ '[' root = root ']'\
+++ mktemp -d\
++ tmp=/tmp/tmp.IzNb7tHk2O\
++ trap 'rm -rf /tmp/tmp.IzNb7tHk2O' 0\
++ tar zxvf ./MQ_7.5.0.2_TRIAL_LNX_ON_X86_64_ML.tar.gz -C /tmp/tmp.IzNb7tHk2O\
+copyright\
+crtmqpkg\
+lap/\
+lap/LAPApp.jar\
+lap/jre/\
+lap/jre/copyright\
+lap/jre/docs/\
+lap/jre/docs/IBMJAVASDK06013.SYS2\
+lap/jre/docs/autorun.inf\
+lap/jre/docs/content/\
+lap/jre/docs/content/cs/\
+lap/jre/docs/content/cs/license_cs.txt\
+lap/jre/docs/content/de/\
+lap/jre/docs/content/de/license_de.txt\
+lap/jre/docs/content/de/sdkandruntimeguide.lnx.htm\
+lap/jre/docs/content/en/\
+lap/jre/docs/content/en/copyright\
+lap/jre/docs/content/en/japaneseinfo.lnx.htm\
+lap/jre/docs/content/en/license_en.txt\
+lap/jre/docs/content/en/notices.txt\
+lap/jre/docs/content/en/readmefirst.lnx.txt\
+lap/jre/docs/content/en/rmi-iiop.htm\
+lap/jre/docs/content/en/sdkandruntimeguide.lnx.htm\
+lap/jre/docs/content/en/securityguide.lnx.htm\
+lap/jre/docs/content/es/\
+lap/jre/docs/content/es/license_es.txt\
+lap/jre/docs/content/es/sdkandruntimeguide.lnx.htm\
+lap/jre/docs/content/fr/\
+lap/jre/docs/content/fr/license_fr.txt\
+lap/jre/docs/content/fr/sdkandruntimeguide.lnx.htm\
+lap/jre/docs/content/ibmidwb.css\
+lap/jre/docs/content/it/\
+lap/jre/docs/content/it/license_it.txt\
+lap/jre/docs/content/it/sdkandruntimeguide.lnx.htm\
+lap/jre/docs/content/ja/\
+lap/jre/docs/content/ja/japaneseinfo.lnx.htm\
+lap/jre/docs/content/ja/license_ja.txt\
+lap/jre/docs/content/ja/sdkandruntimeguide.lnx.htm\
+lap/jre/docs/content/ko/\
+lap/jre/docs/content/ko/license_ko.txt\
+lap/jre/docs/content/ko/sdkandruntimeguide.lnx.htm\
+lap/jre/docs/content/pl/\
+lap/jre/docs/content/pl/license_pl.txt\
+lap/jre/docs/content/platform\
+lap/jre/docs/content/pt/\
+lap/jre/docs/content/pt/license_pt.txt\
+lap/jre/docs/content/pt_BR/\
+lap/jre/docs/content/pt_BR/license_pt_BR.txt\
+lap/jre/docs/content/pt_BR/sdkandruntimeguide.lnx.htm\
+lap/jre/docs/content/swg_info_common.css\
+lap/jre/docs/content/tr/\
+lap/jre/docs/content/tr/license_tr.txt\
+lap/jre/docs/content/zh/\
+lap/jre/docs/content/zh/license_zh.txt\
+lap/jre/docs/content/zh_TW/\
+lap/jre/docs/content/zh_TW/license_zh_TW.txt\
+lap/jre/docs/launchpad/\
+lap/jre/docs/launchpad/CheckShell.sh\
+lap/jre/docs/launchpad/DelDir.bat\
+lap/jre/docs/launchpad/Firefox.bat\
+lap/jre/docs/launchpad/Firefox.sh\
+lap/jre/docs/launchpad/Firefox_bash.sh\
+lap/jre/docs/launchpad/GetLocale.bat\
+lap/jre/docs/launchpad/GetLocale.sh\
+lap/jre/docs/launchpad/GetShortName.bat\
+lap/jre/docs/launchpad/IExplore.bat\
+lap/jre/docs/launchpad/IExplore.html\
+lap/jre/docs/launchpad/IExplore.js\
+lap/jre/docs/launchpad/Mozilla.bat\
+lap/jre/docs/launchpad/Mozilla.html\
+lap/jre/docs/launchpad/Mozilla.js\
+lap/jre/docs/launchpad/Mozilla.sh\
+lap/jre/docs/launchpad/MozillaPatch.bat\
+lap/jre/docs/launchpad/Mozilla_bash.sh\
+lap/jre/docs/launchpad/NoBrowser.bat\
+lap/jre/docs/launchpad/NoBrowser.sh\
+lap/jre/docs/launchpad/OS.js\
+lap/jre/docs/launchpad/RunFirefox.bat\
+lap/jre/docs/launchpad/RunIExplore.bat\
+lap/jre/docs/launchpad/RunMozilla.bat\
+lap/jre/docs/launchpad/RunSeaMonkey.bat\
+lap/jre/docs/launchpad/ScriptLauncher.exe\
+lap/jre/docs/launchpad/SeaMonkey.bat\
+lap/jre/docs/launchpad/SeaMonkey.sh\
+lap/jre/docs/launchpad/SeaMonkey_bash.sh\
+lap/jre/docs/launchpad/SetArchitecture.bat\
+lap/jre/docs/launchpad/SetArchitecture.sh\
+lap/jre/docs/launchpad/SetTmp.bat\
+lap/jre/docs/launchpad/ar/\
+lap/jre/docs/launchpad/ar/global.properties\
+lap/jre/docs/launchpad/ar/log.properties\
+lap/jre/docs/launchpad/bg/\
+lap/jre/docs/launchpad/bg/global.properties\
+lap/jre/docs/launchpad/bg/log.properties\
+lap/jre/docs/launchpad/browsePrompt.js\
+lap/jre/docs/launchpad/browser.sh\
+lap/jre/docs/launchpad/callback.bat\
+lap/jre/docs/launchpad/callback.sh\
+lap/jre/docs/launchpad/changeDirectory.bat\
+lap/jre/docs/launchpad/changeDirectory.sh\
+lap/jre/docs/launchpad/content/\
+lap/jre/docs/launchpad/content/apidoc.html\
+lap/jre/docs/launchpad/content/apidoc_security.html\
+lap/jre/docs/launchpad/content/apidoc_security_jaas.html\
+lap/jre/docs/launchpad/content/banner.properties\
+lap/jre/docs/launchpad/content/banner_logo.gif\
+lap/jre/docs/launchpad/content/content.css\
+lap/jre/docs/launchpad/content/copyright.html\
+lap/jre/docs/launchpad/content/cs/\
+lap/jre/docs/launchpad/content/cs/global.properties\
+lap/jre/docs/launchpad/content/de/\
+lap/jre/docs/launchpad/content/de/apidoc.properties\
+lap/jre/docs/launchpad/content/de/banner.properties\
+lap/jre/docs/launchpad/content/de/copyright.properties\
+lap/jre/docs/launchpad/content/de/global.properties\
+lap/jre/docs/launchpad/content/de/incorrectDisk.properties\
+lap/jre/docs/launchpad/content/de/license.properties\
+lap/jre/docs/launchpad/content/de/navigation.properties\
+lap/jre/docs/launchpad/content/de/notices.properties\
+lap/jre/docs/launchpad/content/de/releasenotes.properties\
+lap/jre/docs/launchpad/content/de/userguides.properties\
+lap/jre/docs/launchpad/content/de/welcome.properties\
+lap/jre/docs/launchpad/content/en/\
+lap/jre/docs/launchpad/content/en/apidoc.properties\
+lap/jre/docs/launchpad/content/en/apidoc_security.properties\
+lap/jre/docs/launchpad/content/en/apidoc_security_jaas.properties\
+lap/jre/docs/launchpad/content/en/banner.properties\
+lap/jre/docs/launchpad/content/en/copyright.properties\
+lap/jre/docs/launchpad/content/en/global.properties\
+lap/jre/docs/launchpad/content/en/incorrectDisk.properties\
+lap/jre/docs/launchpad/content/en/license.properties\
+lap/jre/docs/launchpad/content/en/navigation.properties\
+lap/jre/docs/launchpad/content/en/notices.properties\
+lap/jre/docs/launchpad/content/en/releasenotes.properties\
+lap/jre/docs/launchpad/content/en/userguides.properties\
+lap/jre/docs/launchpad/content/en/welcome.properties\
+lap/jre/docs/launchpad/content/es/\
+lap/jre/docs/launchpad/content/es/apidoc.properties\
+lap/jre/docs/launchpad/content/es/banner.properties\
+lap/jre/docs/launchpad/content/es/copyright.properties\
+lap/jre/docs/launchpad/content/es/global.properties\
+lap/jre/docs/launchpad/content/es/incorrectDisk.properties\
+lap/jre/docs/launchpad/content/es/license.properties\
+lap/jre/docs/launchpad/content/es/navigation.properties\
+lap/jre/docs/launchpad/content/es/notices.properties\
+lap/jre/docs/launchpad/content/es/releasenotes.properties\
+lap/jre/docs/launchpad/content/es/userguides.properties\
+lap/jre/docs/launchpad/content/es/welcome.properties\
+lap/jre/docs/launchpad/content/fr/\
+lap/jre/docs/launchpad/content/fr/apidoc.properties\
+lap/jre/docs/launchpad/content/fr/banner.properties\
+lap/jre/docs/launchpad/content/fr/copyright.properties\
+lap/jre/docs/launchpad/content/fr/global.properties\
+lap/jre/docs/launchpad/content/fr/incorrectDisk.properties\
+lap/jre/docs/launchpad/content/fr/license.properties\
+lap/jre/docs/launchpad/content/fr/navigation.properties\
+lap/jre/docs/launchpad/content/fr/notices.properties\
+lap/jre/docs/launchpad/content/fr/releasenotes.properties\
+lap/jre/docs/launchpad/content/fr/userguides.properties\
+lap/jre/docs/launchpad/content/fr/welcome.properties\
+lap/jre/docs/launchpad/content/global.head\
+lap/jre/docs/launchpad/content/global.properties\
+lap/jre/docs/launchpad/content/images/\
+lap/jre/docs/launchpad/content/images/info_link.gif\
+lap/jre/docs/launchpad/content/images/install_verify.gif\
+lap/jre/docs/launchpad/content/images/pdf.gif\
+lap/jre/docs/launchpad/content/images/popup.gif\
+lap/jre/docs/launchpad/content/images/wizard.gif\
+lap/jre/docs/launchpad/content/incorrectDisk.html\
+lap/jre/docs/launchpad/content/it/\
+lap/jre/docs/launchpad/content/it/apidoc.properties\
+lap/jre/docs/launchpad/content/it/banner.properties\
+lap/jre/docs/launchpad/content/it/copyright.properties\
+lap/jre/docs/launchpad/content/it/global.properties\
+lap/jre/docs/launchpad/content/it/incorrectDisk.properties\
+lap/jre/docs/launchpad/content/it/license.properties\
+lap/jre/docs/launchpad/content/it/navigation.properties\
+lap/jre/docs/launchpad/content/it/notices.properties\
+lap/jre/docs/launchpad/content/it/releasenotes.properties\
+lap/jre/docs/launchpad/content/it/userguides.properties\
+lap/jre/docs/launchpad/content/it/welcome.properties\
+lap/jre/docs/launchpad/content/ja/\
+lap/jre/docs/launchpad/content/ja/apidoc.properties\
+lap/jre/docs/launchpad/content/ja/banner.properties\
+lap/jre/docs/launchpad/content/ja/copyright.properties\
+lap/jre/docs/launchpad/content/ja/global.properties\
+lap/jre/docs/launchpad/content/ja/incorrectDisk.properties\
+lap/jre/docs/launchpad/content/ja/license.properties\
+lap/jre/docs/launchpad/content/ja/navigation.properties\
+lap/jre/docs/launchpad/content/ja/notices.properties\
+lap/jre/docs/launchpad/content/ja/releasenotes.properties\
+lap/jre/docs/launchpad/content/ja/userguides.properties\
+lap/jre/docs/launchpad/content/ja/welcome.properties\
+lap/jre/docs/launchpad/content/ko/\
+lap/jre/docs/launchpad/content/ko/apidoc.properties\
+lap/jre/docs/launchpad/content/ko/banner.properties\
+lap/jre/docs/launchpad/content/ko/copyright.properties\
+lap/jre/docs/launchpad/content/ko/global.properties\
+lap/jre/docs/launchpad/content/ko/incorrectDisk.properties\
+lap/jre/docs/launchpad/content/ko/license.properties\
+lap/jre/docs/launchpad/content/ko/navigation.properties\
+lap/jre/docs/launchpad/content/ko/notices.properties\
+lap/jre/docs/launchpad/content/ko/releasenotes.properties\
+lap/jre/docs/launchpad/content/ko/userguides.properties\
+lap/jre/docs/launchpad/content/ko/welcome.properties\
+lap/jre/docs/launchpad/content/license.html\
+lap/jre/docs/launchpad/content/main.properties\
+lap/jre/docs/launchpad/content/navigation.properties\
+lap/jre/docs/launchpad/content/notices.html\
+lap/jre/docs/launchpad/content/pl/\
+lap/jre/docs/launchpad/content/pl/global.properties\
+lap/jre/docs/launchpad/content/preload.properties\
+lap/jre/docs/launchpad/content/pt_br/\
+lap/jre/docs/launchpad/content/pt_br/apidoc.properties\
+lap/jre/docs/launchpad/content/pt_br/banner.properties\
+lap/jre/docs/launchpad/content/pt_br/copyright.properties\
+lap/jre/docs/launchpad/content/pt_br/global.properties\
+lap/jre/docs/launchpad/content/pt_br/incorrectDisk.properties\
+lap/jre/docs/launchpad/content/pt_br/license.properties\
+lap/jre/docs/launchpad/content/pt_br/navigation.properties\
+lap/jre/docs/launchpad/content/pt_br/notices.properties\
+lap/jre/docs/launchpad/content/pt_br/releasenotes.properties\
+lap/jre/docs/launchpad/content/pt_br/userguides.properties\
+lap/jre/docs/launchpad/content/pt_br/welcome.properties\
+lap/jre/docs/launchpad/content/releasenotes.html\
+lap/jre/docs/launchpad/content/ru/\
+lap/jre/docs/launchpad/content/ru/global.properties\
+lap/jre/docs/launchpad/content/secureUserExtensions.js\
+lap/jre/docs/launchpad/content/tr/\
+lap/jre/docs/launchpad/content/tr/global.properties\
+lap/jre/docs/launchpad/content/transparent.gif\
+lap/jre/docs/launchpad/content/userExtensions.js\
+lap/jre/docs/launchpad/content/userguides.html\
+lap/jre/docs/launchpad/content/welcome.html\
+lap/jre/docs/launchpad/content/zh/\
+lap/jre/docs/launchpad/content/zh/apidoc.properties\
+lap/jre/docs/launchpad/content/zh/banner.properties\
+lap/jre/docs/launchpad/content/zh/copyright.properties\
+lap/jre/docs/launchpad/content/zh/global.properties\
+lap/jre/docs/launchpad/content/zh/incorrectDisk.properties\
+lap/jre/docs/launchpad/content/zh/license.properties\
+lap/jre/docs/launchpad/content/zh/navigation.properties\
+lap/jre/docs/launchpad/content/zh/notices.properties\
+lap/jre/docs/launchpad/content/zh/releasenotes.properties\
+lap/jre/docs/launchpad/content/zh/userguides.properties\
+lap/jre/docs/launchpad/content/zh/welcome.properties\
+lap/jre/docs/launchpad/content/zh_TW/\
+lap/jre/docs/launchpad/content/zh_TW/global.properties\
+lap/jre/docs/launchpad/cs/\
+lap/jre/docs/launchpad/cs/codepages/\
+lap/jre/docs/launchpad/cs/codepages/852/\
+lap/jre/docs/launchpad/cs/global.properties\
+lap/jre/docs/launchpad/cs/log.properties\
+lap/jre/docs/launchpad/da/\
+lap/jre/docs/launchpad/da/global.properties\
+lap/jre/docs/launchpad/da/log.properties\
+lap/jre/docs/launchpad/de/\
+lap/jre/docs/launchpad/de/codepages/\
+lap/jre/docs/launchpad/de/codepages/850/\
+lap/jre/docs/launchpad/de/global.properties\
+lap/jre/docs/launchpad/de/log.properties\
+lap/jre/docs/launchpad/de/noBrowser.html\
+lap/jre/docs/launchpad/diskLabels.js\
+lap/jre/docs/launchpad/diskinfo/\
+lap/jre/docs/launchpad/diskinfo/allDisks.labels\
+lap/jre/docs/launchpad/diskinfo/product.ico\
+lap/jre/docs/launchpad/diskinfo/thisDisk.properties\
+lap/jre/docs/launchpad/el/\
+lap/jre/docs/launchpad/el/global.properties\
+lap/jre/docs/launchpad/el/log.properties\
+lap/jre/docs/launchpad/en/\
+lap/jre/docs/launchpad/en/codepages/\
+lap/jre/docs/launchpad/en/codepages/437/\
+lap/jre/docs/launchpad/en/codepages/437/noBrowser.txt\
+lap/jre/docs/launchpad/en/codepages/437/noJRE.txt\
+lap/jre/docs/launchpad/en/global.properties\
+lap/jre/docs/launchpad/en/incorrectDisk.html\
+lap/jre/docs/launchpad/en/incorrectDisk.properties\
+lap/jre/docs/launchpad/en/log.properties\
+lap/jre/docs/launchpad/en/noBrowser.html\
+lap/jre/docs/launchpad/en/noJRE.html\
+lap/jre/docs/launchpad/es/\
+lap/jre/docs/launchpad/es/codepages/\
+lap/jre/docs/launchpad/es/codepages/850/\
+lap/jre/docs/launchpad/es/global.properties\
+lap/jre/docs/launchpad/es/log.properties\
+lap/jre/docs/launchpad/es/noBrowser.html\
+lap/jre/docs/launchpad/fi/\
+lap/jre/docs/launchpad/fi/global.properties\
+lap/jre/docs/launchpad/fi/log.properties\
+lap/jre/docs/launchpad/fr/\
+lap/jre/docs/launchpad/fr/codepages/\
+lap/jre/docs/launchpad/fr/codepages/850/\
+lap/jre/docs/launchpad/fr/global.properties\
+lap/jre/docs/launchpad/fr/log.properties\
+lap/jre/docs/launchpad/fr/noBrowser.html\
+lap/jre/docs/launchpad/getOS.bat\
+lap/jre/docs/launchpad/getOS.sh\
+lap/jre/docs/launchpad/global.properties\
+lap/jre/docs/launchpad/globals.js\
+lap/jre/docs/launchpad/he/\
+lap/jre/docs/launchpad/he/global.properties\
+lap/jre/docs/launchpad/he/log.properties\
+lap/jre/docs/launchpad/hr/\
+lap/jre/docs/launchpad/hr/global.properties\
+lap/jre/docs/launchpad/hr/log.properties\
+lap/jre/docs/launchpad/hu/\
+lap/jre/docs/launchpad/hu/codepages/\
+lap/jre/docs/launchpad/hu/codepages/852/\
+lap/jre/docs/launchpad/hu/global.properties\
+lap/jre/docs/launchpad/hu/log.properties\
+lap/jre/docs/launchpad/invokeWithJre.sh\
+lap/jre/docs/launchpad/it/\
+lap/jre/docs/launchpad/it/codepages/\
+lap/jre/docs/launchpad/it/codepages/850/\
+lap/jre/docs/launchpad/it/global.properties\
+lap/jre/docs/launchpad/it/log.properties\
+lap/jre/docs/launchpad/it/noBrowser.html\
+lap/jre/docs/launchpad/ja/\
+lap/jre/docs/launchpad/ja/codepages/\
+lap/jre/docs/launchpad/ja/codepages/943/\
+lap/jre/docs/launchpad/ja/global.properties\
+lap/jre/docs/launchpad/ja/log.properties\
+lap/jre/docs/launchpad/ja/noBrowser.html\
+lap/jre/docs/launchpad/java.properties\
+lap/jre/docs/launchpad/jclp.bat\
+lap/jre/docs/launchpad/jclp.sh\
+lap/jre/docs/launchpad/jscp.js\
+lap/jre/docs/launchpad/ko/\
+lap/jre/docs/launchpad/ko/codepages/\
+lap/jre/docs/launchpad/ko/codepages/949/\
+lap/jre/docs/launchpad/ko/global.properties\
+lap/jre/docs/launchpad/ko/log.properties\
+lap/jre/docs/launchpad/ko/noBrowser.html\
+lap/jre/docs/launchpad/launchpad.bat\
+lap/jre/docs/launchpad/launchpadEnv\
+lap/jre/docs/launchpad/log.html\
+lap/jre/docs/launchpad/log.js\
+lap/jre/docs/launchpad/navigation.html\
+lap/jre/docs/launchpad/nl/\
+lap/jre/docs/launchpad/nl/global.properties\
+lap/jre/docs/launchpad/nl/log.properties\
+lap/jre/docs/launchpad/no/\
+lap/jre/docs/launchpad/no/global.properties\
+lap/jre/docs/launchpad/no/log.properties\
+lap/jre/docs/launchpad/noJRE.bat\
+lap/jre/docs/launchpad/noJre.sh\
+lap/jre/docs/launchpad/pageloader.html\
+lap/jre/docs/launchpad/pl/\
+lap/jre/docs/launchpad/pl/codepages/\
+lap/jre/docs/launchpad/pl/codepages/852/\
+lap/jre/docs/launchpad/pl/global.properties\
+lap/jre/docs/launchpad/pl/log.properties\
+lap/jre/docs/launchpad/preload.html\
+lap/jre/docs/launchpad/properties.js\
+lap/jre/docs/launchpad/pt/\
+lap/jre/docs/launchpad/pt/global.properties\
+lap/jre/docs/launchpad/pt/log.properties\
+lap/jre/docs/launchpad/pt_BR/\
+lap/jre/docs/launchpad/pt_BR/codepages/\
+lap/jre/docs/launchpad/pt_BR/codepages/850/\
+lap/jre/docs/launchpad/pt_BR/global.properties\
+lap/jre/docs/launchpad/pt_BR/log.properties\
+lap/jre/docs/launchpad/pt_BR/noBrowser_pt.html\
+lap/jre/docs/launchpad/readRegistry.bat\
+lap/jre/docs/launchpad/readRegistryNonVista.bat\
+lap/jre/docs/launchpad/readRegistryVista.bat\
+lap/jre/docs/launchpad/ro/\
+lap/jre/docs/launchpad/ro/global.properties\
+lap/jre/docs/launchpad/ro/log.properties\
+lap/jre/docs/launchpad/ru/\
+lap/jre/docs/launchpad/ru/codepages/\
+lap/jre/docs/launchpad/ru/codepages/866/\
+lap/jre/docs/launchpad/ru/global.properties\
+lap/jre/docs/launchpad/ru/log.properties\
+lap/jre/docs/launchpad/secureUserExtensions.js\
+lap/jre/docs/launchpad/setBrowser.bat\
+lap/jre/docs/launchpad/setClasspath.bat\
+lap/jre/docs/launchpad/setClasspath.sh\
+lap/jre/docs/launchpad/setLocal.bat\
+lap/jre/docs/launchpad/setVM.bat\
+lap/jre/docs/launchpad/setVar.bat\
+lap/jre/docs/launchpad/sk/\
+lap/jre/docs/launchpad/sk/global.properties\
+lap/jre/docs/launchpad/sk/log.properties\
+lap/jre/docs/launchpad/skins/\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/banner.css\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/banner.html\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/banner.properties\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/footer.css\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/footer.html\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/global.css\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/global.properties\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/activeLabelIcon.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/activeLabelIcon_bidi.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/arrow.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/completedLabelIcon.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/completedLabelIcon_bidi.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/error.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/navigation.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/progress_blue.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/splash_default.jpg\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/transparent.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/upcomingLabelIcon.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/upcomingLabelIcon_bidi.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/images/warning.gif\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/main.html\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/main.properties\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/navigation.css\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/navigation.properties\
+lap/jre/docs/launchpad/skins/expressLaunchpadModernSkin/preload.css\
+lap/jre/docs/launchpad/skins/unittest/\
+lap/jre/docs/launchpad/skins/unittest/content1.html\
+lap/jre/docs/launchpad/skins/unittest/content2.html\
+lap/jre/docs/launchpad/skins/unittest/en/\
+lap/jre/docs/launchpad/skins/unittest/en/navigation.properties\
+lap/jre/docs/launchpad/skins/unittest/fb/\
+lap/jre/docs/launchpad/skins/unittest/fb/fallback.properties\
+lap/jre/docs/launchpad/skins/unittest/main.frameset\
+lap/jre/docs/launchpad/skins/unittest/preload.properties\
+lap/jre/docs/launchpad/skins/unittest/unittest.bat\
+lap/jre/docs/launchpad/skins/unittest/unittest.html\
+lap/jre/docs/launchpad/skins/unittest/unittest.sh\
+lap/jre/docs/launchpad/skins/unittest/unittestpopup.html\
+lap/jre/docs/launchpad/skins/unittest/utframeset.html\
+lap/jre/docs/launchpad/sl/\
+lap/jre/docs/launchpad/sl/global.properties\
+lap/jre/docs/launchpad/sl/log.properties\
+lap/jre/docs/launchpad/splash/\
+lap/jre/docs/launchpad/splash/aixppc/\
+lap/jre/docs/launchpad/splash/aixppc/AZY_Splash\
+lap/jre/docs/launchpad/splash/hpuxia64/\
+lap/jre/docs/launchpad/splash/hpuxia64/AZY_Splash\
+lap/jre/docs/launchpad/splash/hpuxparisc/\
+lap/jre/docs/launchpad/splash/hpuxparisc/AZY_Splash\
+lap/jre/docs/launchpad/splash/linuxppc/\
+lap/jre/docs/launchpad/splash/linuxppc/AZY_Splash\
+lap/jre/docs/launchpad/splash/linuxs390/\
+lap/jre/docs/launchpad/splash/linuxs390/AZY_Splash\
+lap/jre/docs/launchpad/splash/linuxx86/\
+lap/jre/docs/launchpad/splash/linuxx86/AZY_Splash\
+lap/jre/docs/launchpad/splash/sunsparc/\
+lap/jre/docs/launchpad/splash/sunsparc/AZY_Splash\
+lap/jre/docs/launchpad/splash/sunx86/\
+lap/jre/docs/launchpad/splash/sunx86/AZY_Splash\
+lap/jre/docs/launchpad/splash.sh\
+lap/jre/docs/launchpad/sv/\
+lap/jre/docs/launchpad/sv/global.properties\
+lap/jre/docs/launchpad/sv/log.properties\
+lap/jre/docs/launchpad/tr/\
+lap/jre/docs/launchpad/tr/global.properties\
+lap/jre/docs/launchpad/tr/log.properties\
+lap/jre/docs/launchpad/unittest.bat\
+lap/jre/docs/launchpad/unittest.sh\
+lap/jre/docs/launchpad/userExtensions.js\
+lap/jre/docs/launchpad/utils.js\
+lap/jre/docs/launchpad/wizard.js\
+lap/jre/docs/launchpad/zh/\
+lap/jre/docs/launchpad/zh/codepages/\
+lap/jre/docs/launchpad/zh/codepages/1381/\
+lap/jre/docs/launchpad/zh/global.properties\
+lap/jre/docs/launchpad/zh/log.properties\
+lap/jre/docs/launchpad/zh/noBrowser.html\
+lap/jre/docs/launchpad/zh_TW/\
+lap/jre/docs/launchpad/zh_TW/codepages/\
+lap/jre/docs/launchpad/zh_TW/codepages/950/\
+lap/jre/docs/launchpad/zh_TW/global.properties\
+lap/jre/docs/launchpad/zh_TW/log.properties\
+lap/jre/docs/launchpad.exe\
+lap/jre/docs/launchpad.ini\
+lap/jre/docs/launchpad.sh\
+lap/jre/jre/\
+lap/jre/jre/.systemPrefs/\
+lap/jre/jre/.systemPrefs/.system.lock\
+lap/jre/jre/.systemPrefs/.systemRootModFile\
+lap/jre/jre/bin/\
+lap/jre/jre/bin/ControlPanel\
+lap/jre/jre/bin/classic/\
+lap/jre/jre/bin/classic/libjvm.so\
+lap/jre/jre/bin/ikeycmd\
+lap/jre/jre/bin/ikeyman\
+lap/jre/jre/bin/j9vm/\
+lap/jre/jre/bin/j9vm/libjvm.so\
+lap/jre/jre/bin/java\
+lap/jre/jre/bin/java_vm\
+lap/jre/jre/bin/javaw\
+lap/jre/jre/bin/javaws\
+lap/jre/jre/bin/jcontrol\
+lap/jre/jre/bin/jextract\
+lap/jre/jre/bin/keytool\
+lap/jre/jre/bin/kinit\
+lap/jre/jre/bin/klist\
+lap/jre/jre/bin/ktab\
+lap/jre/jre/bin/launcher.properties\
+lap/jre/jre/bin/launcher_ca.properties\
+lap/jre/jre/bin/launcher_cs.properties\
+lap/jre/jre/bin/launcher_de.properties\
+lap/jre/jre/bin/launcher_es.properties\
+lap/jre/jre/bin/launcher_fr.properties\
+lap/jre/jre/bin/launcher_hu.properties\
+lap/jre/jre/bin/launcher_it.properties\
+lap/jre/jre/bin/launcher_ja.properties\
+lap/jre/jre/bin/launcher_ko.properties\
+lap/jre/jre/bin/launcher_pl.properties\
+lap/jre/jre/bin/launcher_pt_BR.properties\
+lap/jre/jre/bin/launcher_ru.properties\
+lap/jre/jre/bin/launcher_sk.properties\
+lap/jre/jre/bin/launcher_sl.properties\
+lap/jre/jre/bin/launcher_tr.properties\
+lap/jre/jre/bin/launcher_zh.properties\
+lap/jre/jre/bin/launcher_zh_TW.properties\
+lap/jre/jre/bin/pack200\
+lap/jre/jre/bin/policytool\
+lap/jre/jre/bin/rmid\
+lap/jre/jre/bin/rmiregistry\
+lap/jre/jre/bin/tnameserv\
+lap/jre/jre/bin/unpack200\
+lap/jre/jre/javaws/\
+lap/jre/jre/lib/\
+lap/jre/jre/lib/.project\
+lap/jre/jre/lib/J9TraceFormat.dat\
+lap/jre/jre/lib/TraceFormat.dat\
+lap/jre/jre/lib/amd64/\
+lap/jre/jre/lib/amd64/classic/\
+lap/jre/jre/lib/amd64/classic/libjvm.so\
+lap/jre/jre/lib/amd64/compressedrefs/\
+lap/jre/jre/lib/amd64/compressedrefs/j9ddr.dat\
+lap/jre/jre/lib/amd64/compressedrefs/java.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_ca.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_cs.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_de.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_es.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_fr.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_hu.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_it.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_ja.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_ko.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_pl.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_pt_BR.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_ru.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_sk.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_sl.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_tr.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_zh.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_zh_CN.properties\
+lap/jre/jre/lib/amd64/compressedrefs/java_zh_TW.properties\
+lap/jre/jre/lib/amd64/compressedrefs/jclSC160/\
+lap/jre/jre/lib/amd64/compressedrefs/jclSC160/vm.jar\
+lap/jre/jre/lib/amd64/compressedrefs/libhyprtshim24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libhythr.so\
+lap/jre/jre/lib/amd64/compressedrefs/libiverel24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9bcv24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9dbg24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9dmp24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9dyn24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9gc24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9gcchk24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9hookable24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9jextract.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9jit24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9jitd24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9jnichk24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9jvmti24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9prt24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9rdbi24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9shr24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9thr24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9trc24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9ute24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9vm24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9vrb24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libj9zlib24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libjclscar_24.so\
+lap/jre/jre/lib/amd64/compressedrefs/libjsig.so\
+lap/jre/jre/lib/amd64/compressedrefs/libjvm.so\
+lap/jre/jre/lib/amd64/compressedrefs/libvmi.so\
+lap/jre/jre/lib/amd64/default/\
+lap/jre/jre/lib/amd64/default/j9ddr.dat\
+lap/jre/jre/lib/amd64/default/java.properties\
+lap/jre/jre/lib/amd64/default/java_ca.properties\
+lap/jre/jre/lib/amd64/default/java_cs.properties\
+lap/jre/jre/lib/amd64/default/java_de.properties\
+lap/jre/jre/lib/amd64/default/java_es.properties\
+lap/jre/jre/lib/amd64/default/java_fr.properties\
+lap/jre/jre/lib/amd64/default/java_hu.properties\
+lap/jre/jre/lib/amd64/default/java_it.properties\
+lap/jre/jre/lib/amd64/default/java_ja.properties\
+lap/jre/jre/lib/amd64/default/java_ko.properties\
+lap/jre/jre/lib/amd64/default/java_pl.properties\
+lap/jre/jre/lib/amd64/default/java_pt_BR.properties\
+lap/jre/jre/lib/amd64/default/java_ru.properties\
+lap/jre/jre/lib/amd64/default/java_sk.properties\
+lap/jre/jre/lib/amd64/default/java_sl.properties\
+lap/jre/jre/lib/amd64/default/java_tr.properties\
+lap/jre/jre/lib/amd64/default/java_zh.properties\
+lap/jre/jre/lib/amd64/default/java_zh_CN.properties\
+lap/jre/jre/lib/amd64/default/java_zh_TW.properties\
+lap/jre/jre/lib/amd64/default/jclSC160/\
+lap/jre/jre/lib/amd64/default/jclSC160/vm.jar\
+lap/jre/jre/lib/amd64/default/libhyprtshim24.so\
+lap/jre/jre/lib/amd64/default/libhythr.so\
+lap/jre/jre/lib/amd64/default/libiverel24.so\
+lap/jre/jre/lib/amd64/default/libj9bcv24.so\
+lap/jre/jre/lib/amd64/default/libj9dbg24.so\
+lap/jre/jre/lib/amd64/default/libj9dmp24.so\
+lap/jre/jre/lib/amd64/default/libj9dyn24.so\
+lap/jre/jre/lib/amd64/default/libj9gc24.so\
+lap/jre/jre/lib/amd64/default/libj9gcchk24.so\
+lap/jre/jre/lib/amd64/default/libj9hookable24.so\
+lap/jre/jre/lib/amd64/default/libj9jextract.so\
+lap/jre/jre/lib/amd64/default/libj9jit24.so\
+lap/jre/jre/lib/amd64/default/libj9jitd24.so\
+lap/jre/jre/lib/amd64/default/libj9jnichk24.so\
+lap/jre/jre/lib/amd64/default/libj9jvmti24.so\
+lap/jre/jre/lib/amd64/default/libj9prt24.so\
+lap/jre/jre/lib/amd64/default/libj9rdbi24.so\
+lap/jre/jre/lib/amd64/default/libj9shr24.so\
+lap/jre/jre/lib/amd64/default/libj9thr24.so\
+lap/jre/jre/lib/amd64/default/libj9trc24.so\
+lap/jre/jre/lib/amd64/default/libj9ute24.so\
+lap/jre/jre/lib/amd64/default/libj9vm24.so\
+lap/jre/jre/lib/amd64/default/libj9vrb24.so\
+lap/jre/jre/lib/amd64/default/libj9zlib24.so\
+lap/jre/jre/lib/amd64/default/libjclscar_24.so\
+lap/jre/jre/lib/amd64/default/libjsig.so\
+lap/jre/jre/lib/amd64/default/libjvm.so\
+lap/jre/jre/lib/amd64/default/libvmi.so\
+lap/jre/jre/lib/amd64/headless/\
+lap/jre/jre/lib/amd64/headless/libmawt.so\
+lap/jre/jre/lib/amd64/j9vm/\
+lap/jre/jre/lib/amd64/j9vm/libjvm.so\
+lap/jre/jre/lib/amd64/jli/\
+lap/jre/jre/lib/amd64/jli/libjli.so\
+lap/jre/jre/lib/amd64/jvm.cfg\
+lap/jre/jre/lib/amd64/libJdbcOdbc.so\
+lap/jre/jre/lib/amd64/libattach.so\
+lap/jre/jre/lib/amd64/libawt.so\
+lap/jre/jre/lib/amd64/libcmm.so\
+lap/jre/jre/lib/amd64/libdbgwrapper.so\
+lap/jre/jre/lib/amd64/libdcpr.so\
+lap/jre/jre/lib/amd64/libdeploy.so\
+lap/jre/jre/lib/amd64/libdgcollector.so\
+lap/jre/jre/lib/amd64/libdt_socket.so\
+lap/jre/jre/lib/amd64/libfontmanager.so\
+lap/jre/jre/lib/amd64/libhealthcenter.so\
+lap/jre/jre/lib/amd64/libhprof.so\
+lap/jre/jre/lib/amd64/libinstrument.so\
+lap/jre/jre/lib/amd64/libioser12.so\
+lap/jre/jre/lib/amd64/libjaas.so\
+lap/jre/jre/lib/amd64/libjaasauth.so\
+lap/jre/jre/lib/amd64/libjava.so\
+lap/jre/jre/lib/amd64/libjava_crw_demo.so\
+lap/jre/jre/lib/amd64/libjavaplugin_jni.so\
+lap/jre/jre/lib/amd64/libjawt.so\
+lap/jre/jre/lib/amd64/libjdwp.so\
+lap/jre/jre/lib/amd64/libjpeg.so\
+lap/jre/jre/lib/amd64/libjpkcs11.so\
+lap/jre/jre/lib/amd64/libjsig.so\
+lap/jre/jre/lib/amd64/libjsound.so\
+lap/jre/jre/lib/amd64/libmanagement.so\
+lap/jre/jre/lib/amd64/libmlib_image.so\
+lap/jre/jre/lib/amd64/libnet.so\
+lap/jre/jre/lib/amd64/libnio.so\
+lap/jre/jre/lib/amd64/libnpjp2.so\
+lap/jre/jre/lib/amd64/libnpt.so\
+lap/jre/jre/lib/amd64/librmi.so\
+lap/jre/jre/lib/amd64/libsplashscreen.so\
+lap/jre/jre/lib/amd64/libunpack.so\
+lap/jre/jre/lib/amd64/libzip.so\
+lap/jre/jre/lib/amd64/motif21/\
+lap/jre/jre/lib/amd64/motif21/libmawt.so\
+lap/jre/jre/lib/amd64/xawt/\
+lap/jre/jre/lib/amd64/xawt/libmawt.so\
+lap/jre/jre/lib/annotation.jar\
+lap/jre/jre/lib/applet/\
+lap/jre/jre/lib/audio/\
+lap/jre/jre/lib/audio/soundbank.gm\
+lap/jre/jre/lib/beans.jar\
+lap/jre/jre/lib/calendars.properties\
+lap/jre/jre/lib/charsets.jar\
+lap/jre/jre/lib/cmm/\
+lap/jre/jre/lib/cmm/CIEXYZ.pf\
+lap/jre/jre/lib/cmm/GRAY.pf\
+lap/jre/jre/lib/cmm/LINEAR_RGB.pf\
+lap/jre/jre/lib/cmm/PYCC.pf\
+lap/jre/jre/lib/cmm/sRGB.pf\
+lap/jre/jre/lib/content-types.properties\
+lap/jre/jre/lib/dc.properties\
+lap/jre/jre/lib/deploy/\
+lap/jre/jre/lib/deploy/ffjcext.zip\
+lap/jre/jre/lib/deploy/java-icon.ico\
+lap/jre/jre/lib/deploy/messages.properties\
+lap/jre/jre/lib/deploy/messages_ca.properties\
+lap/jre/jre/lib/deploy/messages_cs.properties\
+lap/jre/jre/lib/deploy/messages_de.properties\
+lap/jre/jre/lib/deploy/messages_es.properties\
+lap/jre/jre/lib/deploy/messages_fr.properties\
+lap/jre/jre/lib/deploy/messages_hu.properties\
+lap/jre/jre/lib/deploy/messages_it.properties\
+lap/jre/jre/lib/deploy/messages_ja.properties\
+lap/jre/jre/lib/deploy/messages_ko.properties\
+lap/jre/jre/lib/deploy/messages_pl.properties\
+lap/jre/jre/lib/deploy/messages_pt_BR.properties\
+lap/jre/jre/lib/deploy/messages_ru.properties\
+lap/jre/jre/lib/deploy/messages_sk.properties\
+lap/jre/jre/lib/deploy/messages_sl.properties\
+lap/jre/jre/lib/deploy/messages_sv.properties\
+lap/jre/jre/lib/deploy/messages_tr.properties\
+lap/jre/jre/lib/deploy/messages_zh.properties\
+lap/jre/jre/lib/deploy/messages_zh_CN.properties\
+lap/jre/jre/lib/deploy/messages_zh_HK.properties\
+lap/jre/jre/lib/deploy/messages_zh_TW.properties\
+lap/jre/jre/lib/deploy/splash.gif\
+lap/jre/jre/lib/deploy.jar\
+lap/jre/jre/lib/desktop/\
+lap/jre/jre/lib/desktop/applications/\
+lap/jre/jre/lib/desktop/applications/sun-java.desktop\
+lap/jre/jre/lib/desktop/applications/sun-javaws.desktop\
+lap/jre/jre/lib/desktop/applications/sun_java.desktop\
+lap/jre/jre/lib/desktop/icons/\
+lap/jre/jre/lib/desktop/icons/HighContrast/\
+lap/jre/jre/lib/desktop/icons/HighContrast/16x16/\
+lap/jre/jre/lib/desktop/icons/HighContrast/16x16/apps/\
+lap/jre/jre/lib/desktop/icons/HighContrast/16x16/apps/sun-java.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/16x16/apps/sun-javaws.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/16x16/apps/sun-jcontrol.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/16x16/mimetypes/\
+lap/jre/jre/lib/desktop/icons/HighContrast/16x16/mimetypes/gnome-mime-application-x-java-archive.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/16x16/mimetypes/gnome-mime-application-x-java-jnlp-file.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/16x16/mimetypes/gnome-mime-text-x-java.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/48x48/\
+lap/jre/jre/lib/desktop/icons/HighContrast/48x48/apps/\
+lap/jre/jre/lib/desktop/icons/HighContrast/48x48/apps/sun-java.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/48x48/apps/sun-javaws.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/48x48/apps/sun-jcontrol.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/48x48/mimetypes/\
+lap/jre/jre/lib/desktop/icons/HighContrast/48x48/mimetypes/gnome-mime-application-x-java-archive.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/48x48/mimetypes/gnome-mime-application-x-java-jnlp-file.png\
+lap/jre/jre/lib/desktop/icons/HighContrast/48x48/mimetypes/gnome-mime-text-x-java.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/16x16/\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/16x16/apps/\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/16x16/apps/sun-java.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/16x16/apps/sun-javaws.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/16x16/apps/sun-jcontrol.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/16x16/mimetypes/\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/16x16/mimetypes/gnome-mime-application-x-java-archive.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/16x16/mimetypes/gnome-mime-application-x-java-jnlp-file.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/16x16/mimetypes/gnome-mime-text-x-java.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/48x48/\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/48x48/apps/\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/48x48/apps/sun-java.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/48x48/apps/sun-javaws.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/48x48/apps/sun-jcontrol.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/48x48/mimetypes/\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/48x48/mimetypes/gnome-mime-application-x-java-archive.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/48x48/mimetypes/gnome-mime-application-x-java-jnlp-file.png\
+lap/jre/jre/lib/desktop/icons/HighContrastInverse/48x48/mimetypes/gnome-mime-text-x-java.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/\
+lap/jre/jre/lib/desktop/icons/LowContrast/16x16/\
+lap/jre/jre/lib/desktop/icons/LowContrast/16x16/apps/\
+lap/jre/jre/lib/desktop/icons/LowContrast/16x16/apps/sun-java.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/16x16/apps/sun-javaws.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/16x16/apps/sun-jcontrol.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/16x16/mimetypes/\
+lap/jre/jre/lib/desktop/icons/LowContrast/16x16/mimetypes/gnome-mime-application-x-java-archive.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/16x16/mimetypes/gnome-mime-application-x-java-jnlp-file.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/16x16/mimetypes/gnome-mime-text-x-java.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/48x48/\
+lap/jre/jre/lib/desktop/icons/LowContrast/48x48/apps/\
+lap/jre/jre/lib/desktop/icons/LowContrast/48x48/apps/sun-java.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/48x48/apps/sun-javaws.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/48x48/apps/sun-jcontrol.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/48x48/mimetypes/\
+lap/jre/jre/lib/desktop/icons/LowContrast/48x48/mimetypes/gnome-mime-application-x-java-archive.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/48x48/mimetypes/gnome-mime-application-x-java-jnlp-file.png\
+lap/jre/jre/lib/desktop/icons/LowContrast/48x48/mimetypes/gnome-mime-text-x-java.png\
+lap/jre/jre/lib/desktop/icons/hicolor/\
+lap/jre/jre/lib/desktop/icons/hicolor/16x16/\
+lap/jre/jre/lib/desktop/icons/hicolor/16x16/apps/\
+lap/jre/jre/lib/desktop/icons/hicolor/16x16/apps/sun-java.png\
+lap/jre/jre/lib/desktop/icons/hicolor/16x16/apps/sun-javaws.png\
+lap/jre/jre/lib/desktop/icons/hicolor/16x16/apps/sun-jcontrol.png\
+lap/jre/jre/lib/desktop/icons/hicolor/16x16/mimetypes/\
+lap/jre/jre/lib/desktop/icons/hicolor/16x16/mimetypes/gnome-mime-application-x-java-archive.png\
+lap/jre/jre/lib/desktop/icons/hicolor/16x16/mimetypes/gnome-mime-application-x-java-jnlp-file.png\
+lap/jre/jre/lib/desktop/icons/hicolor/16x16/mimetypes/gnome-mime-text-x-java.png\
+lap/jre/jre/lib/desktop/icons/hicolor/48x48/\
+lap/jre/jre/lib/desktop/icons/hicolor/48x48/apps/\
+lap/jre/jre/lib/desktop/icons/hicolor/48x48/apps/sun-java.png\
+lap/jre/jre/lib/desktop/icons/hicolor/48x48/apps/sun-javaws.png\
+lap/jre/jre/lib/desktop/icons/hicolor/48x48/apps/sun-jcontrol.png\
+lap/jre/jre/lib/desktop/icons/hicolor/48x48/mimetypes/\
+lap/jre/jre/lib/desktop/icons/hicolor/48x48/mimetypes/gnome-mime-application-x-java-archive.png\
+lap/jre/jre/lib/desktop/icons/hicolor/48x48/mimetypes/gnome-mime-application-x-java-jnlp-file.png\
+lap/jre/jre/lib/desktop/icons/hicolor/48x48/mimetypes/gnome-mime-text-x-java.png\
+lap/jre/jre/lib/desktop/mime/\
+lap/jre/jre/lib/desktop/mime/packages/\
+lap/jre/jre/lib/desktop/mime/packages/x-java-archive.xml\
+lap/jre/jre/lib/desktop/mime/packages/x-java-jnlp-file.xml\
+lap/jre/jre/lib/endorsed/\
+lap/jre/jre/lib/ext/\
+lap/jre/jre/lib/ext/CmpCrmf.jar\
+lap/jre/jre/lib/ext/IBMKeyManagementServer.jar\
+lap/jre/jre/lib/ext/IBMSecureRandom.jar\
+lap/jre/jre/lib/ext/JavaDiagnosticsCollector.jar\
+lap/jre/jre/lib/ext/dnsns.jar\
+lap/jre/jre/lib/ext/dtfj-interface.jar\
+lap/jre/jre/lib/ext/dtfj.jar\
+lap/jre/jre/lib/ext/dtfjview.jar\
+lap/jre/jre/lib/ext/gskikm.jar\
+lap/jre/jre/lib/ext/healthcenter.jar\
+lap/jre/jre/lib/ext/ibmcmsprovider.jar\
+lap/jre/jre/lib/ext/ibmjcefips.jar\
+lap/jre/jre/lib/ext/ibmjceprovider.jar\
+lap/jre/jre/lib/ext/ibmkeycert.jar\
+lap/jre/jre/lib/ext/ibmpkcs11impl.jar\
+lap/jre/jre/lib/ext/ibmsaslprovider.jar\
+lap/jre/jre/lib/ext/ibmxmlcrypto.jar\
+lap/jre/jre/lib/ext/ibmxmlencprovider.jar\
+lap/jre/jre/lib/ext/jaccess.jar\
+lap/jre/jre/lib/ext/jdmpview.jar\
+lap/jre/jre/lib/ext/localedata.jar\
+lap/jre/jre/lib/ext/xmlencfw.jar\
+lap/jre/jre/lib/flavormap.properties\
+lap/jre/jre/lib/fontconfig.RedHat.2.1.bfc\
+lap/jre/jre/lib/fontconfig.RedHat.2.1.properties.src\
+lap/jre/jre/lib/fontconfig.RedHat.3.bfc\
+lap/jre/jre/lib/fontconfig.RedHat.3.properties.src\
+lap/jre/jre/lib/fontconfig.RedHat.4.bfc\
+lap/jre/jre/lib/fontconfig.RedHat.4.properties.src\
+lap/jre/jre/lib/fontconfig.RedHat.5.bfc\
+lap/jre/jre/lib/fontconfig.RedHat.5.properties.src\
+lap/jre/jre/lib/fontconfig.RedHat.6.bfc\
+lap/jre/jre/lib/fontconfig.RedHat.6.properties.src\
+lap/jre/jre/lib/fontconfig.RedHat.bfc\
+lap/jre/jre/lib/fontconfig.RedHat.properties.src\
+lap/jre/jre/lib/fontconfig.SuSE.10.bfc\
+lap/jre/jre/lib/fontconfig.SuSE.10.properties.src\
+lap/jre/jre/lib/fontconfig.SuSE.11.bfc\
+lap/jre/jre/lib/fontconfig.SuSE.11.properties.src\
+lap/jre/jre/lib/fontconfig.SuSE.9.bfc\
+lap/jre/jre/lib/fontconfig.SuSE.9.properties.src\
+lap/jre/jre/lib/fontconfig.SuSE.bfc\
+lap/jre/jre/lib/fontconfig.SuSE.properties.src\
+lap/jre/jre/lib/fontconfig.Sun.bfc\
+lap/jre/jre/lib/fontconfig.Sun.properties.src\
+lap/jre/jre/lib/fontconfig.Turbo.bfc\
+lap/jre/jre/lib/fontconfig.Turbo.properties.src\
+lap/jre/jre/lib/fontconfig.Ubuntu.bfc\
+lap/jre/jre/lib/fontconfig.Ubuntu.properties.src\
+lap/jre/jre/lib/fontconfig.bfc\
+lap/jre/jre/lib/fontconfig.properties.src\
+lap/jre/jre/lib/fonts/\
+lap/jre/jre/lib/fonts/LucidaBrightDemiBold.ttf\
+lap/jre/jre/lib/fonts/LucidaBrightDemiItalic.ttf\
+lap/jre/jre/lib/fonts/LucidaBrightItalic.ttf\
+lap/jre/jre/lib/fonts/LucidaBrightRegular.ttf\
+lap/jre/jre/lib/fonts/LucidaSansDemiBold.ttf\
+lap/jre/jre/lib/fonts/LucidaSansRegular.ttf\
+lap/jre/jre/lib/fonts/LucidaTypewriterBold.ttf\
+lap/jre/jre/lib/fonts/LucidaTypewriterRegular.ttf\
+lap/jre/jre/lib/fonts/fonts.dir\
+lap/jre/jre/lib/healthcenter.properties\
+lap/jre/jre/lib/ibmcertpathfw.jar\
+lap/jre/jre/lib/ibmcertpathprovider.jar\
+lap/jre/jre/lib/ibmcfw.jar\
+lap/jre/jre/lib/ibmjcefw.jar\
+lap/jre/jre/lib/ibmjgssfw.jar\
+lap/jre/jre/lib/ibmjgssprovider.jar\
+lap/jre/jre/lib/ibmjssefw.jar\
+lap/jre/jre/lib/ibmjsseprovider2.jar\
+lap/jre/jre/lib/ibmorb.jar\
+lap/jre/jre/lib/ibmorbapi.jar\
+lap/jre/jre/lib/ibmpkcs.jar\
+lap/jre/jre/lib/ibmsaslfw.jar\
+lap/jre/jre/lib/ibmversions.txt\
+lap/jre/jre/lib/im/\
+lap/jre/jre/lib/im/indicim.jar\
+lap/jre/jre/lib/im/thaiim.jar\
+lap/jre/jre/lib/images/\
+lap/jre/jre/lib/images/cursors/\
+lap/jre/jre/lib/images/cursors/cursors.properties\
+lap/jre/jre/lib/images/cursors/invalid32x32.gif\
+lap/jre/jre/lib/images/cursors/motif_CopyDrop32x32.gif\
+lap/jre/jre/lib/images/cursors/motif_CopyNoDrop32x32.gif\
+lap/jre/jre/lib/images/cursors/motif_LinkDrop32x32.gif\
+lap/jre/jre/lib/images/cursors/motif_LinkNoDrop32x32.gif\
+lap/jre/jre/lib/images/cursors/motif_MoveDrop32x32.gif\
+lap/jre/jre/lib/images/cursors/motif_MoveNoDrop32x32.gif\
+lap/jre/jre/lib/images/icons/\
+lap/jre/jre/lib/images/icons/sun-java.png\
+lap/jre/jre/lib/images/icons/sun-java_HighContrast.png\
+lap/jre/jre/lib/images/icons/sun-java_HighContrastInverse.png\
+lap/jre/jre/lib/images/icons/sun-java_LowContrast.png\
+lap/jre/jre/lib/ir.idl\
+lap/jre/jre/lib/j9zip.jar\
+lap/jre/jre/lib/jars.cfg\
+lap/jre/jre/lib/java.util.jar\
+lap/jre/jre/lib/javascript.jar\
+lap/jre/jre/lib/javaws.jar\
+lap/jre/jre/lib/jaxp.properties.sample\
+lap/jre/jre/lib/jexec\
+lap/jre/jre/lib/jlm.jar\
+lap/jre/jre/lib/jndi.jar\
+lap/jre/jre/lib/jvm.hprof.txt\
+lap/jre/jre/lib/locale/\
+lap/jre/jre/lib/locale/de/\
+lap/jre/jre/lib/locale/de/LC_MESSAGES/\
+lap/jre/jre/lib/locale/de/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/es/\
+lap/jre/jre/lib/locale/es/LC_MESSAGES/\
+lap/jre/jre/lib/locale/es/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/fr/\
+lap/jre/jre/lib/locale/fr/LC_MESSAGES/\
+lap/jre/jre/lib/locale/fr/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/it/\
+lap/jre/jre/lib/locale/it/LC_MESSAGES/\
+lap/jre/jre/lib/locale/it/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/ja/\
+lap/jre/jre/lib/locale/ja/LC_MESSAGES/\
+lap/jre/jre/lib/locale/ja/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/ko/\
+lap/jre/jre/lib/locale/ko/LC_MESSAGES/\
+lap/jre/jre/lib/locale/ko/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/ko.UTF-8/\
+lap/jre/jre/lib/locale/ko.UTF-8/LC_MESSAGES/\
+lap/jre/jre/lib/locale/ko.UTF-8/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/sv/\
+lap/jre/jre/lib/locale/sv/LC_MESSAGES/\
+lap/jre/jre/lib/locale/sv/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/zh/\
+lap/jre/jre/lib/locale/zh/LC_MESSAGES/\
+lap/jre/jre/lib/locale/zh/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/zh.GBK/\
+lap/jre/jre/lib/locale/zh.GBK/LC_MESSAGES/\
+lap/jre/jre/lib/locale/zh.GBK/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/zh_HK.BIG5HK/\
+lap/jre/jre/lib/locale/zh_HK.BIG5HK/LC_MESSAGES/\
+lap/jre/jre/lib/locale/zh_HK.BIG5HK/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/zh_TW/\
+lap/jre/jre/lib/locale/zh_TW/LC_MESSAGES/\
+lap/jre/jre/lib/locale/zh_TW/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/locale/zh_TW.BIG5/\
+lap/jre/jre/lib/locale/zh_TW.BIG5/LC_MESSAGES/\
+lap/jre/jre/lib/locale/zh_TW.BIG5/LC_MESSAGES/sunw_java_plugin.mo\
+lap/jre/jre/lib/logging.jar\
+lap/jre/jre/lib/logging.properties\
+lap/jre/jre/lib/management/\
+lap/jre/jre/lib/management/jmxremote.access\
+lap/jre/jre/lib/management/jmxremote.password.template\
+lap/jre/jre/lib/management/management.properties\
+lap/jre/jre/lib/management/snmp.acl.template\
+lap/jre/jre/lib/management-agent.jar\
+lap/jre/jre/lib/net.properties\
+lap/jre/jre/lib/oblique-fonts/\
+lap/jre/jre/lib/oblique-fonts/LucidaSansDemiOblique.ttf\
+lap/jre/jre/lib/oblique-fonts/LucidaSansOblique.ttf\
+lap/jre/jre/lib/oblique-fonts/LucidaTypewriterBoldOblique.ttf\
+lap/jre/jre/lib/oblique-fonts/LucidaTypewriterOblique.ttf\
+lap/jre/jre/lib/oblique-fonts/fonts.dir\
+lap/jre/jre/lib/orb.idl\
+lap/jre/jre/lib/plugin.jar\
+lap/jre/jre/lib/psfont.properties.ja\
+lap/jre/jre/lib/psfontj2d.properties\
+lap/jre/jre/lib/resources.jar\
+lap/jre/jre/lib/rt.jar\
+lap/jre/jre/lib/security/\
+lap/jre/jre/lib/security/US_export_policy.jar\
+lap/jre/jre/lib/security/blacklist\
+lap/jre/jre/lib/security/cacerts\
+lap/jre/jre/lib/security/java.policy\
+lap/jre/jre/lib/security/java.security\
+lap/jre/jre/lib/security/javaws.policy\
+lap/jre/jre/lib/security/local_policy.jar\
+lap/jre/jre/lib/security/trusted.libraries\
+lap/jre/jre/lib/security.jar\
+lap/jre/jre/lib/sound.properties\
+lap/jre/jre/lib/sql.jar\
+lap/jre/jre/lib/stax.properties.sample\
+lap/jre/jre/lib/tzmappings\
+lap/jre/jre/lib/version.properties\
+lap/jre/jre/lib/xalan.properties\
+lap/jre/jre/lib/xerces.properties\
+lap/jre/jre/lib/xml.jar\
+lap/jre/jre/lib/xmldsigfw.jar\
+lap/jre/jre/lib/zi/\
+lap/jre/jre/lib/zi/Africa/\
+lap/jre/jre/lib/zi/Africa/Abidjan\
+lap/jre/jre/lib/zi/Africa/Accra\
+lap/jre/jre/lib/zi/Africa/Addis_Ababa\
+lap/jre/jre/lib/zi/Africa/Algiers\
+lap/jre/jre/lib/zi/Africa/Asmara\
+lap/jre/jre/lib/zi/Africa/Bamako\
+lap/jre/jre/lib/zi/Africa/Bangui\
+lap/jre/jre/lib/zi/Africa/Banjul\
+lap/jre/jre/lib/zi/Africa/Bissau\
+lap/jre/jre/lib/zi/Africa/Blantyre\
+lap/jre/jre/lib/zi/Africa/Brazzaville\
+lap/jre/jre/lib/zi/Africa/Bujumbura\
+lap/jre/jre/lib/zi/Africa/Cairo\
+lap/jre/jre/lib/zi/Africa/Casablanca\
+lap/jre/jre/lib/zi/Africa/Ceuta\
+lap/jre/jre/lib/zi/Africa/Conakry\
+lap/jre/jre/lib/zi/Africa/Dakar\
+lap/jre/jre/lib/zi/Africa/Dar_es_Salaam\
+lap/jre/jre/lib/zi/Africa/Djibouti\
+lap/jre/jre/lib/zi/Africa/Douala\
+lap/jre/jre/lib/zi/Africa/El_Aaiun\
+lap/jre/jre/lib/zi/Africa/Freetown\
+lap/jre/jre/lib/zi/Africa/Gaborone\
+lap/jre/jre/lib/zi/Africa/Harare\
+lap/jre/jre/lib/zi/Africa/Johannesburg\
+lap/jre/jre/lib/zi/Africa/Juba\
+lap/jre/jre/lib/zi/Africa/Kampala\
+lap/jre/jre/lib/zi/Africa/Khartoum\
+lap/jre/jre/lib/zi/Africa/Kigali\
+lap/jre/jre/lib/zi/Africa/Kinshasa\
+lap/jre/jre/lib/zi/Africa/Lagos\
+lap/jre/jre/lib/zi/Africa/Libreville\
+lap/jre/jre/lib/zi/Africa/Lome\
+lap/jre/jre/lib/zi/Africa/Luanda\
+lap/jre/jre/lib/zi/Africa/Lubumbashi\
+lap/jre/jre/lib/zi/Africa/Lusaka\
+lap/jre/jre/lib/zi/Africa/Malabo\
+lap/jre/jre/lib/zi/Africa/Maputo\
+lap/jre/jre/lib/zi/Africa/Maseru\
+lap/jre/jre/lib/zi/Africa/Mbabane\
+lap/jre/jre/lib/zi/Africa/Mogadishu\
+lap/jre/jre/lib/zi/Africa/Monrovia\
+lap/jre/jre/lib/zi/Africa/Nairobi\
+lap/jre/jre/lib/zi/Africa/Ndjamena\
+lap/jre/jre/lib/zi/Africa/Niamey\
+lap/jre/jre/lib/zi/Africa/Nouakchott\
+lap/jre/jre/lib/zi/Africa/Ouagadougou\
+lap/jre/jre/lib/zi/Africa/Porto-Novo\
+lap/jre/jre/lib/zi/Africa/Sao_Tome\
+lap/jre/jre/lib/zi/Africa/Tripoli\
+lap/jre/jre/lib/zi/Africa/Tunis\
+lap/jre/jre/lib/zi/Africa/Windhoek\
+lap/jre/jre/lib/zi/America/\
+lap/jre/jre/lib/zi/America/Adak\
+lap/jre/jre/lib/zi/America/Anchorage\
+lap/jre/jre/lib/zi/America/Anguilla\
+lap/jre/jre/lib/zi/America/Antigua\
+lap/jre/jre/lib/zi/America/Araguaina\
+lap/jre/jre/lib/zi/America/Argentina/\
+lap/jre/jre/lib/zi/America/Argentina/Buenos_Aires\
+lap/jre/jre/lib/zi/America/Argentina/Catamarca\
+lap/jre/jre/lib/zi/America/Argentina/Cordoba\
+lap/jre/jre/lib/zi/America/Argentina/Jujuy\
+lap/jre/jre/lib/zi/America/Argentina/La_Rioja\
+lap/jre/jre/lib/zi/America/Argentina/Mendoza\
+lap/jre/jre/lib/zi/America/Argentina/Rio_Gallegos\
+lap/jre/jre/lib/zi/America/Argentina/Salta\
+lap/jre/jre/lib/zi/America/Argentina/San_Juan\
+lap/jre/jre/lib/zi/America/Argentina/San_Luis\
+lap/jre/jre/lib/zi/America/Argentina/Tucuman\
+lap/jre/jre/lib/zi/America/Argentina/Ushuaia\
+lap/jre/jre/lib/zi/America/Aruba\
+lap/jre/jre/lib/zi/America/Asuncion\
+lap/jre/jre/lib/zi/America/Atikokan\
+lap/jre/jre/lib/zi/America/Bahia\
+lap/jre/jre/lib/zi/America/Bahia_Banderas\
+lap/jre/jre/lib/zi/America/Barbados\
+lap/jre/jre/lib/zi/America/Belem\
+lap/jre/jre/lib/zi/America/Belize\
+lap/jre/jre/lib/zi/America/Blanc-Sablon\
+lap/jre/jre/lib/zi/America/Boa_Vista\
+lap/jre/jre/lib/zi/America/Bogota\
+lap/jre/jre/lib/zi/America/Boise\
+lap/jre/jre/lib/zi/America/Cambridge_Bay\
+lap/jre/jre/lib/zi/America/Campo_Grande\
+lap/jre/jre/lib/zi/America/Cancun\
+lap/jre/jre/lib/zi/America/Caracas\
+lap/jre/jre/lib/zi/America/Cayenne\
+lap/jre/jre/lib/zi/America/Cayman\
+lap/jre/jre/lib/zi/America/Chicago\
+lap/jre/jre/lib/zi/America/Chihuahua\
+lap/jre/jre/lib/zi/America/Costa_Rica\
+lap/jre/jre/lib/zi/America/Creston\
+lap/jre/jre/lib/zi/America/Cuiaba\
+lap/jre/jre/lib/zi/America/Curacao\
+lap/jre/jre/lib/zi/America/Danmarkshavn\
+lap/jre/jre/lib/zi/America/Dawson\
+lap/jre/jre/lib/zi/America/Dawson_Creek\
+lap/jre/jre/lib/zi/America/Denver\
+lap/jre/jre/lib/zi/America/Detroit\
+lap/jre/jre/lib/zi/America/Dominica\
+lap/jre/jre/lib/zi/America/Edmonton\
+lap/jre/jre/lib/zi/America/Eirunepe\
+lap/jre/jre/lib/zi/America/El_Salvador\
+lap/jre/jre/lib/zi/America/Fortaleza\
+lap/jre/jre/lib/zi/America/Glace_Bay\
+lap/jre/jre/lib/zi/America/Godthab\
+lap/jre/jre/lib/zi/America/Goose_Bay\
+lap/jre/jre/lib/zi/America/Grand_Turk\
+lap/jre/jre/lib/zi/America/Grenada\
+lap/jre/jre/lib/zi/America/Guadeloupe\
+lap/jre/jre/lib/zi/America/Guatemala\
+lap/jre/jre/lib/zi/America/Guayaquil\
+lap/jre/jre/lib/zi/America/Guyana\
+lap/jre/jre/lib/zi/America/Halifax\
+lap/jre/jre/lib/zi/America/Havana\
+lap/jre/jre/lib/zi/America/Hermosillo\
+lap/jre/jre/lib/zi/America/Indiana/\
+lap/jre/jre/lib/zi/America/Indiana/Indianapolis\
+lap/jre/jre/lib/zi/America/Indiana/Knox\
+lap/jre/jre/lib/zi/America/Indiana/Marengo\
+lap/jre/jre/lib/zi/America/Indiana/Petersburg\
+lap/jre/jre/lib/zi/America/Indiana/Tell_City\
+lap/jre/jre/lib/zi/America/Indiana/Vevay\
+lap/jre/jre/lib/zi/America/Indiana/Vincennes\
+lap/jre/jre/lib/zi/America/Indiana/Winamac\
+lap/jre/jre/lib/zi/America/Inuvik\
+lap/jre/jre/lib/zi/America/Iqaluit\
+lap/jre/jre/lib/zi/America/Jamaica\
+lap/jre/jre/lib/zi/America/Juneau\
+lap/jre/jre/lib/zi/America/Kentucky/\
+lap/jre/jre/lib/zi/America/Kentucky/Louisville\
+lap/jre/jre/lib/zi/America/Kentucky/Monticello\
+lap/jre/jre/lib/zi/America/La_Paz\
+lap/jre/jre/lib/zi/America/Lima\
+lap/jre/jre/lib/zi/America/Los_Angeles\
+lap/jre/jre/lib/zi/America/Maceio\
+lap/jre/jre/lib/zi/America/Managua\
+lap/jre/jre/lib/zi/America/Manaus\
+lap/jre/jre/lib/zi/America/Martinique\
+lap/jre/jre/lib/zi/America/Matamoros\
+lap/jre/jre/lib/zi/America/Mazatlan\
+lap/jre/jre/lib/zi/America/Menominee\
+lap/jre/jre/lib/zi/America/Merida\
+lap/jre/jre/lib/zi/America/Metlakatla\
+lap/jre/jre/lib/zi/America/Mexico_City\
+lap/jre/jre/lib/zi/America/Miquelon\
+lap/jre/jre/lib/zi/America/Moncton\
+lap/jre/jre/lib/zi/America/Monterrey\
+lap/jre/jre/lib/zi/America/Montevideo\
+lap/jre/jre/lib/zi/America/Montreal\
+lap/jre/jre/lib/zi/America/Montserrat\
+lap/jre/jre/lib/zi/America/Nassau\
+lap/jre/jre/lib/zi/America/New_York\
+lap/jre/jre/lib/zi/America/Nipigon\
+lap/jre/jre/lib/zi/America/Nome\
+lap/jre/jre/lib/zi/America/Noronha\
+lap/jre/jre/lib/zi/America/North_Dakota/\
+lap/jre/jre/lib/zi/America/North_Dakota/Beulah\
+lap/jre/jre/lib/zi/America/North_Dakota/Center\
+lap/jre/jre/lib/zi/America/North_Dakota/New_Salem\
+lap/jre/jre/lib/zi/America/Ojinaga\
+lap/jre/jre/lib/zi/America/Panama\
+lap/jre/jre/lib/zi/America/Pangnirtung\
+lap/jre/jre/lib/zi/America/Paramaribo\
+lap/jre/jre/lib/zi/America/Phoenix\
+lap/jre/jre/lib/zi/America/Port-au-Prince\
+lap/jre/jre/lib/zi/America/Port_of_Spain\
+lap/jre/jre/lib/zi/America/Porto_Velho\
+lap/jre/jre/lib/zi/America/Puerto_Rico\
+lap/jre/jre/lib/zi/America/Rainy_River\
+lap/jre/jre/lib/zi/America/Rankin_Inlet\
+lap/jre/jre/lib/zi/America/Recife\
+lap/jre/jre/lib/zi/America/Regina\
+lap/jre/jre/lib/zi/America/Resolute\
+lap/jre/jre/lib/zi/America/Rio_Branco\
+lap/jre/jre/lib/zi/America/Santa_Isabel\
+lap/jre/jre/lib/zi/America/Santarem\
+lap/jre/jre/lib/zi/America/Santiago\
+lap/jre/jre/lib/zi/America/Santo_Domingo\
+lap/jre/jre/lib/zi/America/Sao_Paulo\
+lap/jre/jre/lib/zi/America/Scoresbysund\
+lap/jre/jre/lib/zi/America/Sitka\
+lap/jre/jre/lib/zi/America/St_Johns\
+lap/jre/jre/lib/zi/America/St_Kitts\
+lap/jre/jre/lib/zi/America/St_Lucia\
+lap/jre/jre/lib/zi/America/St_Thomas\
+lap/jre/jre/lib/zi/America/St_Vincent\
+lap/jre/jre/lib/zi/America/Swift_Current\
+lap/jre/jre/lib/zi/America/Tegucigalpa\
+lap/jre/jre/lib/zi/America/Thule\
+lap/jre/jre/lib/zi/America/Thunder_Bay\
+lap/jre/jre/lib/zi/America/Tijuana\
+lap/jre/jre/lib/zi/America/Toronto\
+lap/jre/jre/lib/zi/America/Tortola\
+lap/jre/jre/lib/zi/America/Vancouver\
+lap/jre/jre/lib/zi/America/Whitehorse\
+lap/jre/jre/lib/zi/America/Winnipeg\
+lap/jre/jre/lib/zi/America/Yakutat\
+lap/jre/jre/lib/zi/America/Yellowknife\
+lap/jre/jre/lib/zi/Antarctica/\
+lap/jre/jre/lib/zi/Antarctica/Casey\
+lap/jre/jre/lib/zi/Antarctica/Davis\
+lap/jre/jre/lib/zi/Antarctica/DumontDUrville\
+lap/jre/jre/lib/zi/Antarctica/Macquarie\
+lap/jre/jre/lib/zi/Antarctica/Mawson\
+lap/jre/jre/lib/zi/Antarctica/McMurdo\
+lap/jre/jre/lib/zi/Antarctica/Palmer\
+lap/jre/jre/lib/zi/Antarctica/Rothera\
+lap/jre/jre/lib/zi/Antarctica/Syowa\
+lap/jre/jre/lib/zi/Antarctica/Vostok\
+lap/jre/jre/lib/zi/Asia/\
+lap/jre/jre/lib/zi/Asia/Aden\
+lap/jre/jre/lib/zi/Asia/Almaty\
+lap/jre/jre/lib/zi/Asia/Amman\
+lap/jre/jre/lib/zi/Asia/Anadyr\
+lap/jre/jre/lib/zi/Asia/Aqtau\
+lap/jre/jre/lib/zi/Asia/Aqtobe\
+lap/jre/jre/lib/zi/Asia/Ashgabat\
+lap/jre/jre/lib/zi/Asia/Baghdad\
+lap/jre/jre/lib/zi/Asia/Bahrain\
+lap/jre/jre/lib/zi/Asia/Baku\
+lap/jre/jre/lib/zi/Asia/Bangkok\
+lap/jre/jre/lib/zi/Asia/Beirut\
+lap/jre/jre/lib/zi/Asia/Bishkek\
+lap/jre/jre/lib/zi/Asia/Brunei\
+lap/jre/jre/lib/zi/Asia/Choibalsan\
+lap/jre/jre/lib/zi/Asia/Chongqing\
+lap/jre/jre/lib/zi/Asia/Colombo\
+lap/jre/jre/lib/zi/Asia/Damascus\
+lap/jre/jre/lib/zi/Asia/Dhaka\
+lap/jre/jre/lib/zi/Asia/Dili\
+lap/jre/jre/lib/zi/Asia/Dubai\
+lap/jre/jre/lib/zi/Asia/Dushanbe\
+lap/jre/jre/lib/zi/Asia/Gaza\
+lap/jre/jre/lib/zi/Asia/Harbin\
+lap/jre/jre/lib/zi/Asia/Hebron\
+lap/jre/jre/lib/zi/Asia/Ho_Chi_Minh\
+lap/jre/jre/lib/zi/Asia/Hong_Kong\
+lap/jre/jre/lib/zi/Asia/Hovd\
+lap/jre/jre/lib/zi/Asia/Irkutsk\
+lap/jre/jre/lib/zi/Asia/Jakarta\
+lap/jre/jre/lib/zi/Asia/Jayapura\
+lap/jre/jre/lib/zi/Asia/Jerusalem\
+lap/jre/jre/lib/zi/Asia/Kabul\
+lap/jre/jre/lib/zi/Asia/Kamchatka\
+lap/jre/jre/lib/zi/Asia/Karachi\
+lap/jre/jre/lib/zi/Asia/Kashgar\
+lap/jre/jre/lib/zi/Asia/Kathmandu\
+lap/jre/jre/lib/zi/Asia/Khandyga\
+lap/jre/jre/lib/zi/Asia/Kolkata\
+lap/jre/jre/lib/zi/Asia/Krasnoyarsk\
+lap/jre/jre/lib/zi/Asia/Kuala_Lumpur\
+lap/jre/jre/lib/zi/Asia/Kuching\
+lap/jre/jre/lib/zi/Asia/Kuwait\
+lap/jre/jre/lib/zi/Asia/Macau\
+lap/jre/jre/lib/zi/Asia/Magadan\
+lap/jre/jre/lib/zi/Asia/Makassar\
+lap/jre/jre/lib/zi/Asia/Manila\
+lap/jre/jre/lib/zi/Asia/Muscat\
+lap/jre/jre/lib/zi/Asia/Nicosia\
+lap/jre/jre/lib/zi/Asia/Novokuznetsk\
+lap/jre/jre/lib/zi/Asia/Novosibirsk\
+lap/jre/jre/lib/zi/Asia/Omsk\
+lap/jre/jre/lib/zi/Asia/Oral\
+lap/jre/jre/lib/zi/Asia/Phnom_Penh\
+lap/jre/jre/lib/zi/Asia/Pontianak\
+lap/jre/jre/lib/zi/Asia/Pyongyang\
+lap/jre/jre/lib/zi/Asia/Qatar\
+lap/jre/jre/lib/zi/Asia/Qyzylorda\
+lap/jre/jre/lib/zi/Asia/Rangoon\
+lap/jre/jre/lib/zi/Asia/Riyadh\
+lap/jre/jre/lib/zi/Asia/Riyadh87\
+lap/jre/jre/lib/zi/Asia/Riyadh88\
+lap/jre/jre/lib/zi/Asia/Riyadh89\
+lap/jre/jre/lib/zi/Asia/Sakhalin\
+lap/jre/jre/lib/zi/Asia/Samarkand\
+lap/jre/jre/lib/zi/Asia/Seoul\
+lap/jre/jre/lib/zi/Asia/Shanghai\
+lap/jre/jre/lib/zi/Asia/Singapore\
+lap/jre/jre/lib/zi/Asia/Taipei\
+lap/jre/jre/lib/zi/Asia/Tashkent\
+lap/jre/jre/lib/zi/Asia/Tbilisi\
+lap/jre/jre/lib/zi/Asia/Tehran\
+lap/jre/jre/lib/zi/Asia/Thimphu\
+lap/jre/jre/lib/zi/Asia/Tokyo\
+lap/jre/jre/lib/zi/Asia/Ulaanbaatar\
+lap/jre/jre/lib/zi/Asia/Urumqi\
+lap/jre/jre/lib/zi/Asia/Ust-Nera\
+lap/jre/jre/lib/zi/Asia/Vientiane\
+lap/jre/jre/lib/zi/Asia/Vladivostok\
+lap/jre/jre/lib/zi/Asia/Yakutsk\
+lap/jre/jre/lib/zi/Asia/Yekaterinburg\
+lap/jre/jre/lib/zi/Asia/Yerevan\
+lap/jre/jre/lib/zi/Atlantic/\
+lap/jre/jre/lib/zi/Atlantic/Azores\
+lap/jre/jre/lib/zi/Atlantic/Bermuda\
+lap/jre/jre/lib/zi/Atlantic/Canary\
+lap/jre/jre/lib/zi/Atlantic/Cape_Verde\
+lap/jre/jre/lib/zi/Atlantic/Faroe\
+lap/jre/jre/lib/zi/Atlantic/Madeira\
+lap/jre/jre/lib/zi/Atlantic/Reykjavik\
+lap/jre/jre/lib/zi/Atlantic/South_Georgia\
+lap/jre/jre/lib/zi/Atlantic/St_Helena\
+lap/jre/jre/lib/zi/Atlantic/Stanley\
+lap/jre/jre/lib/zi/Australia/\
+lap/jre/jre/lib/zi/Australia/Adelaide\
+lap/jre/jre/lib/zi/Australia/Brisbane\
+lap/jre/jre/lib/zi/Australia/Broken_Hill\
+lap/jre/jre/lib/zi/Australia/Currie\
+lap/jre/jre/lib/zi/Australia/Darwin\
+lap/jre/jre/lib/zi/Australia/Eucla\
+lap/jre/jre/lib/zi/Australia/Hobart\
+lap/jre/jre/lib/zi/Australia/Lindeman\
+lap/jre/jre/lib/zi/Australia/Lord_Howe\
+lap/jre/jre/lib/zi/Australia/Melbourne\
+lap/jre/jre/lib/zi/Australia/Perth\
+lap/jre/jre/lib/zi/Australia/Sydney\
+lap/jre/jre/lib/zi/CET\
+lap/jre/jre/lib/zi/CST6CDT\
+lap/jre/jre/lib/zi/EET\
+lap/jre/jre/lib/zi/EST\
+lap/jre/jre/lib/zi/EST5EDT\
+lap/jre/jre/lib/zi/Etc/\
+lap/jre/jre/lib/zi/Etc/GMT\
+lap/jre/jre/lib/zi/Etc/GMT+1\
+lap/jre/jre/lib/zi/Etc/GMT+10\
+lap/jre/jre/lib/zi/Etc/GMT+11\
+lap/jre/jre/lib/zi/Etc/GMT+12\
+lap/jre/jre/lib/zi/Etc/GMT+2\
+lap/jre/jre/lib/zi/Etc/GMT+3\
+lap/jre/jre/lib/zi/Etc/GMT+4\
+lap/jre/jre/lib/zi/Etc/GMT+5\
+lap/jre/jre/lib/zi/Etc/GMT+6\
+lap/jre/jre/lib/zi/Etc/GMT+7\
+lap/jre/jre/lib/zi/Etc/GMT+8\
+lap/jre/jre/lib/zi/Etc/GMT+9\
+lap/jre/jre/lib/zi/Etc/GMT-1\
+lap/jre/jre/lib/zi/Etc/GMT-10\
+lap/jre/jre/lib/zi/Etc/GMT-11\
+lap/jre/jre/lib/zi/Etc/GMT-12\
+lap/jre/jre/lib/zi/Etc/GMT-13\
+lap/jre/jre/lib/zi/Etc/GMT-14\
+lap/jre/jre/lib/zi/Etc/GMT-2\
+lap/jre/jre/lib/zi/Etc/GMT-3\
+lap/jre/jre/lib/zi/Etc/GMT-4\
+lap/jre/jre/lib/zi/Etc/GMT-5\
+lap/jre/jre/lib/zi/Etc/GMT-6\
+lap/jre/jre/lib/zi/Etc/GMT-7\
+lap/jre/jre/lib/zi/Etc/GMT-8\
+lap/jre/jre/lib/zi/Etc/GMT-9\
+lap/jre/jre/lib/zi/Etc/UCT\
+lap/jre/jre/lib/zi/Etc/UTC\
+lap/jre/jre/lib/zi/Europe/\
+lap/jre/jre/lib/zi/Europe/Amsterdam\
+lap/jre/jre/lib/zi/Europe/Andorra\
+lap/jre/jre/lib/zi/Europe/Athens\
+lap/jre/jre/lib/zi/Europe/Belgrade\
+lap/jre/jre/lib/zi/Europe/Berlin\
+lap/jre/jre/lib/zi/Europe/Brussels\
+lap/jre/jre/lib/zi/Europe/Bucharest\
+lap/jre/jre/lib/zi/Europe/Budapest\
+lap/jre/jre/lib/zi/Europe/Chisinau\
+lap/jre/jre/lib/zi/Europe/Copenhagen\
+lap/jre/jre/lib/zi/Europe/Dublin\
+lap/jre/jre/lib/zi/Europe/Gibraltar\
+lap/jre/jre/lib/zi/Europe/Helsinki\
+lap/jre/jre/lib/zi/Europe/Istanbul\
+lap/jre/jre/lib/zi/Europe/Kaliningrad\
+lap/jre/jre/lib/zi/Europe/Kiev\
+lap/jre/jre/lib/zi/Europe/Lisbon\
+lap/jre/jre/lib/zi/Europe/London\
+lap/jre/jre/lib/zi/Europe/Luxembourg\
+lap/jre/jre/lib/zi/Europe/Madrid\
+lap/jre/jre/lib/zi/Europe/Malta\
+lap/jre/jre/lib/zi/Europe/Minsk\
+lap/jre/jre/lib/zi/Europe/Monaco\
+lap/jre/jre/lib/zi/Europe/Moscow\
+lap/jre/jre/lib/zi/Europe/Oslo\
+lap/jre/jre/lib/zi/Europe/Paris\
+lap/jre/jre/lib/zi/Europe/Prague\
+lap/jre/jre/lib/zi/Europe/Riga\
+lap/jre/jre/lib/zi/Europe/Rome\
+lap/jre/jre/lib/zi/Europe/Samara\
+lap/jre/jre/lib/zi/Europe/Simferopol\
+lap/jre/jre/lib/zi/Europe/Sofia\
+lap/jre/jre/lib/zi/Europe/Stockholm\
+lap/jre/jre/lib/zi/Europe/Tallinn\
+lap/jre/jre/lib/zi/Europe/Tirane\
+lap/jre/jre/lib/zi/Europe/Uzhgorod\
+lap/jre/jre/lib/zi/Europe/Vaduz\
+lap/jre/jre/lib/zi/Europe/Vienna\
+lap/jre/jre/lib/zi/Europe/Vilnius\
+lap/jre/jre/lib/zi/Europe/Volgograd\
+lap/jre/jre/lib/zi/Europe/Warsaw\
+lap/jre/jre/lib/zi/Europe/Zaporozhye\
+lap/jre/jre/lib/zi/Europe/Zurich\
+lap/jre/jre/lib/zi/GMT\
+lap/jre/jre/lib/zi/HST\
+lap/jre/jre/lib/zi/Indian/\
+lap/jre/jre/lib/zi/Indian/Antananarivo\
+lap/jre/jre/lib/zi/Indian/Chagos\
+lap/jre/jre/lib/zi/Indian/Christmas\
+lap/jre/jre/lib/zi/Indian/Cocos\
+lap/jre/jre/lib/zi/Indian/Comoro\
+lap/jre/jre/lib/zi/Indian/Kerguelen\
+lap/jre/jre/lib/zi/Indian/Mahe\
+lap/jre/jre/lib/zi/Indian/Maldives\
+lap/jre/jre/lib/zi/Indian/Mauritius\
+lap/jre/jre/lib/zi/Indian/Mayotte\
+lap/jre/jre/lib/zi/Indian/Reunion\
+lap/jre/jre/lib/zi/MET\
+lap/jre/jre/lib/zi/MST\
+lap/jre/jre/lib/zi/MST7MDT\
+lap/jre/jre/lib/zi/PST8PDT\
+lap/jre/jre/lib/zi/Pacific/\
+lap/jre/jre/lib/zi/Pacific/Apia\
+lap/jre/jre/lib/zi/Pacific/Auckland\
+lap/jre/jre/lib/zi/Pacific/Chatham\
+lap/jre/jre/lib/zi/Pacific/Chuuk\
+lap/jre/jre/lib/zi/Pacific/Easter\
+lap/jre/jre/lib/zi/Pacific/Efate\
+lap/jre/jre/lib/zi/Pacific/Enderbury\
+lap/jre/jre/lib/zi/Pacific/Fakaofo\
+lap/jre/jre/lib/zi/Pacific/Fiji\
+lap/jre/jre/lib/zi/Pacific/Funafuti\
+lap/jre/jre/lib/zi/Pacific/Galapagos\
+lap/jre/jre/lib/zi/Pacific/Gambier\
+lap/jre/jre/lib/zi/Pacific/Guadalcanal\
+lap/jre/jre/lib/zi/Pacific/Guam\
+lap/jre/jre/lib/zi/Pacific/Honolulu\
+lap/jre/jre/lib/zi/Pacific/Johnston\
+lap/jre/jre/lib/zi/Pacific/Kiritimati\
+lap/jre/jre/lib/zi/Pacific/Kosrae\
+lap/jre/jre/lib/zi/Pacific/Kwajalein\
+lap/jre/jre/lib/zi/Pacific/Majuro\
+lap/jre/jre/lib/zi/Pacific/Marquesas\
+lap/jre/jre/lib/zi/Pacific/Midway\
+lap/jre/jre/lib/zi/Pacific/Nauru\
+lap/jre/jre/lib/zi/Pacific/Niue\
+lap/jre/jre/lib/zi/Pacific/Norfolk\
+lap/jre/jre/lib/zi/Pacific/Noumea\
+lap/jre/jre/lib/zi/Pacific/Pago_Pago\
+lap/jre/jre/lib/zi/Pacific/Palau\
+lap/jre/jre/lib/zi/Pacific/Pitcairn\
+lap/jre/jre/lib/zi/Pacific/Pohnpei\
+lap/jre/jre/lib/zi/Pacific/Port_Moresby\
+lap/jre/jre/lib/zi/Pacific/Rarotonga\
+lap/jre/jre/lib/zi/Pacific/Saipan\
+lap/jre/jre/lib/zi/Pacific/Tahiti\
+lap/jre/jre/lib/zi/Pacific/Tarawa\
+lap/jre/jre/lib/zi/Pacific/Tongatapu\
+lap/jre/jre/lib/zi/Pacific/Wake\
+lap/jre/jre/lib/zi/Pacific/Wallis\
+lap/jre/jre/lib/zi/SystemV/\
+lap/jre/jre/lib/zi/SystemV/AST4\
+lap/jre/jre/lib/zi/SystemV/AST4ADT\
+lap/jre/jre/lib/zi/SystemV/CST6\
+lap/jre/jre/lib/zi/SystemV/CST6CDT\
+lap/jre/jre/lib/zi/SystemV/EST5\
+lap/jre/jre/lib/zi/SystemV/EST5EDT\
+lap/jre/jre/lib/zi/SystemV/HST10\
+lap/jre/jre/lib/zi/SystemV/MST7\
+lap/jre/jre/lib/zi/SystemV/MST7MDT\
+lap/jre/jre/lib/zi/SystemV/PST8\
+lap/jre/jre/lib/zi/SystemV/PST8PDT\
+lap/jre/jre/lib/zi/SystemV/YST9\
+lap/jre/jre/lib/zi/SystemV/YST9YDT\
+lap/jre/jre/lib/zi/WET\
+lap/jre/jre/lib/zi/ZoneInfoMappings\
+lap/jre/jre/plugin/\
+lap/jre/jre/plugin/desktop/\
+lap/jre/jre/plugin/desktop/sun_java.desktop\
+lap/jre/jre/plugin/desktop/sun_java.png\
+lap/jre/license_en.txt\
+lap/jre/notices.txt\
+lap/jre/properties/\
+lap/jre/properties/version/\
+lap/jre/properties/version/IBM_Java-Class_Libraries.1.6.0.cmptag\
+lap/jre/properties/version/IBM_Java-Diagnostics_Collector.1.0.0.1.cmptag\
+lap/jre/properties/version/IBM_Java-Health_Center.2.1.0.cmptag\
+lap/jre/properties/version/IBM_Java_-_Documentation.1.6.0.swtag\
+lap/jre/properties/version/IBM_Java_-_Object_Request_Broker.1600.1.swtag\
+lap/jre/properties/version/IBM_Java_-_Security.1.6.0.swtag\
+lap/jre/properties/version/IXL_XML_Processor.1.1.17.swtag\
+lap/jre/properties/version/Java_API_for_XML_Processing.1.4.7.swtag\
+lap/jre/properties/version/XL_Transform_and_Xquery_Engine_for_Java.1.0.28.swtag\
+lap/jre/properties/version/XML_for_Java.4.5.18.swtag\
+lap/jre/readmefirst.lnx.txt\
+lap/licenses/\
+lap/licenses/LA_cs\
+lap/licenses/LA_de\
+lap/licenses/LA_el\
+lap/licenses/LA_en\
+lap/licenses/LA_es\
+lap/licenses/LA_fr\
+lap/licenses/LA_in\
+lap/licenses/LA_it\
+lap/licenses/LA_ja\
+lap/licenses/LA_ko\
+lap/licenses/LA_lt\
+lap/licenses/LA_pl\
+lap/licenses/LA_pt\
+lap/licenses/LA_ru\
+lap/licenses/LA_sl\
+lap/licenses/LA_tr\
+lap/licenses/LA_zh\
+lap/licenses/LA_zh_TW\
+lap/licenses/LI_cs\
+lap/licenses/LI_de\
+lap/licenses/LI_el\
+lap/licenses/LI_en\
+lap/licenses/LI_es\
+lap/licenses/LI_fr\
+lap/licenses/LI_in\
+lap/licenses/LI_it\
+lap/licenses/LI_ja\
+lap/licenses/LI_ko\
+lap/licenses/LI_lt\
+lap/licenses/LI_pl\
+lap/licenses/LI_pt\
+lap/licenses/LI_ru\
+lap/licenses/LI_sl\
+lap/licenses/LI_tr\
+lap/licenses/LI_zh\
+lap/licenses/LI_zh_TW\
+lap/licenses/icon.gif\
+lap/licenses/logo.gif\
+lap/licenses/non_ibm_license\
+lap/licenses/notices\
+licenses/\
+licenses/LA_cs\
+licenses/LA_de\
+licenses/LA_el\
+licenses/LA_en\
+licenses/LA_es\
+licenses/LA_fr\
+licenses/LA_in\
+licenses/LA_it\
+licenses/LA_ja\
+licenses/LA_ko\
+licenses/LA_lt\
+licenses/LA_pl\
+licenses/LA_pt\
+licenses/LA_ru\
+licenses/LA_sl\
+licenses/LA_tr\
+licenses/LA_zh\
+licenses/LA_zh_TW\
+licenses/LI_cs\
+licenses/LI_de\
+licenses/LI_el\
+licenses/LI_en\
+licenses/LI_es\
+licenses/LI_fr\
+licenses/LI_in\
+licenses/LI_it\
+licenses/LI_ja\
+licenses/LI_ko\
+licenses/LI_lt\
+licenses/LI_pl\
+licenses/LI_pt\
+licenses/LI_ru\
+licenses/LI_sl\
+licenses/LI_tr\
+licenses/LI_zh\
+licenses/LI_zh_TW\
+licenses/non_ibm_license\
+licenses/notices\
+mqlicense.sh\
+MQSeriesAMS-7.5.0-2.x86_64.rpm\
+MQSeriesClient-7.5.0-2.x86_64.rpm\
+MQSeriesExplorer-7.5.0-2.x86_64.rpm\
+MQSeriesFTAgent-7.5.0-2.x86_64.rpm\
+MQSeriesFTBase-7.5.0-2.x86_64.rpm\
+MQSeriesFTLogger-7.5.0-2.x86_64.rpm\
+MQSeriesFTService-7.5.0-2.x86_64.rpm\
+MQSeriesFTTools-7.5.0-2.x86_64.rpm\
+MQSeriesGSKit-7.5.0-2.x86_64.rpm\
+MQSeriesJava-7.5.0-2.x86_64.rpm\
+MQSeriesJRE-7.5.0-2.x86_64.rpm\
+MQSeriesMan-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_cs-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_de-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_es-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_fr-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_hu-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_it-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_ja-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_ko-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_pl-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_pt-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_ru-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_Zh_CN-7.5.0-2.x86_64.rpm\
+MQSeriesMsg_Zh_TW-7.5.0-2.x86_64.rpm\
+MQSeriesRuntime-7.5.0-2.x86_64.rpm\
+MQSeriesSamples-7.5.0-2.x86_64.rpm\
+MQSeriesSDK-7.5.0-2.x86_64.rpm\
+MQSeriesServer-7.5.0-2.x86_64.rpm\
+MQSeriesXRClients-7.5.0-2.x86_64.rpm\
+MQSeriesXRService-7.5.0-2.x86_64.rpm\
+PreReqs/\
+PreReqs/axis/\
+PreReqs/axis/axis.jar\
+PreReqs/axis/axis_readme.txt\
+READMEs/\
+READMEs/cs_CZ/\
+READMEs/cs_CZ/readme\
+READMEs/de_DE/\
+READMEs/de_DE/readme\
+READMEs/en_US/\
+READMEs/en_US/readme\
+READMEs/es_ES/\
+READMEs/es_ES/readme\
+READMEs/fr_FR/\
+READMEs/fr_FR/readme\
+READMEs/hu_HU/\
+READMEs/hu_HU/readme\
+READMEs/it_IT/\
+READMEs/it_IT/readme\
+READMEs/ja_JP/\
+READMEs/ja_JP/readme\
+READMEs/ja_JP.PCK/\
+READMEs/ja_JP.PCK/readme\
+READMEs/ko_KR/\
+READMEs/ko_KR/readme\
+READMEs/pl_PL/\
+READMEs/pl_PL/readme\
+READMEs/pt_BR/\
+READMEs/pt_BR/readme\
+READMEs/ru_RU/\
+READMEs/ru_RU/readme\
+READMEs/zh_CN/\
+READMEs/zh_CN/readme\
+READMEs/zh_TW/\
+READMEs/zh_TW/readme\
+READMEs/zh_TW.BIG5/\
+READMEs/zh_TW.BIG5/readme\
+repackage/\
+repackage/MQSeriesAMS.spec\
+repackage/MQSeriesClient.spec\
+repackage/MQSeriesExplorer.spec\
+repackage/MQSeriesFTAgent.spec\
+repackage/MQSeriesFTBase.spec\
+repackage/MQSeriesFTLogger.spec\
+repackage/MQSeriesFTService.spec\
+repackage/MQSeriesFTTools.spec\
+repackage/MQSeriesGSKit.spec\
+repackage/MQSeriesJRE.spec\
+repackage/MQSeriesJava.spec\
+repackage/MQSeriesMan.spec\
+repackage/MQSeriesMsg_Zh_CN.spec\
+repackage/MQSeriesMsg_Zh_TW.spec\
+repackage/MQSeriesMsg_cs.spec\
+repackage/MQSeriesMsg_de.spec\
+repackage/MQSeriesMsg_es.spec\
+repackage/MQSeriesMsg_fr.spec\
+repackage/MQSeriesMsg_hu.spec\
+repackage/MQSeriesMsg_it.spec\
+repackage/MQSeriesMsg_ja.spec\
+repackage/MQSeriesMsg_ko.spec\
+repackage/MQSeriesMsg_pl.spec\
+repackage/MQSeriesMsg_pt.spec\
+repackage/MQSeriesMsg_ru.spec\
+repackage/MQSeriesRuntime.spec\
+repackage/MQSeriesSDK.spec\
+repackage/MQSeriesSamples.spec\
+repackage/MQSeriesServer.spec\
+repackage/MQSeriesXRClients.spec\
+repackage/MQSeriesXRService.spec\
++ cd /tmp/tmp.IzNb7tHk2O\
++ ./mqlicense.sh -accept\
+\
+Licensed Materials - Property of IBM \
+                 \
+ 5724-H72 \
+\
+ (C) Copyright IBM Corporation 1994, 2013 All rights reserved.\
+\
+US Government Users Restricted Rights - Use, duplication or disclosure\
+restricted by GSA ADP Schedule Contract with IBM Corp.\
+\
+\
+\
+Agreement accepted:  Proceed with install.\
+\
++ xargs rpm -Uvh\
++ cat\
+Preparing...                ########################################### [100%]\
+Creating group mqm\
+Creating user mqm\
+   1:MQSeriesRuntime        ########################################### [  8%]\
+   2:MQSeriesJava           ########################################### [ 17%]\
+   3:MQSeriesJRE            ########################################### [ 25%]\
+   4:MQSeriesFTBase         ########################################### [ 33%]\
+   5:MQSeriesServer         ########################################### [ 42%]\
+\
+After the installation has completed, run the '/opt/mqm/bin/mqconfig'\
+command, using the 'mqm' user ID.\
+\
+For example, execute the following statement when running as the 'root' user:\
+\
+    su mqm -c "/opt/mqm/bin/mqconfig"\
+\
+The 'mqconfig' command validates that the system configuration satisfies the\
+requirements for WebSphere MQ, and ensures that the settings for the 'mqm'\
+user ID are suitably configured.  Other WebSphere MQ administrators in the\
+'mqm' group can run this command to ensure their user limits are also\
+properly configured to use WebSphere MQ.\
+\
+If 'mqconfig' indicates that any of the requirements have not been met,\
+consult the installation section within the WebSphere MQ Information Center\
+for details about how to configure the system and user limits.\
+\
+   6:MQSeriesFTAgent        ########################################### [ 50%]\
+   7:MQSeriesFTService      ########################################### [ 58%]\
+   8:MQSeriesFTLogger       ########################################### [ 67%]\
+   9:MQSeriesFTTools        ########################################### [ 75%]\
+  10:MQSeriesClient         ########################################### [ 83%]\
+  11:MQSeriesMsg_ja         ########################################### [ 92%]\
+  12:MQSeriesMan            ########################################### [100%]\
++ rm -rf /tmp/tmp.IzNb7tHk2O\
+[vagrant@localhost mq]$ cd /vagrant/mb\
+[vagrant@localhost mb]$ ls -l\
+total 476264\
+-rw-r--r--. 1 vagrant vagrant 486676480 2020-11-02 10:59 \cf5 8.0.0-WS-MB-LINUXX64-FP0000-TRIAL.tar\cf2 \
+-rw-r--r--. 1 vagrant vagrant      8517 2020-11-04 11:31 HTTPClient_D_X.bar\
+-rw-r--r--. 1 vagrant vagrant       201 2020-11-04 11:31 RizaConfig.js\
+-rw-r--r--. 1 vagrant vagrant     10098 2020-11-04 11:31 XMLCenter_D.bar\
+drwxr-xr-x. 1 vagrant vagrant       128 2020-11-02 11:22 \cf7 fp\cf2 \
+-rw-r--r--. 1 vagrant vagrant     89924 2020-11-04 11:31 ibm-943_P130-1999.cnv\
+-rwxr--r--. 1 vagrant vagrant       289 2020-11-02 12:47 \cf6 install.sh\cf2 \
+-rwxr--r--. 1 vagrant vagrant       219 2020-11-02 10:59 \cf6 wmb_license.txt\cf2 \
+[vagrant@localhost mb]$ sudo ./install.sh \
+++ dirname ./install.sh\
++ base=.\
+++ whoami\
++ '[' root = root ']'\
+++ mktemp -d\
++ tmp=/tmp/tmp.F3JgTbde1J\
++ trap 'rm -rf /tmp/tmp.F3JgTbde1J' 0\
++ tar xvf ./8.0.0-WS-MB-LINUXX64-FP0000-TRIAL.tar -C /tmp/tmp.F3JgTbde1J\
+./messagebroker_ia_trial_runtime1/\
+./messagebroker_ia_trial_runtime1/IE02/\
+./messagebroker_ia_trial_runtime1/IE02/ie02.pdf\
+./messagebroker_ia_trial_runtime1/IE02/install-ie02.bin\
+./messagebroker_ia_trial_runtime1/install.ini\
+./messagebroker_ia_trial_runtime1/license/\
+./messagebroker_ia_trial_runtime1/license/LA_cs\
+./messagebroker_ia_trial_runtime1/license/LA_de\
+./messagebroker_ia_trial_runtime1/license/LA_el\
+./messagebroker_ia_trial_runtime1/license/LA_en\
+./messagebroker_ia_trial_runtime1/license/LA_es\
+./messagebroker_ia_trial_runtime1/license/LA_fr\
+./messagebroker_ia_trial_runtime1/license/LA_in\
+./messagebroker_ia_trial_runtime1/license/LA_it\
+./messagebroker_ia_trial_runtime1/license/LA_ja\
+./messagebroker_ia_trial_runtime1/license/LA_ko\
+./messagebroker_ia_trial_runtime1/license/LA_lt\
+./messagebroker_ia_trial_runtime1/license/LA_pl\
+./messagebroker_ia_trial_runtime1/license/LA_pt\
+./messagebroker_ia_trial_runtime1/license/LA_ru\
+./messagebroker_ia_trial_runtime1/license/LA_sl\
+./messagebroker_ia_trial_runtime1/license/LA_tr\
+./messagebroker_ia_trial_runtime1/license/LA_zh\
+./messagebroker_ia_trial_runtime1/license/LA_zh_TW\
+./messagebroker_ia_trial_runtime1/license/LI_cs\
+./messagebroker_ia_trial_runtime1/license/LI_de\
+./messagebroker_ia_trial_runtime1/license/LI_el\
+./messagebroker_ia_trial_runtime1/license/LI_en\
+./messagebroker_ia_trial_runtime1/license/LI_es\
+./messagebroker_ia_trial_runtime1/license/LI_fr\
+./messagebroker_ia_trial_runtime1/license/LI_in\
+./messagebroker_ia_trial_runtime1/license/LI_it\
+./messagebroker_ia_trial_runtime1/license/LI_ja\
+./messagebroker_ia_trial_runtime1/license/LI_ko\
+./messagebroker_ia_trial_runtime1/license/LI_lt\
+./messagebroker_ia_trial_runtime1/license/LI_pl\
+./messagebroker_ia_trial_runtime1/license/LI_pt\
+./messagebroker_ia_trial_runtime1/license/LI_ru\
+./messagebroker_ia_trial_runtime1/license/LI_sl\
+./messagebroker_ia_trial_runtime1/license/LI_tr\
+./messagebroker_ia_trial_runtime1/license/LI_zh\
+./messagebroker_ia_trial_runtime1/license/LI_zh_TW\
+./messagebroker_ia_trial_runtime1/license/notices\
+./messagebroker_ia_trial_runtime1/license/RAD_notices.html\
+./messagebroker_ia_trial_runtime1/MBExplorer/\
+./messagebroker_ia_trial_runtime1/MBExplorer/install.bin\
+./messagebroker_ia_trial_runtime1/readmes/\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/en_US/\
+./messagebroker_ia_trial_runtime1/readmes/en_US/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/en_US/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/level.txt\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/readme.html\
+./messagebroker_ia_trial_runtime1/sample-scripts/\
+./messagebroker_ia_trial_runtime1/sample-scripts/installAllSilent.sh\
+./messagebroker_ia_trial_runtime1/sample-scripts/mbx-response.properties\
+./messagebroker_ia_trial_runtime1/sample-scripts/response.properties\
+./messagebroker_ia_trial_runtime1/setuplinuxx64\
+./messagebroker_ia_trial_runtime1/setuplinuxx64.bin\
++ cd /tmp/tmp.F3JgTbde1J/messagebroker_ia_trial_runtime1\
++ ./setuplinuxx64 -f /vagrant/mb/wmb_license.txt -i silent -DLICENSE_ACCEPTED=TRUE\
+strings: '/lib/libc.so.6': No such file\
+./setuplinuxx64.bin: /tmp/install.dir.7655/Linux/resource/jre/jre/bin/java: /lib/ld-linux.so.2: bad ELF interpreter: 
+\f3 \'82\'bb\'82\'cc\'82\'e6\'82\'a4\'82\'c8\'83\'74\'83\'40\'83\'43\'83\'8b\'82\'e2\'83\'66\'83\'42\'83\'8c\'83\'4e\'83\'67\'83\'8a\'82\'cd\'82\'a0\'82\'e8\'82\'dc\'82\'b9\'82\'f1
+\f1 \
+./setuplinuxx64.bin: line 2506: /tmp/install.dir.7655/Linux/resource/jre/jre/bin/java: 
+\f3 \'90\'ac\'8c\'f7\'82\'c5\'82\'b7
+\f1 \
+\
+./setuplinuxx64: line 40: /var/mqsi/WMBDBE_200.log: 
+\f3 \'82\'bb\'82\'cc\'82\'e6\'82\'a4\'82\'c8\'83\'74\'83\'40\'83\'43\'83\'8b\'82\'e2\'83\'66\'83\'42\'83\'8c\'83\'4e\'83\'67\'83\'8a\'82\'cd\'82\'a0\'82\'e8\'82\'dc\'82\'b9\'82\'f1
+\f1 \
++ rm -rf /tmp/tmp.F3JgTbde1J\
+[vagrant@localhost mb]$ sudo find / -name libc.so.6\
+/lib64/libc.so.6\
+[vagrant@localhost mb]$ sudo ln -s /lib64/libc.so.6 /lib/libc.so.6\
+[vagrant@localhost mb]$ ls -l /lib/libc.so.6 \
+lrwxrwxrwx. 1 root root 16 2020-11-04 13:25 \cf8 /lib/libc.so.6\cf2  -> \cf6 /lib64/libc.so.6\cf2 \
+[vagrant@localhost mb]$ sudo ./install.sh \
+++ dirname ./install.sh\
++ base=.\
+++ whoami\
++ '[' root = root ']'\
+++ mktemp -d\
++ tmp=/tmp/tmp.w82WokwRp5\
++ trap 'rm -rf /tmp/tmp.w82WokwRp5' 0\
++ tar xvf ./8.0.0-WS-MB-LINUXX64-FP0000-TRIAL.tar -C /tmp/tmp.w82WokwRp5\
+./messagebroker_ia_trial_runtime1/\
+./messagebroker_ia_trial_runtime1/IE02/\
+./messagebroker_ia_trial_runtime1/IE02/ie02.pdf\
+./messagebroker_ia_trial_runtime1/IE02/install-ie02.bin\
+./messagebroker_ia_trial_runtime1/install.ini\
+./messagebroker_ia_trial_runtime1/license/\
+./messagebroker_ia_trial_runtime1/license/LA_cs\
+./messagebroker_ia_trial_runtime1/license/LA_de\
+./messagebroker_ia_trial_runtime1/license/LA_el\
+./messagebroker_ia_trial_runtime1/license/LA_en\
+./messagebroker_ia_trial_runtime1/license/LA_es\
+./messagebroker_ia_trial_runtime1/license/LA_fr\
+./messagebroker_ia_trial_runtime1/license/LA_in\
+./messagebroker_ia_trial_runtime1/license/LA_it\
+./messagebroker_ia_trial_runtime1/license/LA_ja\
+./messagebroker_ia_trial_runtime1/license/LA_ko\
+./messagebroker_ia_trial_runtime1/license/LA_lt\
+./messagebroker_ia_trial_runtime1/license/LA_pl\
+./messagebroker_ia_trial_runtime1/license/LA_pt\
+./messagebroker_ia_trial_runtime1/license/LA_ru\
+./messagebroker_ia_trial_runtime1/license/LA_sl\
+./messagebroker_ia_trial_runtime1/license/LA_tr\
+./messagebroker_ia_trial_runtime1/license/LA_zh\
+./messagebroker_ia_trial_runtime1/license/LA_zh_TW\
+./messagebroker_ia_trial_runtime1/license/LI_cs\
+./messagebroker_ia_trial_runtime1/license/LI_de\
+./messagebroker_ia_trial_runtime1/license/LI_el\
+./messagebroker_ia_trial_runtime1/license/LI_en\
+./messagebroker_ia_trial_runtime1/license/LI_es\
+./messagebroker_ia_trial_runtime1/license/LI_fr\
+./messagebroker_ia_trial_runtime1/license/LI_in\
+./messagebroker_ia_trial_runtime1/license/LI_it\
+./messagebroker_ia_trial_runtime1/license/LI_ja\
+./messagebroker_ia_trial_runtime1/license/LI_ko\
+./messagebroker_ia_trial_runtime1/license/LI_lt\
+./messagebroker_ia_trial_runtime1/license/LI_pl\
+./messagebroker_ia_trial_runtime1/license/LI_pt\
+./messagebroker_ia_trial_runtime1/license/LI_ru\
+./messagebroker_ia_trial_runtime1/license/LI_sl\
+./messagebroker_ia_trial_runtime1/license/LI_tr\
+./messagebroker_ia_trial_runtime1/license/LI_zh\
+./messagebroker_ia_trial_runtime1/license/LI_zh_TW\
+./messagebroker_ia_trial_runtime1/license/notices\
+./messagebroker_ia_trial_runtime1/license/RAD_notices.html\
+./messagebroker_ia_trial_runtime1/MBExplorer/\
+./messagebroker_ia_trial_runtime1/MBExplorer/install.bin\
+./messagebroker_ia_trial_runtime1/readmes/\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/en_US/\
+./messagebroker_ia_trial_runtime1/readmes/en_US/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/en_US/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/level.txt\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/readme.html\
+./messagebroker_ia_trial_runtime1/sample-scripts/\
+./messagebroker_ia_trial_runtime1/sample-scripts/installAllSilent.sh\
+./messagebroker_ia_trial_runtime1/sample-scripts/mbx-response.properties\
+./messagebroker_ia_trial_runtime1/sample-scripts/response.properties\
+./messagebroker_ia_trial_runtime1/setuplinuxx64\
+./messagebroker_ia_trial_runtime1/setuplinuxx64.bin\
++ cd /tmp/tmp.w82WokwRp5/messagebroker_ia_trial_runtime1\
++ ./setuplinuxx64 -f /vagrant/mb/wmb_license.txt -i silent -DLICENSE_ACCEPTED=TRUE\
+./setuplinuxx64.bin: /tmp/install.dir.7824/Linux/resource/jre/jre/bin/java: /lib/ld-linux.so.2: bad ELF interpreter: 
+\f3 \'82\'bb\'82\'cc\'82\'e6\'82\'a4\'82\'c8\'83\'74\'83\'40\'83\'43\'83\'8b\'82\'e2\'83\'66\'83\'42\'83\'8c\'83\'4e\'83\'67\'83\'8a\'82\'cd\'82\'a0\'82\'e8\'82\'dc\'82\'b9\'82\'f1
+\f1 \
+./setuplinuxx64.bin: line 2506: /tmp/install.dir.7824/Linux/resource/jre/jre/bin/java: 
+\f3 \'90\'ac\'8c\'f7\'82\'c5\'82\'b7
+\f1 \
+\
+./setuplinuxx64: line 40: /var/mqsi/WMBDBE_200.log: 
+\f3 \'82\'bb\'82\'cc\'82\'e6\'82\'a4\'82\'c8\'83\'74\'83\'40\'83\'43\'83\'8b\'82\'e2\'83\'66\'83\'42\'83\'8c\'83\'4e\'83\'67\'83\'8a\'82\'cd\'82\'a0\'82\'e8\'82\'dc\'82\'b9\'82\'f1
+\f1 \
++ rm -rf /tmp/tmp.w82WokwRp5\
+[vagrant@localhost mb]$ sudo yum install ld-linux.so.2\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f3 \'93\'c7\'82\'dd\'8d\'9e\'82\'f1\'82\'be\'83\'76\'83\'89\'83\'4f\'83\'43\'83\'93
+\f1 :fastestmirror\
+
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'8f\'88\'97\'9d\'82\'cc\'90\'dd\'92\'e8\'82\'f0\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 \
+Determining fastest mirrors\
+ * base: ftp.iij.ad.jp\
+ * extras: ftp.iij.ad.jp\
+ * updates: ftp.iij.ad.jp\
+base                                                                                                                 | 3.7 kB     00:00     \
+base/primary_db                                                                                                      | 4.7 MB     00:00     \
+extras                                                                                                               | 3.4 kB     00:00     \
+extras/primary_db                                                                                                    |  29 kB     00:00     \
+updates                                                                                                              | 3.4 kB     00:00     \
+updates/primary_db                                                                                                   |  11 MB     00:01     \
+
+\f3 \'88\'cb\'91\'b6\'90\'ab\'82\'cc\'89\'f0\'8c\'88\'82\'f0\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 \
+--> 
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'cc\'8a\'6d\'94\'46\'82\'f0\'8e\'c0\'8d\'73\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7\'81\'42
+\f1 \
+---> Package glibc.i686 0:2.12-1.212.el6_10.3 will be 
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b
+\f1 \
+--> 
+\f3 \'88\'cb\'91\'b6\'90\'ab\'82\'cc\'8f\'88\'97\'9d\'82\'f0\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 : libfreebl3.so(NSSRAWHASH_3.12.3) 
+\f3 \'82\'cc\'83\'70\'83\'62\'83\'50\'81\'5b\'83\'57
+\f1 : glibc-2.12-1.212.el6_10.3.i686\
+--> 
+\f3 \'88\'cb\'91\'b6\'90\'ab\'82\'cc\'8f\'88\'97\'9d\'82\'f0\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 : libfreebl3.so 
+\f3 \'82\'cc\'83\'70\'83\'62\'83\'50\'81\'5b\'83\'57
+\f1 : glibc-2.12-1.212.el6_10.3.i686\
+--> 
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'cc\'8a\'6d\'94\'46\'82\'f0\'8e\'c0\'8d\'73\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7\'81\'42
+\f1 \
+---> Package nss-softokn-freebl.i686 0:3.44.0-6.el6_10 will be 
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b
+\f1 \
+--> 
+\f3 \'88\'cb\'91\'b6\'90\'ab\'89\'f0\'8c\'88\'82\'f0\'8f\'49\'97\'b9\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+\
+
+\f3 \'88\'cb\'91\'b6\'90\'ab\'82\'f0\'89\'f0\'8c\'88\'82\'b5\'82\'dc\'82\'b5\'82\'bd
+\f1 \
+\
+============================================================================================================================================\
+ 
+\f3 \'83\'70\'83\'62\'83\'50\'81\'5b\'83\'57
+\f1                              
+\f3 \'83\'41\'81\'5b\'83\'4c\'83\'65\'83\'4e\'83\'60\'83\'83
+\f1            
+\f3 \'83\'6f\'81\'5b\'83\'57\'83\'87\'83\'93
+\f1                                
+\f3 \'83\'8a\'83\'7c\'83\'57\'83\'67\'83\'8a\'81\'5b
+\f1                  
+\f3 \'97\'65\'97\'ca
+\f1 \
+============================================================================================================================================\
+
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 :\
+ glibc                                  i686                     2.12-1.212.el6_10.3                      updates                     4.4 M\
+
+\f3 \'88\'cb\'91\'b6\'90\'ab\'8a\'d6\'98\'41\'82\'c5\'82\'cc\'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'82\'f0\'82\'b5\'82\'dc\'82\'b7\'81\'42
+\f1 :\
+ nss-softokn-freebl                     i686                     3.44.0-6.el6_10                          updates                     201 k\
+\
+
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'cc\'97\'76\'96\'f1
+\f1 \
+============================================================================================================================================\
+
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b
+\f1          2 
+\f3 \'83\'70\'83\'62\'83\'50\'81\'5b\'83\'57
+\f1 \
+\
+
+\f3 \'91\'8d\'83\'5f\'83\'45\'83\'93\'83\'8d\'81\'5b\'83\'68\'97\'65\'97\'ca
+\f1 : 4.6 M\
+
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'8d\'cf\'82\'dd\'97\'65\'97\'ca
+\f1 : 14 M\
+
+\f3 \'82\'b1\'82\'ea\'82\'c5\'82\'a2\'82\'a2\'82\'c5\'82\'b7\'82\'a9
+\f1 ? [y/N]y\
+
+\f3 \'83\'70\'83\'62\'83\'50\'81\'5b\'83\'57\'82\'f0\'83\'5f\'83\'45\'83\'93\'83\'8d\'81\'5b\'83\'68\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 :\
+(1/2): glibc-2.12-1.212.el6_10.3.i686.rpm                                                                            | 4.4 MB     00:01     \
+(2/2): nss-softokn-freebl-3.44.0-6.el6_10.i686.rpm                                                                   | 201 kB     00:00     \
+--------------------------------------------------------------------------------------------------------------------------------------------\
+
+\f3 \'8d\'87\'8c\'76
+\f1                                                                                                         2.3 MB/s | 4.6 MB     00:01     \
+rpm_check_debug 
+\f3 \'82\'f0\'8e\'c0\'8d\'73\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 \
+
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'cc\'83\'65\'83\'58\'83\'67\'82\'f0\'8e\'c0\'8d\'73\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 \
+
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'cc\'83\'65\'83\'58\'83\'67\'82\'f0\'90\'ac\'8c\'f7\'82\'b5\'82\'dc\'82\'b5\'82\'bd
+\f1 \
+
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'f0\'8e\'c0\'8d\'73\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 \
+
+\f3 \'8c\'78\'8d\'90
+\f1 : RPMDB 
+\f3 \'82\'cd
+\f1  yum 
+\f3 \'88\'c8\'8a\'4f\'82\'c5\'95\'cf\'8d\'58\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+  
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1   : nss-softokn-freebl-3.44.0-6.el6_10.i686                                                                     1/2 \
+  
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1   : glibc-2.12-1.212.el6_10.3.i686                                                                              2/2 \
+  Verifying               : glibc-2.12-1.212.el6_10.3.i686                                                                              1/2 \
+  Verifying               : nss-softokn-freebl-3.44.0-6.el6_10.i686                                                                     2/2 \
+\
+
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b
+\f1 :\
+  glibc.i686 0:2.12-1.212.el6_10.3                                                                                                          \
+\
+
+\f3 \'88\'cb\'91\'b6\'90\'ab\'8a\'d6\'98\'41\'82\'f0\'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'82\'b5\'82\'dc\'82\'b5\'82\'bd
+\f1 :\
+  nss-softokn-freebl.i686 0:3.44.0-6.el6_10                                                                                                 \
+\
+
+\f3 \'8a\'ae\'97\'b9\'82\'b5\'82\'dc\'82\'b5\'82\'bd
+\f1 !\
+[vagrant@localhost mb]$ sudo ./install.sh \
+++ dirname ./install.sh\
++ base=.\
+++ whoami\
++ '[' root = root ']'\
+++ mktemp -d\
++ tmp=/tmp/tmp.3b4B043rO2\
++ trap 'rm -rf /tmp/tmp.3b4B043rO2' 0\
++ tar xvf ./8.0.0-WS-MB-LINUXX64-FP0000-TRIAL.tar -C /tmp/tmp.3b4B043rO2\
+./messagebroker_ia_trial_runtime1/\
+./messagebroker_ia_trial_runtime1/IE02/\
+./messagebroker_ia_trial_runtime1/IE02/ie02.pdf\
+./messagebroker_ia_trial_runtime1/IE02/install-ie02.bin\
+./messagebroker_ia_trial_runtime1/install.ini\
+./messagebroker_ia_trial_runtime1/license/\
+./messagebroker_ia_trial_runtime1/license/LA_cs\
+./messagebroker_ia_trial_runtime1/license/LA_de\
+./messagebroker_ia_trial_runtime1/license/LA_el\
+./messagebroker_ia_trial_runtime1/license/LA_en\
+./messagebroker_ia_trial_runtime1/license/LA_es\
+./messagebroker_ia_trial_runtime1/license/LA_fr\
+./messagebroker_ia_trial_runtime1/license/LA_in\
+./messagebroker_ia_trial_runtime1/license/LA_it\
+./messagebroker_ia_trial_runtime1/license/LA_ja\
+./messagebroker_ia_trial_runtime1/license/LA_ko\
+./messagebroker_ia_trial_runtime1/license/LA_lt\
+./messagebroker_ia_trial_runtime1/license/LA_pl\
+./messagebroker_ia_trial_runtime1/license/LA_pt\
+./messagebroker_ia_trial_runtime1/license/LA_ru\
+./messagebroker_ia_trial_runtime1/license/LA_sl\
+./messagebroker_ia_trial_runtime1/license/LA_tr\
+./messagebroker_ia_trial_runtime1/license/LA_zh\
+./messagebroker_ia_trial_runtime1/license/LA_zh_TW\
+./messagebroker_ia_trial_runtime1/license/LI_cs\
+./messagebroker_ia_trial_runtime1/license/LI_de\
+./messagebroker_ia_trial_runtime1/license/LI_el\
+./messagebroker_ia_trial_runtime1/license/LI_en\
+./messagebroker_ia_trial_runtime1/license/LI_es\
+./messagebroker_ia_trial_runtime1/license/LI_fr\
+./messagebroker_ia_trial_runtime1/license/LI_in\
+./messagebroker_ia_trial_runtime1/license/LI_it\
+./messagebroker_ia_trial_runtime1/license/LI_ja\
+./messagebroker_ia_trial_runtime1/license/LI_ko\
+./messagebroker_ia_trial_runtime1/license/LI_lt\
+./messagebroker_ia_trial_runtime1/license/LI_pl\
+./messagebroker_ia_trial_runtime1/license/LI_pt\
+./messagebroker_ia_trial_runtime1/license/LI_ru\
+./messagebroker_ia_trial_runtime1/license/LI_sl\
+./messagebroker_ia_trial_runtime1/license/LI_tr\
+./messagebroker_ia_trial_runtime1/license/LI_zh\
+./messagebroker_ia_trial_runtime1/license/LI_zh_TW\
+./messagebroker_ia_trial_runtime1/license/notices\
+./messagebroker_ia_trial_runtime1/license/RAD_notices.html\
+./messagebroker_ia_trial_runtime1/MBExplorer/\
+./messagebroker_ia_trial_runtime1/MBExplorer/install.bin\
+./messagebroker_ia_trial_runtime1/readmes/\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/en_US/\
+./messagebroker_ia_trial_runtime1/readmes/en_US/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/en_US/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/level.txt\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/readme.html\
+./messagebroker_ia_trial_runtime1/sample-scripts/\
+./messagebroker_ia_trial_runtime1/sample-scripts/installAllSilent.sh\
+./messagebroker_ia_trial_runtime1/sample-scripts/mbx-response.properties\
+./messagebroker_ia_trial_runtime1/sample-scripts/response.properties\
+./messagebroker_ia_trial_runtime1/setuplinuxx64\
+./messagebroker_ia_trial_runtime1/setuplinuxx64.bin\
++ cd /tmp/tmp.3b4B043rO2/messagebroker_ia_trial_runtime1\
++ ./setuplinuxx64 -f /vagrant/mb/wmb_license.txt -i silent -DLICENSE_ACCEPTED=TRUE\
+libgcc_s.so.1 must be installed for pthread_cancel to work\
+libgcc_s.so.1 must be installed for pthread_cancel to work\
+libgcc_s.so.1 must be installed for pthread_cancel to work\
+JVMDUMP006I 
+\f3 \'83\'5f\'83\'93\'83\'76\'81\'45\'83\'43\'83\'78\'83\'93\'83\'67
+\f1  "abort"
+\f3 \'81\'41\'8f\'da\'8d\'d7
+\f1  "" 
+\f3 \'82\'f0\'8f\'88\'97\'9d\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1  - 
+\f3 \'82\'a8\'91\'d2\'82\'bf\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42
+\f1 \
+JVMDUMP032I \
+libgcc_s.so.1 must be installed for pthread_cancel to work\
+./setuplinuxx64: line 22:  8013 
+\f3 \'83\'41\'83\'7b\'81\'5b\'83\'67\'82\'b5\'82\'dc\'82\'b5\'82\'bd
+\f1 $0.bin $*\
+\
+./setuplinuxx64: line 40: /var/mqsi/WMBDBE_200.log: 
+\f3 \'82\'bb\'82\'cc\'82\'e6\'82\'a4\'82\'c8\'83\'74\'83\'40\'83\'43\'83\'8b\'82\'e2\'83\'66\'83\'42\'83\'8c\'83\'4e\'83\'67\'83\'8a\'82\'cd\'82\'a0\'82\'e8\'82\'dc\'82\'b9\'82\'f1
+\f1 \
++ rm -rf /tmp/tmp.3b4B043rO2\
+[vagrant@localhost mb]$ sudo yum install libgcc_s.so.1\
+
+\f3 \'93\'c7\'82\'dd\'8d\'9e\'82\'f1\'82\'be\'83\'76\'83\'89\'83\'4f\'83\'43\'83\'93
+\f1 :fastestmirror\
+
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'8f\'88\'97\'9d\'82\'cc\'90\'dd\'92\'e8\'82\'f0\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 \
+Loading mirror speeds from cached hostfile\
+ * base: ftp.iij.ad.jp\
+ * extras: ftp.iij.ad.jp\
+ * updates: ftp.iij.ad.jp\
+
+\f3 \'88\'cb\'91\'b6\'90\'ab\'82\'cc\'89\'f0\'8c\'88\'82\'f0\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 \
+--> 
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'cc\'8a\'6d\'94\'46\'82\'f0\'8e\'c0\'8d\'73\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7\'81\'42
+\f1 \
+---> Package libgcc.i686 0:4.4.7-23.el6 will be 
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b
+\f1 \
+--> 
+\f3 \'88\'cb\'91\'b6\'90\'ab\'89\'f0\'8c\'88\'82\'f0\'8f\'49\'97\'b9\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+\
+
+\f3 \'88\'cb\'91\'b6\'90\'ab\'82\'f0\'89\'f0\'8c\'88\'82\'b5\'82\'dc\'82\'b5\'82\'bd
+\f1 \
+\
+============================================================================================================================================\
+ 
+\f3 \'83\'70\'83\'62\'83\'50\'81\'5b\'83\'57
+\f1                       
+\f3 \'83\'41\'81\'5b\'83\'4c\'83\'65\'83\'4e\'83\'60\'83\'83
+\f1                 
+\f3 \'83\'6f\'81\'5b\'83\'57\'83\'87\'83\'93
+\f1                                
+\f3 \'83\'8a\'83\'7c\'83\'57\'83\'67\'83\'8a\'81\'5b
+\f1                    
+\f3 \'97\'65\'97\'ca
+\f1 \
+============================================================================================================================================\
+
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 :\
+ libgcc                          i686                          4.4.7-23.el6                             base                          115 k\
+\
+
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'cc\'97\'76\'96\'f1
+\f1 \
+============================================================================================================================================\
+
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b
+\f1          1 
+\f3 \'83\'70\'83\'62\'83\'50\'81\'5b\'83\'57
+\f1 \
+\
+
+\f3 \'91\'8d\'83\'5f\'83\'45\'83\'93\'83\'8d\'81\'5b\'83\'68\'97\'65\'97\'ca
+\f1 : 115 k\
+
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'8d\'cf\'82\'dd\'97\'65\'97\'ca
+\f1 : 144 k\
+
+\f3 \'82\'b1\'82\'ea\'82\'c5\'82\'a2\'82\'a2\'82\'c5\'82\'b7\'82\'a9
+\f1 ? [y/N]y\
+
+\f3 \'83\'70\'83\'62\'83\'50\'81\'5b\'83\'57\'82\'f0\'83\'5f\'83\'45\'83\'93\'83\'8d\'81\'5b\'83\'68\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 :\
+libgcc-4.4.7-23.el6.i686.rpm                                                                                         | 115 kB     00:00     \
+rpm_check_debug 
+\f3 \'82\'f0\'8e\'c0\'8d\'73\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 \
+
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'cc\'83\'65\'83\'58\'83\'67\'82\'f0\'8e\'c0\'8d\'73\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 \
+
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'cc\'83\'65\'83\'58\'83\'67\'82\'f0\'90\'ac\'8c\'f7\'82\'b5\'82\'dc\'82\'b5\'82\'bd
+\f1 \
+
+\f3 \'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'82\'f0\'8e\'c0\'8d\'73\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1 \
+  
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1   : libgcc-4.4.7-23.el6.i686                                                                                    1/1 \
+  Verifying               : libgcc-4.4.7-23.el6.i686                                                                                    1/1 \
+\
+
+\f3 \'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b
+\f1 :\
+  libgcc.i686 0:4.4.7-23.el6                                                                                                                \
+\
+
+\f3 \'8a\'ae\'97\'b9\'82\'b5\'82\'dc\'82\'b5\'82\'bd
+\f1 !\
+[vagrant@localhost mb]$ sudo ./install.sh \
+++ dirname ./install.sh\
++ base=.\
+++ whoami\
++ '[' root = root ']'\
+++ mktemp -d\
++ tmp=/tmp/tmp.1u9WMklVQq\
++ trap 'rm -rf /tmp/tmp.1u9WMklVQq' 0\
++ tar xvf ./8.0.0-WS-MB-LINUXX64-FP0000-TRIAL.tar -C /tmp/tmp.1u9WMklVQq\
+./messagebroker_ia_trial_runtime1/\
+./messagebroker_ia_trial_runtime1/IE02/\
+./messagebroker_ia_trial_runtime1/IE02/ie02.pdf\
+./messagebroker_ia_trial_runtime1/IE02/install-ie02.bin\
+./messagebroker_ia_trial_runtime1/install.ini\
+./messagebroker_ia_trial_runtime1/license/\
+./messagebroker_ia_trial_runtime1/license/LA_cs\
+./messagebroker_ia_trial_runtime1/license/LA_de\
+./messagebroker_ia_trial_runtime1/license/LA_el\
+./messagebroker_ia_trial_runtime1/license/LA_en\
+./messagebroker_ia_trial_runtime1/license/LA_es\
+./messagebroker_ia_trial_runtime1/license/LA_fr\
+./messagebroker_ia_trial_runtime1/license/LA_in\
+./messagebroker_ia_trial_runtime1/license/LA_it\
+./messagebroker_ia_trial_runtime1/license/LA_ja\
+./messagebroker_ia_trial_runtime1/license/LA_ko\
+./messagebroker_ia_trial_runtime1/license/LA_lt\
+./messagebroker_ia_trial_runtime1/license/LA_pl\
+./messagebroker_ia_trial_runtime1/license/LA_pt\
+./messagebroker_ia_trial_runtime1/license/LA_ru\
+./messagebroker_ia_trial_runtime1/license/LA_sl\
+./messagebroker_ia_trial_runtime1/license/LA_tr\
+./messagebroker_ia_trial_runtime1/license/LA_zh\
+./messagebroker_ia_trial_runtime1/license/LA_zh_TW\
+./messagebroker_ia_trial_runtime1/license/LI_cs\
+./messagebroker_ia_trial_runtime1/license/LI_de\
+./messagebroker_ia_trial_runtime1/license/LI_el\
+./messagebroker_ia_trial_runtime1/license/LI_en\
+./messagebroker_ia_trial_runtime1/license/LI_es\
+./messagebroker_ia_trial_runtime1/license/LI_fr\
+./messagebroker_ia_trial_runtime1/license/LI_in\
+./messagebroker_ia_trial_runtime1/license/LI_it\
+./messagebroker_ia_trial_runtime1/license/LI_ja\
+./messagebroker_ia_trial_runtime1/license/LI_ko\
+./messagebroker_ia_trial_runtime1/license/LI_lt\
+./messagebroker_ia_trial_runtime1/license/LI_pl\
+./messagebroker_ia_trial_runtime1/license/LI_pt\
+./messagebroker_ia_trial_runtime1/license/LI_ru\
+./messagebroker_ia_trial_runtime1/license/LI_sl\
+./messagebroker_ia_trial_runtime1/license/LI_tr\
+./messagebroker_ia_trial_runtime1/license/LI_zh\
+./messagebroker_ia_trial_runtime1/license/LI_zh_TW\
+./messagebroker_ia_trial_runtime1/license/notices\
+./messagebroker_ia_trial_runtime1/license/RAD_notices.html\
+./messagebroker_ia_trial_runtime1/MBExplorer/\
+./messagebroker_ia_trial_runtime1/MBExplorer/install.bin\
+./messagebroker_ia_trial_runtime1/readmes/\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/de_DE/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/en_US/\
+./messagebroker_ia_trial_runtime1/readmes/en_US/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/en_US/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/es_ES/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/fr_FR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/it_IT/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/ja_JP/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/ko_KR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/level.txt\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/pt_BR/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/zh_CN/readme.html\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/memo.ptf\
+./messagebroker_ia_trial_runtime1/readmes/zh_TW/readme.html\
+./messagebroker_ia_trial_runtime1/sample-scripts/\
+./messagebroker_ia_trial_runtime1/sample-scripts/installAllSilent.sh\
+./messagebroker_ia_trial_runtime1/sample-scripts/mbx-response.properties\
+./messagebroker_ia_trial_runtime1/sample-scripts/response.properties\
+./messagebroker_ia_trial_runtime1/setuplinuxx64\
+./messagebroker_ia_trial_runtime1/setuplinuxx64.bin\
++ cd /tmp/tmp.1u9WMklVQq/messagebroker_ia_trial_runtime1\
++ ./setuplinuxx64 -f /vagrant/mb/wmb_license.txt -i silent -DLICENSE_ACCEPTED=TRUE\
+\
+\
+\
+0\
++ rm -rf /tmp/tmp.1u9WMklVQq\
+[vagrant@localhost mb]$ \
+[vagrant@localhost mb]$ \
+[vagrant@localhost mb]$ cd fp\
+[vagrant@localhost fp]$ ls -l\
+total 623300\
+-rw-r--r--. 1 vagrant vagrant 634624000 2020-11-02 11:00 \cf5 8.0.0-WS-MB-LINUXX64-FP0009.tar\cf2 \
+-rwxr--r--. 1 vagrant vagrant       233 2020-11-02 11:22 \cf6 install.sh\cf2 \
+[vagrant@localhost fp]$ sudo ./install.sh 9\
+++ dirname ./install.sh\
++ base=.\
+++ whoami\
++ '[' root = root ']'\
+++ mktemp -d\
++ tmp=/tmp/tmp.j4CPNNgTNi\
++ trap 'rm -rf /tmp/tmp.j4CPNNgTNi' 0\
++ : 9\
++ tar xvf ./8.0.0-WS-MB-LINUXX64-FP0009.tar -C /tmp/tmp.j4CPNNgTNi\
+disk1/\
+disk1/setuplinuxx64\
+disk1/install.ini\
+disk1/setuplinuxx64.bin\
+disk1/IE02/\
+disk1/IE02/ie02.pdf\
+disk1/IE02/install-ie02.bin\
+disk1/readmes/\
+disk1/readmes/es_ES/\
+disk1/readmes/es_ES/memo.ptf\
+disk1/readmes/es_ES/readme.html\
+disk1/readmes/ko_KR/\
+disk1/readmes/ko_KR/memo.ptf\
+disk1/readmes/ko_KR/readme.html\
+disk1/readmes/ja_JP/\
+disk1/readmes/ja_JP/memo.ptf\
+disk1/readmes/ja_JP/readme.html\
+disk1/readmes/zh_CN/\
+disk1/readmes/zh_CN/memo.ptf\
+disk1/readmes/zh_CN/readme.html\
+disk1/readmes/zh_TW/\
+disk1/readmes/zh_TW/memo.ptf\
+disk1/readmes/zh_TW/readme.html\
+disk1/readmes/pt_BR/\
+disk1/readmes/pt_BR/memo.ptf\
+disk1/readmes/pt_BR/readme.html\
+disk1/readmes/it_IT/\
+disk1/readmes/it_IT/memo.ptf\
+disk1/readmes/it_IT/readme.html\
+disk1/readmes/de_DE/\
+disk1/readmes/de_DE/memo.ptf\
+disk1/readmes/de_DE/readme.html\
+disk1/readmes/level.txt\
+disk1/readmes/fr_FR/\
+disk1/readmes/fr_FR/memo.ptf\
+disk1/readmes/fr_FR/readme.html\
+disk1/readmes/en_US/\
+disk1/readmes/en_US/memo.ptf\
+disk1/readmes/en_US/readme.html\
++ cd /tmp/tmp.j4CPNNgTNi/disk1\
++ ./setuplinuxx64 -i silent -DLICENSE_ACCEPTED=TRUE\
+\
+\
++ rm -rf /tmp/tmp.j4CPNNgTNi\
+[vagrant@localhost fp]$ logout\
+Connection to 127.0.0.1 closed.\
+natsumi@Natsumis-PC centos6 % vagrant halt\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % \
+natsumi@Natsumis-PC centos6 % \
+natsumi@Natsumis-PC centos6 % vagrant up  \
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set forwarded ports...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Running 'pre-boot' VM customizations...
+\f1\b0 \
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+
+\f2\b ==> default: Machine booted and ready!
+\f1\b0 \
+
+\f2\b ==> default: Checking for guest additions in VM...
+\f1\b0 \
+
+\f2\b ==> default: Mounting shared folders...
+\f1\b0 \
+    default: /vagrant => /Users/natsumi/vagrant/centos6\
+
+\f2\b ==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+\f1\b0 \
+
+\f2\b ==> default: flag to force provisioning. Provisioners marked to run always will still run.
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant ssh\
+Last login: Wed Nov  4 13:22:54 2020 from 10.0.2.2\
+\
+This system is built by the Bento project by Chef Software\
+More information can be found at https://github.com/chef/bento\
+[vagrant@localhost ~]$ sudo mkdir -p /acom/it/logs/mid/wmb\
+[vagrant@localhost ~]$ /acom/it/config/mid/wmb\
+-bash: /acom/it/config/mid/wmb: 
+\f3 \'82\'bb\'82\'cc\'82\'e6\'82\'a4\'82\'c8\'83\'74\'83\'40\'83\'43\'83\'8b\'82\'e2\'83\'66\'83\'42\'83\'8c\'83\'4e\'83\'67\'83\'8a\'82\'cd\'82\'a0\'82\'e8\'82\'dc\'82\'b9\'82\'f1
+\f1 \
+[vagrant@localhost ~]$ ls -l /\
+total 94\
+drwxr-xr-x.   3 root    root     4096 2020-11-04 13:32 \cf7 acom\cf2 \
+dr-xr-xr-x.   2 root    root     4096 2020-10-23 12:54 \cf7 bin\cf2 \
+dr-xr-xr-x.   5 root    root     1024 2020-11-04 13:21 \cf7 boot\cf2 \
+drwxr-xr-x.  18 root    root     3520 2020-11-04 13:31 \cf7 dev\cf2 \
+drwxr-xr-x.  65 root    root     4096 2020-11-04 13:31 \cf7 etc\cf2 \
+drwxr-xr-x.   4 root    root     4096 2020-10-23 12:52 \cf7 home\cf2 \
+dr-xr-xr-x.  10 root    root     4096 2020-11-04 13:27 \cf7 lib\cf2 \
+dr-xr-xr-x.   8 root    root    12288 2020-10-23 12:54 \cf7 lib64\cf2 \
+drwx------.   2 root    root    16384 2020-10-23 12:51 \cf7 lost+found\cf2 \
+drwxr-xr-x.   2 root    root     4096 2011-09-23 11:50 \cf7 media\cf2 \
+drwxr-xr-x.   2 root    root     4096 2011-09-23 11:50 \cf7 mnt\cf2 \
+drwxr-xr-x.   5 root    root     4096 2020-11-04 13:28 \cf7 opt\cf2 \
+dr-xr-xr-x. 102 root    root        0 2020-11-04 13:31 \cf7 proc\cf2 \
+dr-xr-x---.   3 root    root     4096 2020-11-04 13:27 \cf7 root\cf2 \
+dr-xr-xr-x.   2 root    root    12288 2020-11-04 13:31 \cf7 sbin\cf2 \
+drwxr-xr-x.   7 root    root        0 2020-11-04 13:31 \cf7 selinux\cf2 \
+drwxr-xr-x.   2 root    root     4096 2011-09-23 11:50 \cf7 srv\cf2 \
+drwxr-xr-x   13 root    root        0 2020-11-04 13:31 \cf7 sys\cf2 \
+drwxrwxrwt.   7 root    root     4096 2020-11-04 13:31 \cf9 \cb10 tmp\cf2 \cb1 \
+drwxr-xr-x.  13 root    root     4096 2020-10-23 12:51 \cf7 usr\cf2 \
+drwxr-xr-x.   1 vagrant vagrant   256 2020-11-04 13:20 \cf7 vagrant\cf2 \
+drwxr-xr-x.  20 root    root     4096 2020-11-04 13:28 \cf7 var\cf2 \
+[vagrant@localhost ~]$ ls -lR /acom/\
+/acom/:\
+total 4\
+drwxr-xr-x. 3 root root 4096 2020-11-04 13:32 \cf7 it\cf2 \
+\
+/acom/it:\
+total 4\
+drwxr-xr-x. 3 root root 4096 2020-11-04 13:32 \cf7 logs\cf2 \
+\
+/acom/it/logs:\
+total 4\
+drwxr-xr-x. 3 root root 4096 2020-11-04 13:32 \cf7 mid\cf2 \
+\
+/acom/it/logs/mid:\
+total 4\
+drwxr-xr-x. 2 root root 4096 2020-11-04 13:32 \cf7 wmb\cf2 \
+\
+/acom/it/logs/mid/wmb:\
+total 0\
+[vagrant@localhost ~]$ sudo mkdir -p /acom/it/config/mid/wmb\
+[vagrant@localhost ~]$ ls -lR /acom/\
+/acom/:\
+total 4\
+drwxr-xr-x. 4 root root 4096 2020-11-04 13:33 \cf7 it\cf2 \
+\
+/acom/it:\
+total 8\
+drwxr-xr-x. 3 root root 4096 2020-11-04 13:33 \cf7 config\cf2 \
+drwxr-xr-x. 3 root root 4096 2020-11-04 13:32 \cf7 logs\cf2 \
+\
+/acom/it/config:\
+total 4\
+drwxr-xr-x. 3 root root 4096 2020-11-04 13:33 \cf7 mid\cf2 \
+\
+/acom/it/config/mid:\
+total 4\
+drwxr-xr-x. 2 root root 4096 2020-11-04 13:33 \cf7 wmb\cf2 \
+\
+/acom/it/config/mid/wmb:\
+total 0\
+\
+/acom/it/logs:\
+total 4\
+drwxr-xr-x. 3 root root 4096 2020-11-04 13:32 \cf7 mid\cf2 \
+\
+/acom/it/logs/mid:\
+total 4\
+drwxr-xr-x. 2 root root 4096 2020-11-04 13:32 \cf7 wmb\cf2 \
+\
+/acom/it/logs/mid/wmb:\
+total 0\
+[vagrant@localhost ~]$ ls -l /var/mqsi/co\
+common/     components/ config/     \
+[vagrant@localhost ~]$ ls -l /opt/ibm/mqsi/8.0.0.9/\
+.links/                                      dfdl/                                        pattern/\
+DD64/                                        dfdlc/                                       properties/\
+IBM_WebSphere_Message_Broker_InstallLog.log  docs/                                        readmes/\
+ODBC/                                        exmltConfig/                                 sample/\
+ODBC64/                                      include/                                     schema/\
+SecurityProviders/                           isadc/                                       snmp-mib/\
+Uninstaller/                                 itlm/                                        tools/\
+WMQFTE/                                      jplugin/                                     webadmin/\
+adapters/                                    jre17/                                       webservices/\
+bin/                                         lib/                                         wsrrclient/\
+cachesupport/                                license/                                     xlxp/\
+catalina/                                    lil/                                         xlxpc/\
+classes/                                     messages/                                    xml4c/\
+ct/                                          migration/                                   \
+ddl/                                         mqsifixinst.dat                              \
+[vagrant@localhost ~]$ sudo mkdir -p /var/mqsi/converters/icudt51l\
+[vagrant@localhost ~]$ ls -l /var/mqsi/co\
+common/     components/ config/     converters/ \
+[vagrant@localhost ~]$ sudo chown mqm:mqm -r /var/mqsi/converters\
+chown: 
+\f3 \'83\'49\'83\'76\'83\'56\'83\'87\'83\'93\'82\'aa\'88\'e1\'82\'a2\'82\'dc\'82\'b7
+\f1  -- 'r'\
+Try `chown --help' for more information.\
+[vagrant@localhost ~]$ sudo chown mqm:mqm -R /var/mqsi/converters\
+[vagrant@localhost ~]$ sudo chown mqm:mqm -R /acom\
+[vagrant@localhost ~]$ sudo chmod 755 -R /acom\
+[vagrant@localhost ~]$ sudo chmod 755 -R /var/mqsi/converters/\
+[vagrant@localhost ~]$ sudo /vagrant/mb/i\
+ibm-943_P130-1999.cnv  install.sh             \
+[vagrant@localhost ~]$ sudo cp /vagrant/mb/ibm-943_P130-1999.cnv /var/mqsi/converters/icudt51l/\
+[vagrant@localhost ~]$ sudo chmod 644 /var/mqsi/converters/icudt51l/ibm-943_P130-1999.cnv \
+[vagrant@localhost ~]$ sudo chown mqm:mqm /var/mqsi/converters/icudt51l/ibm-943_P130-1999.cnvs\
+chown: cannot access `/var/mqsi/converters/icudt51l/ibm-943_P130-1999.cnvs': 
+\f3 \'82\'bb\'82\'cc\'82\'e6\'82\'a4\'82\'c8\'83\'74\'83\'40\'83\'43\'83\'8b\'82\'e2\'83\'66\'83\'42\'83\'8c\'83\'4e\'83\'67\'83\'8a\'82\'cd\'82\'a0\'82\'e8\'82\'dc\'82\'b9\'82\'f1
+\f1 \
+[vagrant@localhost ~]$ sudo chown mqm:mqm /var/mqsi/converters/icudt51l/ibm-943_P130-1999.cnv\
+[vagrant@localhost ~]$ \
+[vagrant@localhost ~]$ \
+[vagrant@localhost ~]$ \
+[vagrant@localhost ~]$ \
+[vagrant@localhost ~]$ sudo cp /vagrant/mb/RizaConfig.js /acom/it/config/mid/wmb/\
+[vagrant@localhost ~]$ sudo chown mqm:mqm -R /acom/\
+[vagrant@localhost ~]$ sudo chmod 644 /acom/it/config/mid/wmb/RizaConfig.js \
+[vagrant@localhost ~]$ ls -lR /acom/\
+/acom/:\
+total 4\
+drwxr-xr-x. 4 mqm mqm 4096 2020-11-04 13:33 \cf7 it\cf2 \
+\
+/acom/it:\
+total 8\
+drwxr-xr-x. 3 mqm mqm 4096 2020-11-04 13:33 \cf7 config\cf2 \
+drwxr-xr-x. 3 mqm mqm 4096 2020-11-04 13:32 \cf7 logs\cf2 \
+\
+/acom/it/config:\
+total 4\
+drwxr-xr-x. 3 mqm mqm 4096 2020-11-04 13:33 \cf7 mid\cf2 \
+\
+/acom/it/config/mid:\
+total 4\
+drwxr-xr-x. 2 mqm mqm 4096 2020-11-04 13:38 \cf7 wmb\cf2 \
+\
+/acom/it/config/mid/wmb:\
+total 4\
+-rw-r--r--. 1 mqm mqm 201 2020-11-04 13:38 RizaConfig.js\
+\
+/acom/it/logs:\
+total 4\
+drwxr-xr-x. 3 mqm mqm 4096 2020-11-04 13:32 \cf7 mid\cf2 \
+\
+/acom/it/logs/mid:\
+total 4\
+drwxr-xr-x. 2 mqm mqm 4096 2020-11-04 13:32 \cf7 wmb\cf2 \
+\
+/acom/it/logs/mid/wmb:\
+total 0\
+[vagrant@localhost ~]$ ls -lR /var/mqsi/converters/\
+/var/mqsi/converters/:\
+total 4\
+drwxr-xr-x. 2 mqm mqm 4096 2020-11-04 13:37 \cf7 icudt51l\cf2 \
+\
+/var/mqsi/converters/icudt51l:\
+total 88\
+-rw-r--r--. 1 mqm mqm 89924 2020-11-04 13:37 ibm-943_P130-1999.cnv\
+[vagrant@localhost ~]$ \
+[vagrant@localhost ~]$ \
+[vagrant@localhost ~]$ \
+[vagrant@localhost ~]$ ls -l\
+total 0\
+[vagrant@localhost ~]$ cd /vagrant/\
+[vagrant@localhost vagrant]$ sudo -u mqm ./create.sh \
+++ dirname ./create.sh\
++ base=.\
+++ whoami\
++ '[' mqm = mqm ']'\
++ set +ux\
+\
+MQSI 8.0.0.9\
+/opt/ibm/mqsi/8.0.0.9\
+\
++ QMGR=QMFH01\
++ PORT=1414\
++ DEADQ=SYSTEM.ADMIN.EVENT\
++ BK=FH_BK01\
++ EG=EG_AS01\
++ EG_RIZA=EG_AS01_RIZA\
++ set +e\
++ mqsicreatebroker FH_BK01 -q QMFH01\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f3 \'82\'b1\'82\'cc
+\f1  WebSphere MQ 
+\f3 \'82\'cc\'83\'52\'83\'73\'81\'5b\'82\'cc\'8e\'63\'82\'e8\'82\'cc\'8e\'8e\'8d\'73\'8a\'fa\'8a\'d4\'82\'cd
+\f1  90 
+\f3 \'93\'fa\'82\'c5\'82\'b7\'81\'42
+\f1 \
+WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+
+\f3 \'83\'66\'83\'42\'83\'8c\'83\'4e\'83\'67\'83\'8a\'81\'5b
+\f1  '/var/mqm/qmgrs/QMFH01' 
+\f3 \'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b\'82\'cd\'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'8d\'cf\'82\'dd\'8a\'c2\'8b\'ab
+\f1  'Installation1' 
+\f3 \'82\'c9\'8a\'d6\'98\'41\'95\'74\'82\'af\'82\'e7\'82\'ea\'82\'c4\'82\'a2\'82\'dc\'82\'b7\'81\'42
+\f1 \
+
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b
+\f1  'QMFH01' 
+\f3 \'82\'cc\'83\'66\'83\'74\'83\'48\'83\'8b\'83\'67\'81\'45\'83\'49\'83\'75\'83\'57\'83\'46\'83\'4e\'83\'67\'82\'f0\'8d\'ec\'90\'ac\'82\'dc\'82\'bd\'82\'cd\'92\'75\'8a\'b7\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7\'81\'42
+\f1 \
+
+\f3 \'83\'66\'83\'74\'83\'48\'83\'8b\'83\'67\'81\'45\'83\'49\'83\'75\'83\'57\'83\'46\'83\'4e\'83\'67\'82\'cc\'93\'9d\'8c\'76
+\f1  : 
+\f3 \'8d\'ec\'90\'ac
+\f1  74
+\f3 \'81\'41\'92\'75\'8a\'b7
+\f1  0
+\f3 \'81\'41\'8e\'b8\'94\'73
+\f1  0\
+
+\f3 \'90\'dd\'92\'e8\'82\'f0\'8a\'ae\'97\'b9\'92\'86\'82\'c5\'82\'b7\'81\'42
+\f1 \
+
+\f3 \'90\'dd\'92\'e8\'82\'aa\'8a\'ae\'97\'b9\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+
+\f3 \'82\'b1\'82\'cc
+\f1  WebSphere MQ 
+\f3 \'82\'cc\'83\'52\'83\'73\'81\'5b\'82\'cc\'8e\'63\'82\'e8\'82\'cc\'8e\'8e\'8d\'73\'8a\'fa\'8a\'d4\'82\'cd
+\f1  90 
+\f3 \'93\'fa\'82\'c5\'82\'b7\'81\'42
+\f1 \
+WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b
+\f1  'QMFH01' 
+\f3 \'82\'f0\'8a\'4a\'8e\'6e\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7\'81\'42
+\f1 \
+
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b\'82\'cd\'83\'43\'83\'93\'83\'58\'83\'67\'81\'5b\'83\'8b\'8d\'cf\'82\'dd\'8a\'c2\'8b\'ab
+\f1  'Installation1' 
+\f3 \'82\'c9\'8a\'d6\'98\'41\'95\'74\'82\'af\'82\'e7\'82\'ea\'82\'c4\'82\'a2\'82\'dc\'82\'b7\'81\'42
+\f1 \
+
+\f3 \'83\'8d\'83\'4f\'82\'cc\'82\'e2\'82\'e8\'92\'bc\'82\'b5\'83\'74\'83\'46\'81\'5b\'83\'59\'92\'86\'82\'c9\'81\'41\'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b
+\f1  'QMFH01' 
+\f3 \'82\'c5
+\f1  5 
+\f3 \'83\'8d\'83\'4f\'81\'45\'83\'8c\'83\'52\'81\'5b\'83\'68
+\f1  
+\f3 \'82\'aa\'83\'41\'83\'4e\'83\'5a\'83\'58\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b
+\f1  'QMFH01' 
+\f3 \'82\'cc\'83\'8d\'83\'4f\'82\'cc\'82\'e2\'82\'e8\'92\'bc\'82\'b5\'82\'aa\'8a\'ae\'97\'b9\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b
+\f1  'QMFH01' 
+\f3 \'82\'cc\'83\'67\'83\'89\'83\'93\'83\'55\'83\'4e\'83\'56\'83\'87\'83\'93\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b\'82\'cc\'8f\'f3\'91\'d4\'82\'aa
+\f1  
+\f3 \'89\'f1\'95\'9c\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b
+\f1  'QMFH01' 
+\f3 \'82\'aa
+\f1  V7.5.0.2\
+
+\f3 \'82\'f0\'8e\'67\'97\'70\'82\'b5\'82\'c4\'8a\'4a\'8e\'6e\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+BIP8081 An exception was caught while processing the response message for the command, 'Unable to format an ImbException message for output, ImbException message number is BIP8000'.\
++ set -e\
++ /opt/mqm/bin/runmqsc QMFH01\
+5724-H72 (C) Copyright IBM Corp. 1994, 2011.  ALL RIGHTS RESERVED.\
+
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b
+\f1  QMFH01 
+\f3 \'82\'c9\'91\'ce\'82\'b5\'82\'c4
+\f1  MQSC 
+\f3 \'82\'f0\'8e\'6e\'93\'ae\'92\'86\'82\'c5\'82\'b7\'81\'42
+\f1 \
+\
+\
++ cat\
+     1 : ALTER QMGR +\
+       :   CHLAUTH(DISABLED) +\
+       :   DEADQ(SYSTEM.ADMIN.EVENT)\
+AMQ8005: WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b\'82\'aa\'95\'cf\'8d\'58\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     2 : DEFINE QLOCAL(SYSTEM.ADMIN.EVENT) +\
+       :   REPLACE\
+AMQ8006: WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     3 : ALTER CHANNEL(SYSTEM.BKR.CONFIG) CHLTYPE(SVRCONN) +\
+       :   MCAUSER('mqm')\
+AMQ8016: WebSphere MQ 
+\f3 \'83\'60\'83\'83\'83\'6c\'83\'8b\'82\'aa\'95\'cf\'8d\'58\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     4 : DEFINE LISTENER(QMFH01.LSR) TRPTYPE(TCP) +\
+       :   CONTROL(QMGR) +\
+       :   PORT(1414) +\
+       :   REPLACE\
+AMQ8626: WebSphere MQ 
+\f3 \'83\'8a\'83\'58\'83\'69\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     5 : START LISTENER(QMFH01.LSR)\
+AMQ8021: WebSphere MQ 
+\f3 \'83\'8a\'83\'58\'83\'69\'81\'5b\'82\'cc\'8a\'4a\'8e\'6e\'97\'76\'8b\'81\'82\'aa\'8e\'f3\'82\'af\'93\'fc\'82\'ea\'82\'e7\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+5 MQSC 
+\f3 \'83\'52\'83\'7d\'83\'93\'83\'68\'82\'aa\'93\'c7\'82\'dd\'8e\'e6\'82\'e7\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+
+\f3 \'8d\'5c\'95\'b6\'83\'47\'83\'89\'81\'5b\'82\'aa\'82\'a0\'82\'e9\'83\'52\'83\'7d\'83\'93\'83\'68\'82\'cd\'82\'a0\'82\'e8\'82\'dc\'82\'b9\'82\'f1\'81\'42
+\f1 \
+
+\f3 \'97\'4c\'8c\'f8\'82\'c8
+\f1  MQSC 
+\f3 \'83\'52\'83\'7d\'83\'93\'83\'68\'82\'cd\'82\'b7\'82\'d7\'82\'c4\'8f\'88\'97\'9d\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
++ /opt/mqm/bin/runmqsc QMFH01\
+5724-H72 (C) Copyright IBM Corp. 1994, 2011.  ALL RIGHTS RESERVED.\
+
+\f3 \'83\'4c\'83\'85\'81\'5b\'81\'45\'83\'7d\'83\'6c\'81\'5b\'83\'57\'83\'83\'81\'5b
+\f1  QMFH01 
+\f3 \'82\'c9\'91\'ce\'82\'b5\'82\'c4
+\f1  MQSC 
+\f3 \'82\'f0\'8e\'6e\'93\'ae\'92\'86\'82\'c5\'82\'b7\'81\'42
+\f1 \
+\
+\
+     1 : DEFINE QLOCAL(QC.DH.REQ) +\
+       :   REPLACE\
+AMQ8006: WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     2 : DEFINE QLOCAL(QL.DH.REQ) +\
+       :   REPLACE\
+AMQ8006: WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     3 : DEFINE QLOCAL(QA.DH.DL) +\
+       :   REPLACE\
+AMQ8006: WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     4 : DEFINE QALIAS(QA.DH.DF) +\
+       :   TARGET('QL.DH.HTTP_LSR') +\
+       :   REPLACE\
+AMQ8006: WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     5 : DEFINE QLOCAL(QL.DH.HTTP_LSR) +\
+       :   REPLACE\
+AMQ8006: WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     6 : DEFINE QLOCAL(QL.DH.REP) +\
+       :   REPLACE\
+AMQ8006: WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     7 : DEFINE QLOCAL(QL.DW.REP) +\
+       :   REPLACE\
+AMQ8006: WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+       : \
+     8 : DEFINE QLOCAL(QL.DH.ERR) +\
+       :   DEFPSIST(YES) +\
+       :   REPLACE\
+AMQ8006: WebSphere MQ 
+\f3 \'83\'4c\'83\'85\'81\'5b\'82\'aa\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+8 MQSC 
+\f3 \'83\'52\'83\'7d\'83\'93\'83\'68\'82\'aa\'93\'c7\'82\'dd\'8e\'e6\'82\'e7\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+
+\f3 \'8d\'5c\'95\'b6\'83\'47\'83\'89\'81\'5b\'82\'aa\'82\'a0\'82\'e9\'83\'52\'83\'7d\'83\'93\'83\'68\'82\'cd\'82\'a0\'82\'e8\'82\'dc\'82\'b9\'82\'f1\'81\'42
+\f1 \
+
+\f3 \'97\'4c\'8c\'f8\'82\'c8
+\f1  MQSC 
+\f3 \'83\'52\'83\'7d\'83\'93\'83\'68\'82\'cd\'82\'b7\'82\'d7\'82\'c4\'8f\'88\'97\'9d\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
++ export ICU_DATA=/var/mqsi/converters\
++ ICU_DATA=/var/mqsi/converters\
++ mqsistart FH_BK01\
+BIP8096I: 
+\f3 \'83\'52\'83\'7d\'83\'93\'83\'68\'82\'cc\'8b\'4e\'93\'ae\'82\'cd\'90\'ac\'8c\'f7\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42\'83\'52\'83\'93\'83\'7c\'81\'5b\'83\'6c\'83\'93\'83\'67\'82\'aa\'96\'e2\'91\'e8\'82\'c8\'82\'ad\'8e\'6e\'93\'ae\'82\'b5\'81\'41\'89\'d2\'93\'ae\'92\'86\'82\'c5\'82\'a0\'82\'e9\'82\'b1\'82\'c6\'82\'f0\'8a\'6d\'94\'46\'82\'b7\'82\'e9\'82\'bd\'82\'df\'82\'c9
+\f1  
+\f3 \'83\'56\'83\'58\'83\'65\'83\'80\'81\'45\'83\'8d\'83\'4f\'82\'f0\'8c\'9f\'8d\'b8\'82\'b5\'82\'c4\'82\'ad\'82\'be\'82\'b3\'82\'a2\'81\'42
+\f1  \
++ mqsicreateexecutiongroup FH_BK01 -e EG_AS01\
+BIP1124I: 
+\f3 \'83\'75\'83\'8d\'81\'5b\'83\'4a\'81\'5b
+\f1  'FH_BK01' 
+\f3 \'82\'c9\'8e\'c0\'8d\'73\'83\'4f\'83\'8b\'81\'5b\'83\'76
+\f1  'EG_AS01' 
+\f3 \'82\'f0\'8d\'ec\'90\'ac\'92\'86\'82\'c5\'82\'b7
+\f1 ...\
+BIP1117I: 
+\f3 \'8e\'c0\'8d\'73\'83\'4f\'83\'8b\'81\'5b\'83\'76\'82\'aa\'90\'b3\'8f\'ed\'82\'c9\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1  \
+\
+
+\f3 \'83\'75\'83\'8d\'81\'5b\'83\'4a\'81\'5b\'82\'aa\'8e\'c0\'8d\'73\'83\'4f\'83\'8b\'81\'5b\'83\'76\'82\'f0\'8f\'89\'8a\'fa\'89\'bb\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+BIP8071I: 
+\f3 \'83\'52\'83\'7d\'83\'93\'83\'68\'82\'aa\'8a\'ae\'97\'b9\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
++ mqsideploy FH_BK01 -e EG_AS01 -a ./mb/XMLCenter_D.bar\
+BIP1039I: bar 
+\f3 \'83\'74\'83\'40\'83\'43\'83\'8b
+\f1  '/vagrant/mb/XMLCenter_D.bar' 
+\f3 \'82\'f0\'83\'75\'83\'8d\'81\'5b\'83\'4a\'81\'5b
+\f1  'FH_BK01' 
+\f3 \'82\'c9\'83\'66\'83\'76\'83\'8d\'83\'43\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1  (
+\f3 \'8e\'c0\'8d\'73\'83\'4f\'83\'8b\'81\'5b\'83\'76
+\f1  'EG_AS01') ...\
+BIP1092I: 
+\f3 \'83\'75\'83\'8d\'81\'5b\'83\'4a\'81\'5b\'82\'aa\'83\'66\'83\'76\'83\'8d\'83\'43\'83\'81\'83\'93\'83\'67\'97\'76\'8b\'81\'82\'f0\'90\'b3\'8f\'ed\'82\'c9\'8f\'88\'97\'9d\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
++ mqsicreateexecutiongroup FH_BK01 -e EG_AS01_RIZA\
+BIP1124I: 
+\f3 \'83\'75\'83\'8d\'81\'5b\'83\'4a\'81\'5b
+\f1  'FH_BK01' 
+\f3 \'82\'c9\'8e\'c0\'8d\'73\'83\'4f\'83\'8b\'81\'5b\'83\'76
+\f1  'EG_AS01_RIZA' 
+\f3 \'82\'f0\'8d\'ec\'90\'ac\'92\'86\'82\'c5\'82\'b7
+\f1 ...\
+BIP1117I: 
+\f3 \'8e\'c0\'8d\'73\'83\'4f\'83\'8b\'81\'5b\'83\'76\'82\'aa\'90\'b3\'8f\'ed\'82\'c9\'8d\'ec\'90\'ac\'82\'b3\'82\'ea\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1  \
+\
+
+\f3 \'83\'75\'83\'8d\'81\'5b\'83\'4a\'81\'5b\'82\'aa\'8e\'c0\'8d\'73\'83\'4f\'83\'8b\'81\'5b\'83\'76\'82\'f0\'8f\'89\'8a\'fa\'89\'bb\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+BIP8071I: 
+\f3 \'83\'52\'83\'7d\'83\'93\'83\'68\'82\'aa\'8a\'ae\'97\'b9\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
++ mqsideploy FH_BK01 -e EG_AS01_RIZA -a ./mb/HTTPClient_D_X.bar\
+BIP1039I: bar 
+\f3 \'83\'74\'83\'40\'83\'43\'83\'8b
+\f1  '/vagrant/mb/HTTPClient_D_X.bar' 
+\f3 \'82\'f0\'83\'75\'83\'8d\'81\'5b\'83\'4a\'81\'5b
+\f1  'FH_BK01' 
+\f3 \'82\'c9\'83\'66\'83\'76\'83\'8d\'83\'43\'82\'b5\'82\'c4\'82\'a2\'82\'dc\'82\'b7
+\f1  (
+\f3 \'8e\'c0\'8d\'73\'83\'4f\'83\'8b\'81\'5b\'83\'76
+\f1  'EG_AS01_RIZA') ...\
+BIP1092I: 
+\f3 \'83\'75\'83\'8d\'81\'5b\'83\'4a\'81\'5b\'82\'aa\'83\'66\'83\'76\'83\'8d\'83\'43\'83\'81\'83\'93\'83\'67\'97\'76\'8b\'81\'82\'f0\'90\'b3\'8f\'ed\'82\'c9\'8f\'88\'97\'9d\'82\'b5\'82\'dc\'82\'b5\'82\'bd\'81\'42
+\f1 \
+[vagrant@localhost vagrant]$ logout\
+Connection to 127.0.0.1 closed.\
+natsumi@Natsumis-PC centos6 % \
+natsumi@Natsumis-PC centos6 % \
+natsumi@Natsumis-PC centos6 % \
+natsumi@Natsumis-PC centos6 % vagrant halt\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant up  \
+Bringing machine 'default' up with 'virtualbox' provider...\
+
+\f2\b ==> default: Checking if box 'bento/centos-6.10' version '202010.23.0' is up to date...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set forwarded ports...
+\f1\b0 \
+
+\f2\b ==> default: Clearing any previously set network interfaces...
+\f1\b0 \
+
+\f2\b ==> default: Preparing network interfaces based on configuration...
+\f1\b0 \
+    default: Adapter 1: nat\
+
+\f2\b ==> default: Forwarding ports...
+\f1\b0 \
+    default: 22 (guest) => 2222 (host) (adapter 1)\
+
+\f2\b ==> default: Running 'pre-boot' VM customizations...
+\f1\b0 \
+
+\f2\b ==> default: Booting VM...
+\f1\b0 \
+
+\f2\b ==> default: Waiting for machine to boot. This may take a few minutes...
+\f1\b0 \
+    default: SSH address: 127.0.0.1:2222\
+    default: SSH username: vagrant\
+    default: SSH auth method: private key\
+
+\f2\b ==> default: Machine booted and ready!
+\f1\b0 \
+
+\f2\b ==> default: Checking for guest additions in VM...
+\f1\b0 \
+
+\f2\b ==> default: Mounting shared folders...
+\f1\b0 \
+    default: /vagrant => /Users/natsumi/vagrant/centos6\
+
+\f2\b ==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+\f1\b0 \
+
+\f2\b ==> default: flag to force provisioning. Provisioners marked to run always will still run.
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % vagrant ssh\
+Last login: Wed Nov  4 13:31:52 2020 from 10.0.2.2\
+\
+This system is built by the Bento project by Chef Software\
+More information can be found at https://github.com/chef/bento\
+[vagrant@localhost ~]$ vagrant halt\
+-bash: vagrant: command not found\
+[vagrant@localhost ~]$ logout\
+Connection to 127.0.0.1 closed.\
+natsumi@Natsumis-PC centos6 % vagrant halt\
+
+\f2\b ==> default: Attempting graceful shutdown of VM...
+\f1\b0 \
+natsumi@Natsumis-PC centos6 % \
+}
