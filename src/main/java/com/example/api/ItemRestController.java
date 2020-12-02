@@ -20,7 +20,7 @@ import com.example.domain.Item;
 import com.example.service.ItemService;
 
 @RestController
-@RequestMapping("xml")
+@RequestMapping("/api/items")
 public class ItemRestController {
 	@Autowired
 	ItemService itemService;
