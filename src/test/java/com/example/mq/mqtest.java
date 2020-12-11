@@ -1,4 +1,4 @@
-package com.example.mq;
+	package com.example.mq;
 
 import java.io.IOException;
 
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import com.ibm.mq.MQException;
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;
 import com.ibm.msg.client.wmq.compat.base.internal.MQEnvironment;
-import com.ibm.msg.client.wmq.compat.base.internal.MQGetMessageOptions;
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 import com.ibm.msg.client.wmq.compat.base.internal.MQPutMessageOptions;
 import com.ibm.msg.client.wmq.compat.base.internal.MQQueue;
