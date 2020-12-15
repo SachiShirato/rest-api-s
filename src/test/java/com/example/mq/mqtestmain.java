@@ -22,8 +22,7 @@ public class mqtestmain {
 	private static String MQQueueManagerName = "QMFH01";
 	private static String accessQueueName = "QL.DH.ERR";
 	private static MQQueueManager qmgr;
-	private static MQQueue queue;	
-	
+	private static MQQueue queue;		
 	
 	@BeforeEach
 	void setUp() throws Exception {	
@@ -39,6 +38,11 @@ public class mqtestmain {
 	@Test
 	void test() {
 		try {
+//編集箇所　2			
+			int priority = 5;	
+			int characterSet = 943;	
+			String massage = "This is a message";	
+
 			
 			qmgr = new MQQueueManager(mqtestmain.MQQueueManagerName);
 			int openOption = MQC.MQOO_INPUT_AS_Q_DEF | MQC.MQOO_OUTPUT;
@@ -47,15 +51,17 @@ public class mqtestmain {
 			
 //put 
 			MQPutMessageOptions mqpmo = new MQPutMessageOptions();
-			mqpmo.options = MQC.MQPMO_NO_SYNCPOINT;
-//編集箇所　2 put(int priority,int characterSet,String massage)		
-			queue.put(mqstb.mqput(5,943,"This is a message"));	
+			mqpmo.options = MQC.MQPMO_NO_SYNCPOINT;	
+			queue.put(mqstb.mqput(priority,characterSet,massage));	
 				
 			
 //get
 			System.out.println(mqstb.mqget(queue,17));
 			
+			
 //エラー投げている	throw new MQException(0, 9999, "dd");
+			
+			
 		} catch (MQException | IOException e) {
 			System.out.println("IOException occurred");
 			e.printStackTrace();
