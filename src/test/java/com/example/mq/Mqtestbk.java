@@ -16,7 +16,7 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQPutMessageOptions;
 import com.ibm.msg.client.wmq.compat.base.internal.MQQueue;
 import com.ibm.msg.client.wmq.compat.base.internal.MQQueueManager;
 
-public class mqtest {
+public class Mqtestbk {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {

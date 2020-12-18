@@ -3,25 +3,69 @@ package com.example.mq;
 import java.util.Objects;
 
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;
+import com.ibm.msg.client.wmq.compat.base.internal.MQEnvironment;
 import com.ibm.msg.client.wmq.compat.base.internal.MQGetMessageOptions;
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 import com.ibm.msg.client.wmq.compat.base.internal.MQPutMessageOptions;
 import com.ibm.msg.client.wmq.compat.base.internal.MQQueue;
 import com.ibm.msg.client.wmq.compat.base.internal.MQQueueManager;
 
-public class Mqstb {
-	static MQQueueManager qmgr = null;
-	static MQQueue queue = null;
-	static final int PRIORITY = 5;
-	static final int CHARACTER_SET = 943;
-	static final int LENGTH = 17;
+//public abstract class AbstractMqtestmain {
+public interface MQTest {
+
+//	private MQQueue queue = null;
+//	private static final int PRIORITY = 5;
+//	private static final int CHARACTER_SET = 943;
+//	private static final int LENGTH = 17;
+//
+//	protected abstract String qmgrname();
+//
+//	protected abstract String host();
+//
+//	protected abstract String channel();
+//
+//	protected abstract int port();
+
+//	final MQQueueManager qmgr = null;
+//	final MQQueue queue = null;
+	int PRIORITY = 5;
+	int CHARACTER_SET = 943;
+	int LENGTH = 17;
+
+	String qmgrname();
+
+	String host();
+
+	String channel();
+
+	int port();
+
+//	@BeforeEach
+//	void setUpAll() throws Exception {
+//		System.out.println("クラス共通設定");
+//
+//		env();
+////		MQEnvironment.hostname = HOSTNAME;
+////		MQEnvironment.channel = CHANNEL;
+////		MQEnvironment.port = PORT;
+//	}
+//
+	default void env() {
+		// TODO 自動生成されたメソッド・スタブ
+		MQEnvironment.hostname = host();
+		MQEnvironment.channel = channel();
+		MQEnvironment.port = port();
+	}
 
 //
 //put
-	public static void mqput(String MQQueueManagerName, String accessQueueName, String massage) {
+	default void mqput(String accessQueueName, String massage) {
 
+		env();
+		MQQueueManager qmgr = null;
+		MQQueue queue = null;
 		try {
-			qmgr = new MQQueueManager(MQQueueManagerName);
+			qmgr = new MQQueueManager(qmgrname());
 			queue = qmgr.accessQueue(accessQueueName, MQC.MQOO_OUTPUT);
 
 			MQPutMessageOptions mqpmo = new MQPutMessageOptions();
@@ -41,11 +85,13 @@ public class Mqstb {
 		}
 	}
 
-// get
-	public static String mqget(String MQQueueManagerName, String accessQueueName) {
-
+	// get
+	default String mqget(String accessQueueName) {
+		env();
+		MQQueueManager qmgr = null;
+		MQQueue queue = null;
 		try {
-			qmgr = new MQQueueManager(MQQueueManagerName);
+			qmgr = new MQQueueManager(qmgrname());
 
 			queue = qmgr.accessQueue(accessQueueName, MQC.MQOO_INPUT_AS_Q_DEF);
 
@@ -65,14 +111,14 @@ public class Mqstb {
 	}
 
 //エラー処理
-	public static void mqerr(Exception e) {
+	default void mqerr(Exception e) {
 		System.out.println("Exception occurred");
 		e.printStackTrace();
 
 	}
 
 //クローズ処理
-	public static void mqclose(MQQueueManager qmgr, MQQueue queue) {
+	default void mqclose(MQQueueManager qmgr, MQQueue queue) {
 		try {
 			if (queue != null) {
 				queue.close();
