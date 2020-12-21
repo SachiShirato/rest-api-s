@@ -2,11 +2,6 @@ package com.example.mq;
 
 public interface QMFH01Test extends MQTest {
 
-//	private static final String HOSTNAME = "localhost";
-//	private static final String CHANNEL = "SYSTEM.BKR.CONFIG";
-//	private static final int PORT = 50014;
-//	private static final String QUEUE_MANAGER_NAME = "QMFH01";
-
 	String HOSTNAME = "localhost";
 	String CHANNEL = "SYSTEM.BKR.CONFIG";
 	int PORT = 50014;

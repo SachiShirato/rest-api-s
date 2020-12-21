@@ -1,5 +1,7 @@
 package com.example.mq;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
@@ -12,7 +14,6 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQPutMessageOptions;
 import com.ibm.msg.client.wmq.compat.base.internal.MQQueue;
 import com.ibm.msg.client.wmq.compat.base.internal.MQQueueManager;
 
-//public abstract class AbstractMqtestmain {
 public interface MQTest {
 
 	int PRIORITY = 5;
@@ -28,7 +29,6 @@ public interface MQTest {
 
 //環境設定	
 	default void env() {
-		// TODO 自動生成されたメソッド・スタブ
 		MQEnvironment.hostname = host();
 		MQEnvironment.channel = channel();
 		MQEnvironment.port = port();
@@ -47,23 +47,13 @@ public interface MQTest {
 
 //初期設定（MQの中身を空にする）	
 	default void mqgetnull(String ACCESS_QUEUE_NAME) {
-
-		String str = "a";
-		String end = "end";
+		String str2;
 		int i = 1;
+		do {
+			str2 = mqget(ACCESS_QUEUE_NAME);
+			System.out.println("ごみ:" + str2 + "/件数:" + i++);
+		} while (str2 != null);
 
-		mqput(ACCESS_QUEUE_NAME, end);
-		while (str != "b") {
-			String str2 = mqget(ACCESS_QUEUE_NAME);
-
-			
-			if (str2.equals(end)) {
-				str = "b";
-			}else {
-				System.out.println("ごみ:"+str2+ "/件数:"+i++);	
-			}
-
-		}
 	}
 
 //MQMessageからボディー（String）抽出	
@@ -75,15 +65,36 @@ public interface MQTest {
 				builder.append(msg.readLine() + System.lineSeparator());
 			String strgetMassage = Optional.of(builder.toString()).get();
 			return strgetMassage.substring(0, strgetMassage.length() - 2);
-//			return Optional.of(builder.toString());
-//			return Optional.of(msg.readStringOfByteLength(msg.getMessageLength()));
-//
+
 		} catch (IOException e) {
 			return null;
 		}
 	}
 
-/* put *************************************************************************************/
+//確認
+	default void mqchek(MQMessage putMQmassage, MQMessage getMQmassage) {
+		assertEquals(readLine(putMQmassage), readLine(getMQmassage));
+		System.out.println("putMQmassage(body) :" + readLine(putMQmassage) + ":");
+		System.out.println("getMQmassage(body) :" + readLine(getMQmassage) + ":");
+
+		assertEquals(putMQmassage.priority, getMQmassage.priority);
+		System.out.println("putMQmassage(priority) :" + putMQmassage.priority);
+		System.out.println("getMQmassage(priority) :" + getMQmassage.priority);
+
+		assertEquals(putMQmassage.characterSet, getMQmassage.characterSet);
+		System.out.println("putMQmassage(characterSet) :" + putMQmassage.characterSet);
+		System.out.println("getMQmassage(characterSet) :" + getMQmassage.characterSet);
+	}
+
+	default void mqchek(String putMassage, String getMassage) {
+		assertEquals(putMassage, getMassage);
+		System.out.println("putMassage :" + putMassage + ":");
+		System.out.println("getMassage :" + getMassage + ":");
+	}
+
+	/*
+	 * put
+	 *************************************************************************************/
 	// put(入力がMQMassage)
 	default void mqput(String accessQueueName, MQMessage putMessage) {
 		env();
@@ -105,7 +116,6 @@ public interface MQTest {
 		}
 	}
 
-	//
 	// put(入力がメッセージ)
 	default void mqput(String accessQueueName, String massage) {
 
@@ -130,9 +140,11 @@ public interface MQTest {
 		}
 	}
 
-/* get *************************************************************************************/
+	/*
+	 * get
+	 *************************************************************************************/
 	// getbody
-//	default MQMessage mqgetbody(String accessQueueName) {
+
 	default MQMessage mqget(String accessQueueName, String a) {
 		env();
 		MQQueueManager qmgr = null;
@@ -181,8 +193,9 @@ public interface MQTest {
 		}
 	}
 
-	
-/* err *************************************************************************************/	
+	/*
+	 * err
+	 *************************************************************************************/
 //エラー処理
 	default void mqerr(Exception e) {
 		System.out.println("Exception occurred");
