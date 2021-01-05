@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.example.mq.QMFH01Test;
+import com.example.mq.QUEUE;
 //import com.example.mq.QUEUE;
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
@@ -27,7 +28,10 @@ public class Mqtestmain implements QMFH01Test {
 		String putMassage = "HHHkkkkkkkkkkkkk";
 ////put(入力がMQメッセージ)
 		MQMessage putMQmassage = createMQMessage(putMassage);
-		mqput(ACCESS_QUEUE_NAME, putMQmassage);
+		putMQmassage.replyToQueueManagerName=qmgrname();
+		putMQmassage.replyToQueueName=QUEUE.QL_DW_REP.getQName();
+
+		mqput(QUEUE.QC_DH_REQ.getQName(), putMQmassage);
 
 
 

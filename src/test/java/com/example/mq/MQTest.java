@@ -22,7 +22,7 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQQueueManager;
 public interface MQTest {
 
 	int PRIORITY = 5;
-	int CHARACTER_SET = 943;
+	int CHARACTER_SET = 1208;
 
 	String qmgrname();
 
@@ -43,8 +43,10 @@ public interface MQTest {
 		MQMessage putBody = new MQMessage();
 		putBody.priority = PRIORITY;
 		putBody.characterSet = CHARACTER_SET;
+		
 		putBody.writeString(MQMassageBody);
 		putBody.messageId = MQC.MQMI_NONE;
+		
 		return (putBody);
 
 	}
