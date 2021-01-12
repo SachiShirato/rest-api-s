@@ -6,14 +6,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.xpath.XPathExpressionException;
+
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 
 import com.example.xml.XMLTest;
 
 public interface XMLCENTERTest extends XMLTest {
-
-	String RC = "01";
 
 	List<String> TsList = new ArrayList<String>() {
 		{
@@ -33,27 +32,22 @@ public interface XMLCENTERTest extends XMLTest {
 		return gblpath;
 	}
 
-	default boolean checkDefault(Document putMQmassage, Document getMQmassage) throws ParseException {
+	default boolean checkDefault(Document putMQmassage, Document getMQmassage)
+			throws ParseException, XPathExpressionException {
 
-		if (!checkDefaultRc(getMQmassage)
-				|| (!checkDefaultTs(putMQmassage, getMQmassage))) {
-			return false;
-		}
-		return true;
-	}
-	
-	default boolean checkDefaultRc(Document getMQmassage) throws ParseException {
-
-		return RC.equals((getXmlEvaluate(xmlGlbPath("RC"), getMQmassage)).toString());				
+		return (checkDefaultRc(getMQmassage) && (checkDefaultTs(putMQmassage, getMQmassage)));
 	}
 
-	default boolean checkDefaultTs(Document putMQmassage, Document getMQmassage) throws ParseException {
+	default boolean checkDefaultRc(Document getMQmassage) throws ParseException, XPathExpressionException {
 
-		NodeList putlist = putMQmassage.getElementsByTagName("TS");
+		return "01".equals((getXmlEvaluate(xmlGlbPath("RC"), getMQmassage)).toString());
+	}
 
-		for (int i = 0; i < putlist.getLength(); i++) {
-			int y = i + 1;
-			String ts = "TS[" + y + "]";
+	default boolean checkDefaultTs(Document putMQmassage, Document getMQmassage)
+			throws ParseException, XPathExpressionException {
+
+		for (int i = 0; i < putMQmassage.getElementsByTagName("TS").getLength(); i++) {
+			String ts = "TS[" + (i + 1) + "]";
 
 			for (int x = 0; x < TsList.size(); x++) {
 				String tsName = TsList.get(x);
@@ -71,7 +65,7 @@ public interface XMLCENTERTest extends XMLTest {
 		return true;
 	}
 
-	default boolean checkGetTs(Document getMQmassage) throws ParseException {
+	default boolean checkGetTs(Document getMQmassage) throws ParseException, XPathExpressionException {
 
 		if (!("2".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TsList.get(0)), getMQmassage))
 				&& ("1".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TsList.get(1)), getMQmassage)))
@@ -82,11 +76,10 @@ public interface XMLCENTERTest extends XMLTest {
 		return true;
 	}
 
-	default Date getTimestamp(Document getMQmassage) throws ParseException {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmssSSS");
-		NodeList getlist = getMQmassage.getElementsByTagName("TS");
+	default Date getTimestamp(Document getMQmassage) throws ParseException, XPathExpressionException {
 
-		return dateFormat
-				.parse(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[" + getlist.getLength() + "]"), getMQmassage));
+		return new SimpleDateFormat("yyyyMMddhhmmssSSS").parse(getXmlEvaluate(
+				xmlGlbPath("TIMESTAMP", "TS[" + getMQmassage.getElementsByTagName("TS").getLength() + "]"),
+				getMQmassage));
 	}
 }

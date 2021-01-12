@@ -2,7 +2,6 @@ package com.example.xml;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -11,7 +10,6 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -28,91 +26,64 @@ import org.xmlunit.diff.Difference;
 
 public interface XMLTest {
 
-	default Document changeStringToDocument(String xmlString) {
-		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder;
+	default Document changeStringToDocument(String xmlString)
+			throws ParserConfigurationException, SAXException, IOException {
 
-			builder = factory.newDocumentBuilder();
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder;
 
-			Document document = builder.parse(new InputSource(new StringReader(xmlString)));
-			document.setXmlStandalone(true);
+		builder = factory.newDocumentBuilder();
 
-			return document;
-		} catch (ParserConfigurationException | SAXException | IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+		Document document = builder.parse(new InputSource(new StringReader(xmlString)));
+		document.setXmlStandalone(true);
 
-	default String changeDocumentToString(Document document) {
-
-		DOMSource source = new DOMSource(document);
-
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer;
-		try {
-			transformer = transformerFactory.newTransformer();
-			StreamResult result = new StreamResult(new StringWriter());
-			transformer.transform(source, result);
-			String str1 = result.getWriter().toString();
-			return str1;
-		} catch (TransformerException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return document;
 
 	}
 
-	default String pathToString(String path) {
+	default String changeDocumentToString(Document document) throws TransformerException {
 
-		try (InputStream is = getClass().getResourceAsStream(path);
-				BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+		StreamResult result = new StreamResult(new StringWriter());
+		TransformerFactory.newInstance().newTransformer().transform(new DOMSource(document), result);
+		return result.getWriter().toString();
+	}
+
+	default String pathToString(String path) throws IOException {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)))) {
 
 			StringBuilder sb = new StringBuilder();
 			String line;
 
-			while ((line = br.readLine()) != null) {
-				sb.append(line + System.lineSeparator());
+			sb.append(br.readLine());
 
+			while ((line = br.readLine()) != null) {
+				sb.append(System.lineSeparator() + line);
 			}
 			return sb.toString();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-	}
-
-	default String getXmlEvaluate(String path, Document document) {
-		try {
-
-			return XPathFactory.newInstance().newXPath().evaluate(path, document);
-		} catch (XPathExpressionException e) {
-			e.printStackTrace();
-			return null;
 		}
 	}
 
+	default String getXmlEvaluate(String path, Document document) throws XPathExpressionException {
 
+		return XPathFactory.newInstance().newXPath().evaluate(path, document);
+	}
 
 	default <T> boolean check(T putMQmassage, T getMQmassage, List<String> list) {
 
-		// TODO
-		Diff diff = DiffBuilder.compare(getMQmassage).withTest(putMQmassage)
+		Diff diff = DiffBuilder.compare(getMQmassage).withTest(getMQmassage)
 				.withNodeFilter(node -> !list.contains(node.getNodeName())).build();
 
+//	    Diff diff = DiffBuilder.compare(getMQmassage).withTest(getMQmassage)
+//	    	      .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byName))
+//	    	      .checkForSimilar().build();
+
+//		return diff.hasDifferences();
 		java.util.Iterator<Difference> iter = diff.getDifferences().iterator();
 		int size = 0;
 		while (iter.hasNext()) {
 			System.out.println(iter.next().toString());
 			size++;
 		}
-
-		// TODO
 		return (size == 0);
-
 	}
-
 }

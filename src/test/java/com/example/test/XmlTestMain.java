@@ -29,8 +29,7 @@ public class XmlTestMain implements QMFH01Test, XMLCENTERTest {
 		System.out.println(str1);
 
 		Document document = changeStringToDocument(str1);
-		System.out.println(getXmlEvaluate(xmlGlbPath("TIMESTAMP","TS[2]","@SVR"), document));
-
+		System.out.println(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[2]", "@SVR"), document));
 
 	}
 }

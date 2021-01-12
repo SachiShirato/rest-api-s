@@ -9,7 +9,7 @@ public interface QMFH01Test extends MQTest {
 
 	String ACCESS_QUEUE_NAME = QUEUE.QL_DH_ERR.getQName();
 
-//	@Override
+	@Override
 	default String qmgrname() {
 		return QUEUE_MANAGER_NAME;
 	}
