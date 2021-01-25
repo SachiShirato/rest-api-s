@@ -20,7 +20,7 @@ import com.example.domain.Item;
 import com.example.service.ItemService;
 
 @RestController
-@RequestMapping("/api/items")
+@RequestMapping("xml")
 public class ItemRestController {
 	@Autowired
 	ItemService itemService;
@@ -79,6 +79,29 @@ public class ItemRestController {
 		return body;
 	}
 	
+	@PostMapping(path = "/DF300")
+	@ResponseStatus(HttpStatus.CREATED)
+	String postItem2(@RequestBody String body) throws Exception {
+//		try {
+//			Thread.sleep(10000);
+//		} catch (InterruptedException e) {
+//			// TODO 自動生成された catch ブロック
+//			e.printStackTrace();
+//		}
+		throw new Exception();
+//		return null;
+	}
+	@PostMapping(path = "/DF400")
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	String postItem4(@RequestBody String body) {
+		return body;
+	}
+	
+	@PostMapping(path = "/DF500")
+	@ResponseStatus(HttpStatus.NOT_EXTENDED)
+	String postItem5(@RequestBody String body) {
+		return body;
+	}
 	
 	
 	/**

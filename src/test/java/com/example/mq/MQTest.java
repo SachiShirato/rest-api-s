@@ -1,6 +1,9 @@
 package com.example.mq;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.rmi.server.UID;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,6 +44,11 @@ public interface MQTest {
 		putBody.priority = PRIORITY;
 		putBody.characterSet = CHARACTER_SET;
 
+		putBody.messageType = MQC.MQMT_REQUEST;
+		putBody.format = MQC.MQFMT_STRING;
+		putBody.persistence = MQC.MQPER_NOT_PERSISTENT;
+		putBody.expiry = 30000; // 100ms
+
 		putBody.writeString(MQMassageBody);
 		putBody.messageId = MQC.MQMI_NONE;
 
@@ -52,11 +60,12 @@ public interface MQTest {
 
 		for (String name : ACCESS_QUEUE_NAME_LIST) {
 			int i = 1;
-			String str;
+			MQMessage str;
 			do {
-				str = toStringMQMessage(mqGet(name));
+				str = mqGet(name);
 				if (str != null) {
-					System.out.println("MQname:" + name + "/ごみ:" + str + "/件数:" + i++);
+//					System.out.println("MQname:" + name + "/ごみ:" + str + "/件数:" + i++);
+					System.out.println("MQname:" + name + "/件数:" + i++);
 				}
 			} while (str != null);
 		}
@@ -80,14 +89,13 @@ public interface MQTest {
 		builder.append(msg.readLine());
 		while (msg.getDataLength() > 0)
 			builder.append(System.lineSeparator() + msg.readLine());
-		String strgetMassage = builder.toString();
-		return strgetMassage.substring(0, strgetMassage.length());
+		return builder.toString();
 	}
 
 	default boolean mqCheck(MQMessage putMQmassage, MQMessage getMQmassage) throws IOException {
 
-		System.out.println("putMQmassage(body) :" + toStringMQMessage(putMQmassage) + ":");
-		System.out.println("getMQmassage(body) :" + toStringMQMessage(getMQmassage) + ":");
+//		System.out.println("putMQmassage(body) :" + toStringMQMessage(putMQmassage) + ":");
+//		System.out.println("getMQmassage(body) :" + toStringMQMessage(getMQmassage) + ":");
 		System.out.println("putMQmassage(priority) :" + putMQmassage.priority);
 		System.out.println("getMQmassage(priority) :" + getMQmassage.priority);
 		System.out.println("putMQmassage(characterSet) :" + putMQmassage.characterSet);
@@ -99,12 +107,13 @@ public interface MQTest {
 		System.out.println(
 				"getMQmassage(correlationId) :" + DatatypeConverter.printHexBinary(getMQmassage.correlationId));
 
-		return ((toStringMQMessage(putMQmassage).equals(toStringMQMessage(getMQmassage)))
-				&& (putMQmassage.priority == (getMQmassage.priority))
-				&& (putMQmassage.characterSet == (getMQmassage.characterSet))
-				&& (DatatypeConverter.printHexBinary(putMQmassage.messageId)
-						.equals(DatatypeConverter.printHexBinary(getMQmassage.messageId))));
+//		return ((toStringMQMessage(putMQmassage).equals(toStringMQMessage(getMQmassage)))
+				return ((putMQmassage.priority == (getMQmassage.priority))
+				&& (putMQmassage.characterSet == (getMQmassage.characterSet)));
+//				&& (DatatypeConverter.printHexBinary(putMQmassage.messageId)
+//						.equals(DatatypeConverter.printHexBinary(getMQmassage.messageId))));
 	}
+
 
 	default boolean mqCheck(String putMassage, String getMassage) {
 		System.out.println("putMassage :" + putMassage + ":");
@@ -118,12 +127,11 @@ public interface MQTest {
 		MQQueue queue = null;
 		try {
 			qmgr = new MQQueueManager(qmgrname());
-			queue = qmgr.accessQueue(accessQueueName, MQC.MQOO_OUTPUT);
+			queue = qmgr.accessQueue(accessQueueName, MQC.MQOO_OUTPUT | MQC.MQOO_SET_IDENTITY_CONTEXT);
 
-			MQPutMessageOptions mqpmo = new MQPutMessageOptions();
-			mqpmo.options = MQC.MQPMO_NO_SYNCPOINT;
-
-			queue.put(putMessage, mqpmo);
+			MQPutMessageOptions mqmo = new MQPutMessageOptions();
+			mqmo.options = MQC.MQPMO_NO_SYNCPOINT | MQC.MQPMO_SET_IDENTITY_CONTEXT;
+			queue.put(putMessage, mqmo);
 
 		} finally {
 			mqclose(qmgr, queue);
@@ -142,8 +150,10 @@ public interface MQTest {
 
 		MQGetMessageOptions mqgmo = new MQGetMessageOptions();
 		mqgmo.matchOptions = MQC.MQMO_MATCH_MSG_ID;
+		MQMessage getMsg = new MQMessage();
+		getMsg.messageId = messageId;
 
-		return mqGetWait(accessQueueName, mqgmo, new MQMessage());
+		return mqGetWait(accessQueueName, mqgmo, getMsg);
 	}
 
 	default MQMessage mqGetWaitCorrelid(String accessQueueName, byte[] messageId) throws MQException {
@@ -195,8 +205,11 @@ public interface MQTest {
 			return getMessage;
 
 		} catch (MQException e) {
-			if (e.getReason() != CMQC.MQRC_NO_MSG_AVAILABLE)
+			if (e.getReason() != CMQC.MQRC_NO_MSG_AVAILABLE) {
 				mqerr(e);
+				throw e;
+			}
+
 			return null;
 
 		} finally {
@@ -216,6 +229,82 @@ public interface MQTest {
 
 		if (Objects.nonNull(qmgr)) {
 			qmgr.disconnect();
+		}
+	}
+
+	default String getUnique24() {
+		try {
+			return new StringBuffer()
+					.append(getHex8(InetAddress.getByName(InetAddress.getLocalHost().getHostName()).hashCode()))
+					.append(getHex8(new UID().hashCode())).append("00000000").toString().toUpperCase();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	default String getHex8(int value) {
+		StringBuffer sb = new StringBuffer(8);
+		for (int i = 0; i < 8; i++) {
+			sb.append("0123456789abcdef".charAt(value & 15));
+			value >>= 4;
+
+		}
+		return sb.reverse().toString();
+	}
+	
+	
+	
+	
+	
+	default void putEnabled(String qName) throws MQException {
+		this.alterQueue(qName, new int[] { MQC.MQIA_INHIBIT_PUT }, new int[] { MQC.MQQA_PUT_ALLOWED });
+	}
+	/**
+	 * キュー属性を PUT(DISABLED)に変更する。
+	 * 
+	 * @param qName キュー
+	 * @throws MQException
+	 */
+	default void putDisabled(String qName) throws MQException {
+		this.alterQueue(qName, new int[] { MQC.MQIA_INHIBIT_PUT }, new int[] { MQC.MQQA_PUT_INHIBITED });
+	}
+	/**
+	 * キュー属性を GET(ENABLED)に変更する。
+	 * 
+	 * @param qName キュー
+	 * @throws MQException
+	 */
+	default void getEnabled(String qName) throws MQException {
+		this.alterQueue(qName, new int[] { MQC.MQIA_INHIBIT_GET }, new int[] { MQC.MQQA_GET_ALLOWED });
+	}
+	/**
+	 * キュー属性を GET(DISABLED)に変更する。
+	 * 
+	 * @param qName キュー
+	 * @throws MQException
+	 */
+	default void getDisabled(String qName) throws MQException {
+		this.alterQueue(qName, new int[] { MQC.MQIA_INHIBIT_GET }, new int[] { MQC.MQQA_GET_INHIBITED });
+	}
+	/**
+	 * キュー属性を変更する。
+	 * 
+	 * @param qName  キュー
+	 * @param column 属性
+	 * @param value  値
+	 * @throws MQException
+	 */
+	default void alterQueue(String qName, int[] column, int[] value) throws MQException {
+		this.setMQEnvironment();
+		MQQueueManager qmgr = null;
+		MQQueue queue = null;
+		try {
+			qmgr = new MQQueueManager(qmgrname());
+			queue = qmgr.accessQueue(qName, MQC.MQOO_SET);
+			queue.set(column, value, null);
+		} finally {
+			mqclose(qmgr, queue);
 		}
 	}
 }

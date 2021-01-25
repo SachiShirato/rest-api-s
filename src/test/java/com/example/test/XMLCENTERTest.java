@@ -40,7 +40,7 @@ public interface XMLCENTERTest extends XMLTest {
 
 	default boolean checkDefaultRc(Document getMQmassage) throws ParseException, XPathExpressionException {
 
-		return "01".equals((getXmlEvaluate(xmlGlbPath("RC"), getMQmassage)).toString());
+		return "R".equals((getXmlEvaluate(xmlGlbPath("RC"), getMQmassage)).toString());
 	}
 
 	default boolean checkDefaultTs(Document putMQmassage, Document getMQmassage)
