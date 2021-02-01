@@ -1,11 +1,15 @@
 package com.example.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -97,12 +102,28 @@ public class ItemRestController {
 		return body;
 	}
 	
+	
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
+    @PostMapping(path = "/DF401")
+    @ResponseBody
+    public Map<String, Object> handleError() {
+        Map<String, Object> errorMap = new HashMap<String, Object>();
+        errorMap.put("message", "許可されていないメソッド");
+        errorMap.put("status", HttpStatus.METHOD_NOT_ALLOWED);
+        return errorMap;}
+	
 	@PostMapping(path = "/DF500")
 	@ResponseStatus(HttpStatus.NOT_EXTENDED)
 	String postItem5(@RequestBody String body) {
 		return body;
 	}
 	
+	@PostMapping(path = "/DF800")
+	@ResponseStatus(HttpStatus.CREATED)
+	String postItem8(@RequestBody String body) {
+		return "aaaaaa";
+	}
 	
 	/**
 	 * 商品削除API
