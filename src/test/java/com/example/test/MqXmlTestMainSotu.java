@@ -140,8 +140,8 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 	}
 
 	@Test
-	protected void test_NO1and6_ケース1_正常ケース() throws Exception {
-		System.out.println("正常***************************");
+	protected void test1and6_Normal_RC有() throws Exception {
+		System.out.println("test1and6_Normal_RC有***************************");
 		String path = "/ts3.xml";
 		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
@@ -152,8 +152,8 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 	}
 
 	@Test
-	protected void test_NO1and6_入力RCなし() throws Exception {
-		System.out.println("正常RCなし***************************");
+	protected void test1and6_Normal_RC無() throws Exception {
+		System.out.println("test1and6_Normal_RC無***************************");
 		String path = "/norc.xml";
 		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
@@ -165,10 +165,53 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 
 	}
 
+	
+
+
+	
 	@Test
-	protected void test_NO2_ケース2B_HTTPリクエストエラー_RC02() throws Exception {
-		System.out.println("put(RC02)***************************");
+	protected void test1and6_Normal_norequestid() throws Exception {
+		System.out.println("test1and6_Normal_norequestid***************************");
+		String path = "/norequestid.xml";
+		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
+
+	}
+
+	
+	
+	
+	
+	@Test
+	protected void test2_HTTPRequestError_RC有() throws Exception {
+		System.out.println("test2_HTTPRequestError_RC有***************************");
 		String path = "/ts777.xml";
+		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 2);
+
+	}
+	
+	@Test
+	protected void test2_HTTPRequestError_RC無() throws Exception {
+		System.out.println("test2_HTTPRequestError_RC無***************************");
+		String path = "/ts777norc.xml";
+		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 2);
+
+	}
+	@Test
+	protected void test2_Normal_noserviseid() throws Exception {
+		System.out.println("test2_Normal_noserviseid***************************");
+		String path = "/noserviseid.xml";
 		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 
@@ -178,29 +221,94 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 	}
 
 	@Test
-	protected void test_NO2ERR_MQPUTエラー_QLDHERR() throws Exception {
-		System.out.println("put(RC02)***************************");
+	protected void test3_HTTPRequestErrorAndReplyDead() throws Exception {
+		System.out.println("test3_HTTPRequestErrorAndReplyDead***************************");
 		String path = "/ts777.xml";
 		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+
 		try {
 			putDisabled(QUEUE.QL_DW_REP.getQName());
-//			putDisabled(QUEUE.QL_DH_ERR.getQName());
 
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 		} finally {
 			putEnabled(QUEUE.QL_DW_REP.getQName());
-//			putEnabled(QUEUE.QL_DH_ERR.getQName());
 		}
-
-		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
+		MQMessage getMQmassage = mqGet(QUEUE.QL_DH_ERR.getQName());
 		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 2);
-
 	}
 
 	@Test
-	protected void test_NO2ERR_MQPUTエラー_EVENT() throws Exception {
-		System.out.println("put(RC02)***************************");
+	protected void test4_ParseError() throws Exception {
+//xmlns="http://www.acom.co.jp/ACOMMM 誤り→エラーキューへ
+		System.out.println("test4_ParseError***************************");
+		String path = "/ts4.xml";
+		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
+	}
+	
+	
+	@Test
+	protected void test4_ParseError_breakbody() throws Exception {
+		System.out.println("test4_ParseError_breakbody***************************");
+		String path = "/breakbody.xml";
+
+		MQMessage putMQmassage = createMQMessage(pathToString(path));
+		putMQmassage.replyToQueueManagerName = qmgrname();
+		putMQmassage.replyToQueueName = QUEUE.QL_DW_REP.getQName();
+		putMQmassage.correlationId = getUnique24().getBytes();
+
+		putMQmassage.applicationIdData = "DF200";
+		
+		
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+		mqGetWait(QUEUE.QL_DW_REP.getQName());
+//		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
+	}
+	
+	@Test
+	protected void test4_ParseError_breakrequestid() throws Exception {
+		System.out.println("test4_ParseError_breakrequestid***************************");
+		String path = "/breakrequestid.xml";
+		MQMessage putMQmassage = createMQMessage(pathToString(path));
+		putMQmassage.replyToQueueManagerName = qmgrname();
+		putMQmassage.replyToQueueName = QUEUE.QL_DW_REP.getQName();
+		putMQmassage.correlationId = getUnique24().getBytes();
+
+		putMQmassage.applicationIdData = "DF200";
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+		mqGetWait(QUEUE.QL_DW_REP.getQName());
+//		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
+	}
+	
+	
+	@Test
+	protected void test4_ParseError_breakserviceid() throws Exception {
+		System.out.println("test4_ParseError_breakserviceid***************************");
+		String path = "/breakserviceid.xml";
+//		String str1 = pathToString(path);
+		MQMessage putMQmassage = createMQMessage(pathToString(path));
+		putMQmassage.replyToQueueManagerName = qmgrname();
+		putMQmassage.replyToQueueName = QUEUE.QL_DW_REP.getQName();
+		putMQmassage.correlationId = getUnique24().getBytes();
+
+		putMQmassage.applicationIdData = "DF200";
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+		mqGetWait(QUEUE.QL_DW_REP.getQName());
+		
+	}
+	
+
+
+	@Test
+	protected void test5_HTTPRequestErrorAndReplyDeadAndDeadEnd() throws Exception {
+		System.out.println("test5_HTTPRequestErrorAndReplyDeadAndDeadEnd***************************");
 		String path = "/ts777.xml";
 		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
 		try {
@@ -219,156 +327,9 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 
 	}
 
-	@Test
-	protected void test_NO4_ケース2A_XMLパースエラー_QLDHERR() throws Exception {
-//xmlns="http://www.acom.co.jp/ACOMMM 誤り→エラーキューへ
-		System.out.println("エラーキュー入り（Httpとホスト間のエラー）***************************");
-		String path = "/ts4.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
-		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
-	}
-	
-	
-	@Test
-	protected void test_NO4_ケース2A_XMLパースエラー_breakbody() throws Exception {
-		System.out.println("NO4_ケース2A_XMLパースエラー_breakbody***************************");
-		String path = "/breakbody.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
-		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
-	}
-	
-	@Test
-	protected void test_NO4_ケース2A_XMLパースエラー_breakrequestid() throws Exception {
-		System.out.println("NO4_ケース2A_XMLパースエラー_breakrequestid***************************");
-		String path = "/breakrequestid.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
-		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
-	}
-	
-	
-	@Test
-	protected void test_NO4_ケース2A_XMLパースエラー_breakserviceid() throws Exception {
-		System.out.println("NO4_ケース2A_XMLパースエラー_breakserviceid***************************");
-		String path = "/breakserviceid.xml";
-//		String str1 = pathToString(path);
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
-		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
-	}
-	
-	
-	@Test
-	protected void test_NO_ケース_DF999() throws Exception {
-		System.out.println("DF999_breakserviceid***************************");
-		String path = "/ts999.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
-		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-
-//		System.out.println("messageType:" + getMQmassage.messageType);
-//		System.out.println("format:" + getMQmassage.format.trim());
-//		System.out.println("ccsid:" + getMQmassage.characterSet);
-//		System.out.println("encoding:" + getMQmassage.encoding);
-//		System.out.println("expiry:" + getMQmassage.expiry);
-//		System.out.println("persistence:" + getMQmassage.persistence);
-//		System.out.println("applicationIdData:" + getMQmassage.applicationIdData);
-		
-		
-//		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
-	}
-	
-	
-	
-	
 
 	@Test
-	protected void test_NO7_ケース3A_タイムアウト() {
-		System.out.println("タイムアウト***************************");
-		String path = "/ts300.xml";
-
-		try {
-			MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-			System.out.println("タイムアウト***************************");
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	protected void test_NO7_ケース3B_レスポンスエラー400() {
-		System.out.println("400***************************");
-		String path = "/ts400.xml";
-
-		try {
-			MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	protected void test_NO7_ケース3B_レスポンスエラー500() throws Exception {
-		System.out.println("500***************************");
-		String path = "/ts500.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-		mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-
-	}
-
-	@Test
-	protected void test_NO8_ケース3C_MQPUTエラー_QLDHERR() throws Exception {
-		System.out.println("エラーキュー入り（MQPUTエラー）***************************");
-		String path = "/ts3.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-
-		try {
-			putDisabled(QUEUE.QL_DW_REP.getQName());
-
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-		} finally {
-			putEnabled(QUEUE.QL_DW_REP.getQName());
-		}
-		MQMessage getMQmassage = mqGet(QUEUE.QL_DH_ERR.getQName());
-		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 0);
-	}
-
-	@Test
-	protected void test_NO3_ケース3C_MQPUTエラーRC02_QLDHERR() throws Exception {
-		System.out.println("エラーキュー入り（MQPUTエラー）***************************");
-		String path = "/ts777.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-
-		try {
-			putDisabled(QUEUE.QL_DW_REP.getQName());
-
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-		} finally {
-			putEnabled(QUEUE.QL_DW_REP.getQName());
-		}
-		MQMessage getMQmassage = mqGet(QUEUE.QL_DH_ERR.getQName());
-		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 2);
-	}
-
-	@Test
-	protected void test_NO5_QLDHERR() throws Exception {
+	protected void test5_ParseErrorAndDeadEnd() throws Exception {
 		System.out.println("エラーキュー入れない（MQPUTエラー）***************************");
 		String path = "/ts4.xml";
 		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
@@ -384,5 +345,123 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 		MQMessage getMQmassage = mqGet(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
 		lastCheck(putMQmassage, getMQmassage, QUEUE.SYSTEM_ADMIN_EVENT.getQName(), 999);
 	}
+
+	
+	
+
+	@Test
+	protected void test7_HTTPTimeout() {
+		System.out.println("test7_HTTPTimeout***************************");
+		String path = "/ts300.xml";
+
+		try {
+			MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+			System.out.println("タイムアウト***************************");
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	protected void test7_400_HTTPResponseError() {
+		System.out.println("test7_400_HTTPResponseError***************************");
+		String path = "/ts400.xml";
+
+		try {
+			MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	protected void test7_500_HTTPResponseError() throws Exception {
+		System.out.println("test7_500_HTTPResponseError***************************");
+		String path = "/ts500.xml";
+		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+		mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+
+	}
+
+	@Test
+	protected void test8_ReplyDead() throws Exception {
+		System.out.println("test8_ReplyDead***************************");
+		String path = "/ts3.xml";
+		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+
+		try {
+			putDisabled(QUEUE.QL_DW_REP.getQName());
+
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+		} finally {
+			putEnabled(QUEUE.QL_DW_REP.getQName());
+		}
+		MQMessage getMQmassage = mqGet(QUEUE.QL_DH_ERR.getQName());
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 0);
+	}
+
+	
+
+	@Test
+	protected void test9_ReplyDeadAndDeadEnd() throws Exception {
+		System.out.println("test9_ReplyDeadAndDeadEnd***************************");
+		String path = "/ts3.xml";
+		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		try {
+			putDisabled(QUEUE.QL_DW_REP.getQName());
+			putDisabled(QUEUE.QL_DH_ERR.getQName());			
+			
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+		} finally {
+			putEnabled(QUEUE.QL_DW_REP.getQName());
+			putEnabled(QUEUE.QL_DH_ERR.getQName());
+			
+		}
+		mqGet(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
+//		MQMessage getMQmassage = mqGet(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
+//		lastCheck(putMQmassage, getMQmassage, QUEUE.SYSTEM_ADMIN_EVENT.getQName(), 999);
+
+	}
+
+	@Test
+	protected void test_DF999() throws Exception {
+		System.out.println("DF999***************************");
+		String path = "/ts999.xml";
+		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+//		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
+
+//		System.out.println("messageType:" + getMQmassage.messageType);
+//		System.out.println("format:" + getMQmassage.format.trim());
+//		System.out.println("ccsid:" + getMQmassage.characterSet);
+//		System.out.println("encoding:" + getMQmassage.encoding);
+//		System.out.println("expiry:" + getMQmassage.expiry);
+//		System.out.println("persistence:" + getMQmassage.persistence);
+//		System.out.println("applicationIdData:" + getMQmassage.applicationIdData);
+		
+		
+//		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
+	}
+
+	@Test
+	protected void test_DF800() throws Exception {
+		System.out.println("DF800***************************");
+		String path = "/ts800.xml";
+		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+		MQMessage getMQmassage = mqGetWait(QUEUE.QL_DW_REP.getQName());
+		
+		
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
+	}
+		
 
 }
