@@ -122,6 +122,7 @@ public class ItemRestController {
 	@PostMapping(path = "/DF800")
 	@ResponseStatus(HttpStatus.CREATED)
 	String postItem8(@RequestBody String body) {
+		
 		return "aaaaaa";
 	}
 	

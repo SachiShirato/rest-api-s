@@ -56,6 +56,10 @@ public interface MQTest {
 
 	}
 
+	
+	
+	
+	
 	default void mqtoEmpty(List<String> ACCESS_QUEUE_NAME_LIST) throws IOException, MQException {
 
 		for (String name : ACCESS_QUEUE_NAME_LIST) {
