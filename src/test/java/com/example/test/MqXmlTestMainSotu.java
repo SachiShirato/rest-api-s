@@ -11,6 +11,7 @@ import java.util.List;
 import javax.xml.bind.DatatypeConverter;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
@@ -20,215 +21,205 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
 public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 
+	public static String path = "/ts3.xml";
+	List<String> list = new ArrayList<String>();
+
 	@BeforeEach
 	void setUpAll() throws Exception {
 		mqtoEmpty(getList());
 	}
 
-	MQMessage setUpCreate(String path, String outQueueName) throws Exception {
+	MQMessage setUpCreateMQ(String body, String outQueueName) throws Exception {
 
-		MQMessage putMQmassage = createMQMessage(pathToString(path));
+		MQMessage putMQmassage = createMQMessage(body);
 		putMQmassage.replyToQueueManagerName = qmgrname();
 		putMQmassage.replyToQueueName = outQueueName;
 		putMQmassage.correlationId = getUnique24().getBytes();
-
 		putMQmassage.applicationIdData = getXmlEvaluate(xmlGlbPath("SERVICEID"),
 				changeStringToDocument(toStringMQMessage(putMQmassage)));
 		return putMQmassage;
 	}
-	MQMessage setUpCreateBreake(String path, String outQueueName) throws Exception {
 
-		MQMessage putMQmassage = createMQMessage(path);
+	MQMessage setUpCreateMQ(String body, String outQueueName, String applicationIdData) throws Exception {
+
+		MQMessage putMQmassage = createMQMessage(body);
 		putMQmassage.replyToQueueManagerName = qmgrname();
 		putMQmassage.replyToQueueName = outQueueName;
 		putMQmassage.correlationId = getUnique24().getBytes();
-
-		putMQmassage.applicationIdData = getXmlEvaluate(xmlGlbPath("SERVICEID"),
-				changeStringToDocument(toStringMQMessage(putMQmassage)));
+		putMQmassage.applicationIdData = applicationIdData;
 		return putMQmassage;
 	}
 
 	void lastCheck(MQMessage putMQmassage, MQMessage getMQmassage, String getMQname, int flg) throws Exception {
+		switch (getMQname) {
+		case "QL.DW.REP":
+			assertNotEquals(-1, getMQmassage.expiry);
+			assertEquals(0, getMQmassage.persistence);
+			assertEquals("MQSTR", getMQmassage.format.trim());
+			assertEquals(putMQmassage.encoding, getMQmassage.encoding);
 
-		if (getMQname == "SYSTEM.ADMIN.EVENT") {
+			System.out.println("QL.DW.REP");
+			break;
 
-			assertTrue(mqCheck(putMQmassage, getMQmassage));
-			assertEquals(1, getMQmassage.messageType);
+		case "QL.DH.ERR":
+			assertEquals(-1, getMQmassage.expiry);
+			assertEquals(1, getMQmassage.persistence);
+			assertEquals("MQSTR", getMQmassage.format.trim());
+			assertEquals(putMQmassage.encoding, getMQmassage.encoding);
+
+			System.out.println("QL.DH.ERR");
+			break;
+		case "SYSTEM.ADMIN.EVENT":
 			assertNotEquals(-1, getMQmassage.expiry);
 			assertEquals(0, getMQmassage.persistence);
 			assertEquals("MQDEAD", getMQmassage.format.trim());
-			assertEquals(putMQmassage.characterSet, getMQmassage.characterSet);
-			// 違う assertEquals(putMQmassage.encoding, getMQmassage.encoding);
-			assertEquals(putMQmassage.applicationIdData, getMQmassage.applicationIdData.trim());
+			assertEquals(putMQmassage.encoding * 2, getMQmassage.encoding);
+
+			System.out.println("SYSTEM.ADMIN.EVENT");
+			break;
+
+		}
+
+		if ((flg == 999) || (flg == 800)) {
+			switch (flg) {
+			case 999:
+				System.out.println("999");
+//				assertEquals(toStringMQMessage(putMQmassage), toStringMQMessage(getMQmassage));
+				assertEquals(DatatypeConverter.printHexBinary(putMQmassage.messageId),
+						(DatatypeConverter.printHexBinary(getMQmassage.messageId)));
+				assertEquals(1, getMQmassage.messageType);
+				break;
+			case 800:
+				System.out.println("800");
+				assertEquals("aaaaaa", toStringMQMessage(getMQmassage));
+				assertEquals(DatatypeConverter.printHexBinary(putMQmassage.correlationId),
+						(DatatypeConverter.printHexBinary(getMQmassage.messageId)));
+				assertEquals(2, getMQmassage.messageType);
+				System.out.println("getMQmassage(body) :" + toStringMQMessage(getMQmassage) + ":");
+				break;
+			}
 
 		} else {
 			Document putMQmassageDocument = changeStringToDocument(toStringMQMessage(putMQmassage));
 			Document getMQmassageDocument = changeStringToDocument(toStringMQMessage(getMQmassage));
-
-			System.out.println((getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument)).toString());
+			String getRc = getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument);
 
 			List<String> list = new ArrayList<>();
 			list.add("TIMESTAMP");
 			list.add("RC");
 
-			switch (getMQname) {
-			case "QL.DW.REP":
-//				assertTrue(checkDefault(putMQmassageDocument, getMQmassageDocument));
-				assertNotEquals(-1, getMQmassage.expiry);
-				assertEquals(0, getMQmassage.persistence);
-
-				System.out.println("QL.DW.REP");
-				break;
-
-			case "QL.DH.ERR":
-				assertEquals(-1, getMQmassage.expiry);
-				assertEquals(1, getMQmassage.persistence);
-
-				System.out.println("QL.DH.ERR");
-				break;
-
-			}
-
 			switch (flg) {
-			case 0:
 
-				if ("00" == (getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument))) {					
-				}else {
-					assertEquals((getXmlEvaluate(xmlGlbPath("RC"), putMQmassageDocument)).toString(),
-							((getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument)).toString()));
-				}
+			case 0:
+				assertEquals((getXmlEvaluate(xmlGlbPath("RC"), putMQmassageDocument)).toString(), getRc);
 				assertEquals(DatatypeConverter.printHexBinary(putMQmassage.correlationId),
 						(DatatypeConverter.printHexBinary(getMQmassage.messageId)));
-				
+				assertEquals(2, getMQmassage.messageType);
 				System.out.println("0正常");
-//後で消す
-				System.out.println("<RC>:" + getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument));
-				System.out.println("getMQmassage(body) :" + toStringMQMessage(getMQmassage) + ":");
 
-				break;
-			case 1:
-				System.out.println("1ロールバック");
-				assertEquals(DatatypeConverter.printHexBinary(putMQmassage.messageId),
-						(DatatypeConverter.printHexBinary(getMQmassage.messageId)));
-				assertEquals((getXmlEvaluate(xmlGlbPath("RC"), putMQmassageDocument)).toString(),
-						((getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument)).toString()));
 				break;
 			case 2:
 				System.out.println("2リターンコード");
+				assertEquals("02", getRc);
 				assertEquals(DatatypeConverter.printHexBinary(putMQmassage.correlationId),
 						(DatatypeConverter.printHexBinary(getMQmassage.messageId)));
-				assertEquals("02", ((getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument)).toString()));
+				assertEquals(1, getMQmassage.messageType);
+
 				break;
 			}
-
-//共通確認
 			assertTrue(check(putMQmassageDocument, getMQmassageDocument, list));
-			assertTrue(mqCheck(putMQmassage, getMQmassage));
-			assertEquals("MQSTR", getMQmassage.format.trim());
-			assertEquals(putMQmassage.characterSet, getMQmassage.characterSet);
-			assertEquals(putMQmassage.encoding, getMQmassage.encoding);
-			assertEquals(putMQmassage.applicationIdData, getMQmassage.applicationIdData.trim());
+			System.out.println("putMQmassage(RC) :" + getRc);
 
 		}
-		System.out.println("messageType:" + getMQmassage.messageType);
-		System.out.println("format:" + getMQmassage.format.trim());
-		System.out.println("ccsid:" + getMQmassage.characterSet);
-		System.out.println("encoding:" + getMQmassage.encoding);
-		System.out.println("expiry:" + getMQmassage.expiry);
-		System.out.println("persistence:" + getMQmassage.persistence);
-		System.out.println("applicationIdData:" + getMQmassage.applicationIdData);
+
+		assertTrue(mqCheck(putMQmassage, getMQmassage));
+		assertEquals(putMQmassage.applicationIdData, getMQmassage.applicationIdData.trim());
+
+		System.out.println("putMQmassage(messageType) :" + putMQmassage.messageType);
+		System.out.println("getMQmassage(messageType) :" + getMQmassage.messageType);
+		System.out.println("putMQmassage(format) :" + putMQmassage.format.trim());
+		System.out.println("getMQmassage(format) :" + getMQmassage.format.trim());
+		System.out.println("putMQmassage(encoding) :" + putMQmassage.encoding);
+		System.out.println("getMQmassage(encoding) :" + getMQmassage.encoding);
+		System.out.println("putMQmassage(expiry) :" + putMQmassage.expiry);
+		System.out.println("getMQmassage(expiry) :" + getMQmassage.expiry);
+		System.out.println("putMQmassage(persistence) :" + putMQmassage.persistence);
+		System.out.println("getMQmassage(persistence) :" + getMQmassage.persistence);
+		System.out.println("putMQmassage(applicationIdData) :" + putMQmassage.applicationIdData);
+		System.out.println("getMQmassage(applicationIdData) :" + getMQmassage.applicationIdData);
 	}
 
 	@Test
-	protected void test1and6_Normal_RC有() throws Exception {
-		System.out.println("test1and6_Normal_RC有***************************");
-		String path = "/ts3.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+	@DisplayName("test1and6_Normal")
+	protected void test1and6_Normal() throws Exception {
+		MQMessage putMQmassage = setUpCreateMQ(createMQMAssageBody(), QUEUE.QL_DW_REP.getQName());
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
 		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
 
 	}
 
 	@Test
-	protected void test1and6_Normal_RC無() throws Exception {
-		System.out.println("test1and6_Normal_RC無***************************");
-		String path = "/norc.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+	@DisplayName("test1and6_Normal_NothingRC")
+	protected void test1and6_Normal_NothingRC() throws Exception {
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeRc(createMQMAssageBody(), ""), QUEUE.QL_DW_REP.getQName());
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
-		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
-		
-
-
-	}
-
-	
-
-
-	
-	@Test
-	protected void test1and6_Normal_norequestid() throws Exception {
-		System.out.println("test1and6_Normal_norequestid***************************");
-		String path = "/norequestid.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
 		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
 
 	}
 
-	
-	
-	
-	
 	@Test
-	protected void test2_HTTPRequestError_RC有() throws Exception {
-		System.out.println("test2_HTTPRequestError_RC有***************************");
-		String path = "/ts777.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+	@DisplayName("test1and6_Normal_Nothing<REQUESTID>")
+	protected void test1and6_Normal_NothingREQUESTID() throws Exception {
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeRequestid(createMQMAssageBody(), ""),
+				QUEUE.QL_DW_REP.getQName());
 
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 2);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
 
 	}
-	
-	@Test
-	protected void test2_HTTPRequestError_RC無() throws Exception {
-		System.out.println("test2_HTTPRequestError_RC無***************************");
-		String path = "/ts777norc.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 
+	@Test
+	@DisplayName("test2_HTTPRequestError")
+	protected void test2_HTTPRequestError() throws Exception {
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeRc(createBreakeServiceid(createMQMAssageBody(), "S"), "01"),
+				QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 2);
-
 	}
-	@Test
-	protected void test2_Normal_noserviseid() throws Exception {
-		System.out.println("test2_Normal_noserviseid***************************");
-		String path = "/noserviseid.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 
+	@Test
+	@DisplayName("test2_HTTPRequestError_NothingRC")
+	protected void test2_HTTPRequestError_NothingRC() throws Exception {
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeRc((createBreakeServiceid(createMQMAssageBody(), "S")), ""),
+				QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 2);
 
 	}
 
 	@Test
+	@DisplayName("test2_Normal_Nothing<SERVICEID>")
+	protected void test2_Normal_NothingSERVICEID() throws Exception {
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeServiceid(createMQMAssageBody(), ""),
+				QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 2);
+	}
+
+	@Test
+	@DisplayName("test3_HTTPRequestErrorAndReplyDead")
 	protected void test3_HTTPRequestErrorAndReplyDead() throws Exception {
-		System.out.println("test3_HTTPRequestErrorAndReplyDead***************************");
-		String path = "/ts777.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeRc(createBreakeServiceid(createMQMAssageBody(), "S"), "01"),
+				QUEUE.QL_DW_REP.getQName());
 
 		try {
 			putDisabled(QUEUE.QL_DW_REP.getQName());
-
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 		} finally {
@@ -239,101 +230,72 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 	}
 
 	@Test
+	@DisplayName("test4_ParseError")
 	protected void test4_ParseError() throws Exception {
-//xmlns="http://www.acom.co.jp/ACOMMM 誤り→エラーキューへ
-		System.out.println("test4_ParseError***************************");
-		String path = "/ts4.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeBody(createMQMAssageBody()), QUEUE.QL_DW_REP.getQName());
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
 		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 999);
 	}
-	
-	
+
 	@Test
+	@DisplayName("test4_ParseError_breakbody")
 	protected void test4_ParseError_breakbody() throws Exception {
-		System.out.println("test4_ParseError_breakbody***************************");
-		String path = "/breakbody.xml";
-
-		MQMessage putMQmassage = createMQMessage(pathToString(path));
-		putMQmassage.replyToQueueManagerName = qmgrname();
-		putMQmassage.replyToQueueName = QUEUE.QL_DW_REP.getQName();
-		putMQmassage.correlationId = getUnique24().getBytes();
-
-		putMQmassage.applicationIdData = "DF200";
-		
-		
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeEndtag(createMQMAssageBody(), "APL_DATA"),
+				QUEUE.QL_DW_REP.getQName(), "DF200");
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
-		mqGetWait(QUEUE.QL_DW_REP.getQName());
-//		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
+		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 999);
 	}
-	
+
 	@Test
+	@DisplayName("test4_ParseError_breakrequestid")
 	protected void test4_ParseError_breakrequestid() throws Exception {
-		System.out.println("test4_ParseError_breakrequestid***************************");
-		String path = "/breakrequestid.xml";
-		MQMessage putMQmassage = createMQMessage(pathToString(path));
-		putMQmassage.replyToQueueManagerName = qmgrname();
-		putMQmassage.replyToQueueName = QUEUE.QL_DW_REP.getQName();
-		putMQmassage.correlationId = getUnique24().getBytes();
-
-		putMQmassage.applicationIdData = "DF200";
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeEndtag(createMQMAssageBody(), "REQUESTID"),
+				QUEUE.QL_DW_REP.getQName(), "DF200");
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 999);
 
-		mqGetWait(QUEUE.QL_DW_REP.getQName());
-//		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
 	}
-	
-	
+
 	@Test
+	@DisplayName("test4_ParseError_breakserviceid")
 	protected void test4_ParseError_breakserviceid() throws Exception {
-		System.out.println("test4_ParseError_breakserviceid***************************");
-		String path = "/breakserviceid.xml";
-//		String str1 = pathToString(path);
-		MQMessage putMQmassage = createMQMessage(pathToString(path));
-		putMQmassage.replyToQueueManagerName = qmgrname();
-		putMQmassage.replyToQueueName = QUEUE.QL_DW_REP.getQName();
-		putMQmassage.correlationId = getUnique24().getBytes();
-
-		putMQmassage.applicationIdData = "DF200";
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeEndtag(createMQMAssageBody(), "SERVICEID"),
+				QUEUE.QL_DW_REP.getQName(), "DF200");
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 999);
 
-		mqGetWait(QUEUE.QL_DW_REP.getQName());
-		
 	}
-	
-
 
 	@Test
+	@DisplayName("test5_HTTPRequestErrorAndReplyDeadAndDeadEnd")
 	protected void test5_HTTPRequestErrorAndReplyDeadAndDeadEnd() throws Exception {
-		System.out.println("test5_HTTPRequestErrorAndReplyDeadAndDeadEnd***************************");
-		String path = "/ts777.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeRc(createBreakeServiceid(createMQMAssageBody(), "S"), "01"),
+				QUEUE.QL_DW_REP.getQName());
+
 		try {
 			putDisabled(QUEUE.QL_DW_REP.getQName());
-			putDisabled(QUEUE.QL_DH_ERR.getQName());			
-			
+			putDisabled(QUEUE.QL_DH_ERR.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 		} finally {
 			putEnabled(QUEUE.QL_DW_REP.getQName());
 			putEnabled(QUEUE.QL_DH_ERR.getQName());
-			
+
 		}
-		MQMessage getMQmassage = mqGet(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
+		MQMessage getMQmassage = mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
+//body差分あり
 		lastCheck(putMQmassage, getMQmassage, QUEUE.SYSTEM_ADMIN_EVENT.getQName(), 999);
 
 	}
 
-
 	@Test
+	@DisplayName("test5_ParseErrorAndDeadEnd")
 	protected void test5_ParseErrorAndDeadEnd() throws Exception {
-		System.out.println("エラーキュー入れない（MQPUTエラー）***************************");
-		String path = "/ts4.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeBody(createMQMAssageBody()), QUEUE.QL_DW_REP.getQName());
 		try {
 			putDisabled(QUEUE.QL_DH_ERR.getQName());
 
@@ -343,20 +305,16 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 			putEnabled(QUEUE.QL_DH_ERR.getQName());
 		}
 		MQMessage getMQmassage = mqGet(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
+//body差分あり
 		lastCheck(putMQmassage, getMQmassage, QUEUE.SYSTEM_ADMIN_EVENT.getQName(), 999);
 	}
 
-	
-	
-
 	@Test
+	@DisplayName("test7_HTTPTimeout")
 	protected void test7_HTTPTimeout() {
-		System.out.println("test7_HTTPTimeout***************************");
-		String path = "/ts300.xml";
-
 		try {
-			MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-			System.out.println("タイムアウト***************************");
+			MQMessage putMQmassage = setUpCreateMQ(createBreakeServiceid(createMQMAssageBody(), "DF300"),
+					QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -364,38 +322,32 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 	}
 
 	@Test
-	protected void test7_400_HTTPResponseError() {
-		System.out.println("test7_400_HTTPResponseError***************************");
-		String path = "/ts400.xml";
-
-		try {
-			MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	protected void test7_500_HTTPResponseError() throws Exception {
-		System.out.println("test7_500_HTTPResponseError***************************");
-		String path = "/ts500.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+	@DisplayName("test7_400_HTTPResponseError")
+	protected void test7_400_HTTPResponseError() throws Exception {
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeServiceid(createMQMAssageBody(), "DF400"),
+				QUEUE.QL_DW_REP.getQName());
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 		mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 
 	}
 
 	@Test
+	@DisplayName("test7_500_HTTPResponseError")
+	protected void test7_500_HTTPResponseError() throws Exception {
+		MQMessage putMQmassage = setUpCreateMQ(createBreakeServiceid(createMQMAssageBody(), "DF500"),
+				QUEUE.QL_DW_REP.getQName());
+		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+		mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+
+	}
+
+	@Test
+	@DisplayName("test8_ReplyDead")
 	protected void test8_ReplyDead() throws Exception {
-		System.out.println("test8_ReplyDead***************************");
-		String path = "/ts3.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		MQMessage putMQmassage = setUpCreateMQ(createMQMAssageBody(), QUEUE.QL_DW_REP.getQName());
 
 		try {
 			putDisabled(QUEUE.QL_DW_REP.getQName());
-
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 		} finally {
@@ -405,63 +357,40 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 0);
 	}
 
-	
-
 	@Test
+	@DisplayName("test9_ReplyDeadAndDeadEnd")
 	protected void test9_ReplyDeadAndDeadEnd() throws Exception {
-		System.out.println("test9_ReplyDeadAndDeadEnd***************************");
-		String path = "/ts3.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		MQMessage putMQmassage = setUpCreateMQ(createMQMAssageBody(), QUEUE.QL_DW_REP.getQName());
+
 		try {
 			putDisabled(QUEUE.QL_DW_REP.getQName());
-			putDisabled(QUEUE.QL_DH_ERR.getQName());			
-			
+			putDisabled(QUEUE.QL_DH_ERR.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 		} finally {
 			putEnabled(QUEUE.QL_DW_REP.getQName());
 			putEnabled(QUEUE.QL_DH_ERR.getQName());
-			
 		}
-		mqGet(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
-//		MQMessage getMQmassage = mqGet(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
-//		lastCheck(putMQmassage, getMQmassage, QUEUE.SYSTEM_ADMIN_EVENT.getQName(), 999);
-
+//		mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
 	}
 
 	@Test
+	@DisplayName("test_DF999")
 	protected void test_DF999() throws Exception {
-		System.out.println("DF999***************************");
-		String path = "/ts999.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		MQMessage putMQmassage = setUpCreateMQ((createBreakeServiceid(createMQMAssageBody(), "DF999")),
+				QUEUE.QL_DW_REP.getQName(), "DF999");
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
-//		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-
-//		System.out.println("messageType:" + getMQmassage.messageType);
-//		System.out.println("format:" + getMQmassage.format.trim());
-//		System.out.println("ccsid:" + getMQmassage.characterSet);
-//		System.out.println("encoding:" + getMQmassage.encoding);
-//		System.out.println("expiry:" + getMQmassage.expiry);
-//		System.out.println("persistence:" + getMQmassage.persistence);
-//		System.out.println("applicationIdData:" + getMQmassage.applicationIdData);
-		
-		
-//		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
 	}
 
 	@Test
+	@DisplayName("test_DF800")
 	protected void test_DF800() throws Exception {
-		System.out.println("DF800***************************");
-		String path = "/ts800.xml";
-		MQMessage putMQmassage = setUpCreate(path, QUEUE.QL_DW_REP.getQName());
+		MQMessage putMQmassage = setUpCreateMQ((createBreakeServiceid(createMQMAssageBody(), "DF800")),
+				QUEUE.QL_DW_REP.getQName());
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-
 		MQMessage getMQmassage = mqGetWait(QUEUE.QL_DW_REP.getQName());
-		
-		
-		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
+		lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 800);
+
 	}
-		
 
 }
