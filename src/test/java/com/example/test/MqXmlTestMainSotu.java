@@ -57,6 +57,7 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 			assertEquals(0, getMQmassage.persistence);
 			assertEquals("MQSTR", getMQmassage.format.trim());
 			assertEquals(putMQmassage.encoding, getMQmassage.encoding);
+			assertNotEquals(toStringMQMessage(putMQmassage), toStringMQMessage(getMQmassage));
 
 			System.out.println("QL.DW.REP");
 			break;
@@ -66,7 +67,11 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 			assertEquals(1, getMQmassage.persistence);
 			assertEquals("MQSTR", getMQmassage.format.trim());
 			assertEquals(putMQmassage.encoding, getMQmassage.encoding);
-
+			if(flg==999) {
+				assertEquals(toStringMQMessage(putMQmassage), toStringMQMessage(getMQmassage));
+			}else {
+				assertNotEquals(toStringMQMessage(putMQmassage), toStringMQMessage(getMQmassage));
+			}
 			System.out.println("QL.DH.ERR");
 			break;
 		case "SYSTEM.ADMIN.EVENT":
@@ -84,7 +89,6 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 			switch (flg) {
 			case 999:
 				System.out.println("999");
-//				assertEquals(toStringMQMessage(putMQmassage), toStringMQMessage(getMQmassage));
 				assertEquals(DatatypeConverter.printHexBinary(putMQmassage.messageId),
 						(DatatypeConverter.printHexBinary(getMQmassage.messageId)));
 				assertEquals(1, getMQmassage.messageType);
@@ -287,7 +291,6 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 
 		}
 		MQMessage getMQmassage = mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
-//body差分あり
 		lastCheck(putMQmassage, getMQmassage, QUEUE.SYSTEM_ADMIN_EVENT.getQName(), 999);
 
 	}
@@ -305,7 +308,6 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 			putEnabled(QUEUE.QL_DH_ERR.getQName());
 		}
 		MQMessage getMQmassage = mqGet(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
-//body差分あり
 		lastCheck(putMQmassage, getMQmassage, QUEUE.SYSTEM_ADMIN_EVENT.getQName(), 999);
 	}
 
