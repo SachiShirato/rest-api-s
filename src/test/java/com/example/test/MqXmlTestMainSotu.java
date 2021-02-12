@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -161,15 +162,14 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 	class RRR {
 
 		@ParameterizedTest
-		@DisplayName("test1and6")
 		@MethodSource("test1and6_Per")
+		@DisplayName("test1and6_Normal")
 		void test1and6_Normal(String str) throws Exception {
 			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
 		}
-
 		Stream<Arguments> test1and6_Per() throws Exception {
 			return Stream.of(Arguments.of(createMQMAssageBody()),
 					Arguments.of(createBreakeRc(createMQMAssageBody(), "")),
