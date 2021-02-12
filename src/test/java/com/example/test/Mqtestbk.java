@@ -1,4 +1,4 @@
-	package com.example.mq;
+	package com.example.test;
 
 import java.io.IOException;
 

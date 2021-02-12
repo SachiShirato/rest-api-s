@@ -1,4 +1,4 @@
-package com.example.mq;
+package jp.co.acom.fehub.mq;
 
 import java.io.IOException;
 import java.net.InetAddress;

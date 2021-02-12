@@ -1,6 +1,6 @@
 package com.example.test;
 
-import static com.example.mq.QUEUE.getList;
+import static jp.co.acom.fehub.mq.QUEUE.getList;
 
 import java.io.IOException;
 
@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import com.example.mq.QMFH01Test;
+import jp.co.acom.fehub.mq.QMFH01Test;
+import jp.co.acom.fehub.xml.XMLCENTERTest;
 
 public class XmlTestMain implements QMFH01Test, XMLCENTERTest {
 

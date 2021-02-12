@@ -1,6 +1,6 @@
 package com.example.test;
 
-import static com.example.mq.QUEUE.getList;
+import static jp.co.acom.fehub.mq.QUEUE.getList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,9 +13,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
-import com.example.mq.QMFH01Test;
-import com.example.mq.QUEUE;
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
+
+import jp.co.acom.fehub.mq.QMFH01Test;
+import jp.co.acom.fehub.mq.QUEUE;
+import jp.co.acom.fehub.xml.XMLCENTERTest;
 
 public class MqXmlTestMain implements QMFH01Test, XMLCENTERTest {
 

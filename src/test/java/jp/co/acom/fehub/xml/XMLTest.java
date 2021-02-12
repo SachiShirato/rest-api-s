@@ -1,4 +1,4 @@
-package com.example.xml;
+package jp.co.acom.fehub.xml;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +24,7 @@ import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.Diff;
 import org.xmlunit.diff.Difference;
 
-import com.example.test.MqXmlTestMainSotu;
+import jp.co.acom.fehub.test.MqXmlTestMainSotu;
 
 public interface XMLTest {
 

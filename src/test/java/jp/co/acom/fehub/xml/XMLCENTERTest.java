@@ -1,4 +1,4 @@
-package com.example.test;
+package jp.co.acom.fehub.xml;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,8 +9,6 @@ import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
-
-import com.example.xml.XMLTest;
 
 public interface XMLCENTERTest extends XMLTest {
 
