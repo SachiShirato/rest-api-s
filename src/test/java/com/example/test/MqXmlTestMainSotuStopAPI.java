@@ -1,10 +1,13 @@
 package com.example.test;
 
 import static com.example.mq.QUEUE.getList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.Document;
 
 import com.example.mq.QMFH01Test;
 import com.example.mq.QUEUE;
@@ -28,10 +31,10 @@ public class MqXmlTestMainSotuStopAPI implements QMFH01Test, XMLCENTERTest {
 		putMQmassage.correlationId = getUnique24().getBytes();
 		putMQmassage.applicationIdData = getXmlEvaluate(xmlGlbPath("SERVICEID"),
 				changeStringToDocument(toStringMQMessage(putMQmassage)));
-		putMQmassage.expiry = 100; // 100ms
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-		mqGetWait(QUEUE.QL_DW_REP.getQName());
-
+		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+		Document getMQmassageDocument = changeStringToDocument(toStringMQMessage(getMQmassage));
+		assertEquals("02",(getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument)));
 	}
 
 
