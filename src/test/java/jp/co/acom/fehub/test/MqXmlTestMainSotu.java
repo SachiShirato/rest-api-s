@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -172,6 +171,7 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
 		}
+
 		Stream<Arguments> test1and6_Per() throws Exception {
 			return Stream.of(Arguments.of(createMQMAssageBody()),
 					Arguments.of(createBreakeRc(createMQMAssageBody(), "")),
@@ -226,7 +226,6 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 			return Stream.of(Arguments.of(createBreakeBody(createMQMAssageBody())),
 					Arguments.of(createBreakeEndtag(createMQMAssageBody(), "APL_DATA")),
 					Arguments.of(createBreakeEndtag(createMQMAssageBody(), "REQUESTID")),
-					Arguments.of(createBreakeEndtag(createMQMAssageBody(), "SERVICEID")),
 					Arguments.of(createBreakeEndtag(createMQMAssageBody(), "SERVICEID")));
 		}
 
@@ -268,36 +267,19 @@ public class MqXmlTestMainSotu implements QMFH01Test, XMLCENTERTest {
 			lastCheck(putMQmassage, getMQmassage, QUEUE.SYSTEM_ADMIN_EVENT.getQName(), 999);
 		}
 
-		@Test
-		@DisplayName("test7_HTTPTimeout")
-		protected void test7_HTTPTimeout() {
-			try {
-				MQMessage putMQmassage = setUpCreateMQ(createBreakeServiceid(createMQMAssageBody(), "DF300"),
-						QUEUE.QL_DW_REP.getQName());
-				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		@Test
-		@DisplayName("test7_400_HTTPResponseError")
-		protected void test7_400_HTTPResponseError() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(createBreakeServiceid(createMQMAssageBody(), "DF400"),
-					QUEUE.QL_DW_REP.getQName());
+		@ParameterizedTest
+		@DisplayName("test7_HTTPTimeout_HTTPResponseError")
+		@MethodSource("test7_Per")
+		void test7_HTTPTimeout_HTTPResponseError(String str) throws Exception {
+			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-
 		}
 
-		@Test
-		@DisplayName("test7_500_HTTPResponseError")
-		protected void test7_500_HTTPResponseError() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(createBreakeServiceid(createMQMAssageBody(), "DF500"),
-					QUEUE.QL_DW_REP.getQName());
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-
+		Stream<Arguments> test7_Per() throws Exception {
+			return Stream.of(Arguments.of(createBreakeServiceid(createMQMAssageBody(), "DF300")),
+					Arguments.of(createBreakeServiceid(createMQMAssageBody(), "DF400")),
+					Arguments.of(createBreakeServiceid(createMQMAssageBody(), "DF500")));
 		}
 
 		@Test
