@@ -81,6 +81,7 @@ public class ItemRestController {
 	@PostMapping(path = "/DF200")
 	@ResponseStatus(HttpStatus.CREATED)
 	String postItem(@RequestBody String body) {
+		System.out.println(body.replaceAll(System.lineSeparator(), ""));
 		return body;
 	}
 	

@@ -24,9 +24,10 @@ import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.Diff;
 import org.xmlunit.diff.Difference;
 
-import jp.co.acom.fehub.test.MqXmlTestMainSotu;
+
 
 public interface XMLTest {
+	String path = "/ts3.xml";
 
 	default Document changeStringToDocument(String xmlString)
 			throws ParserConfigurationException, SAXException, IOException {
@@ -90,7 +91,6 @@ public interface XMLTest {
 	}
 
 	default String createMQMAssageBody() throws IOException {
-		String path = MqXmlTestMainSotu.path;
 		return pathToString(path);
 	}
 

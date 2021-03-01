@@ -98,18 +98,18 @@ public interface MQTest {
 
 	default boolean mqCheck(MQMessage putMQmassage, MQMessage getMQmassage) throws IOException {
 
-//		System.out.println("putMQmassage(body) :" + toStringMQMessage(putMQmassage) + ":");
-//		System.out.println("getMQmassage(body) :" + toStringMQMessage(getMQmassage) + ":");
-		System.out.println("putMQmassage(priority) :" + putMQmassage.priority);
-		System.out.println("getMQmassage(priority) :" + getMQmassage.priority);
-		System.out.println("putMQmassage(characterSet) :" + putMQmassage.characterSet);
-		System.out.println("getMQmassage(characterSet) :" + getMQmassage.characterSet);
-		System.out.println("putMQmassage(messageId) :" + DatatypeConverter.printHexBinary(putMQmassage.messageId));
-		System.out.println("getMQmassage(messageId) :" + DatatypeConverter.printHexBinary(getMQmassage.messageId));
-		System.out.println(
-				"putMQmassage(correlationId) :" + DatatypeConverter.printHexBinary(putMQmassage.correlationId));
-		System.out.println(
-				"getMQmassage(correlationId) :" + DatatypeConverter.printHexBinary(getMQmassage.correlationId));
+//		System.out.println("putMQmassage(body) :" + toStringMQMessage(putMQmassage).replaceAll(System.lineSeparator(), "") + ":");
+//		System.out.println("getMQmassage(body) :" + toStringMQMessage(getMQmassage).replaceAll(System.lineSeparator(), "") + ":");
+//		System.out.println("putMQmassage(priority) :" + putMQmassage.priority);
+//		System.out.println("getMQmassage(priority) :" + getMQmassage.priority);
+//		System.out.println("putMQmassage(characterSet) :" + putMQmassage.characterSet);
+//		System.out.println("getMQmassage(characterSet) :" + getMQmassage.characterSet);
+//		System.out.println("putMQmassage(messageId) :" + DatatypeConverter.printHexBinary(putMQmassage.messageId));
+//		System.out.println("getMQmassage(messageId) :" + DatatypeConverter.printHexBinary(getMQmassage.messageId));
+//		System.out.println(
+//				"putMQmassage(correlationId) :" + DatatypeConverter.printHexBinary(putMQmassage.correlationId));
+//		System.out.println(
+//				"getMQmassage(correlationId) :" + DatatypeConverter.printHexBinary(getMQmassage.correlationId));
 
 //		return ((toStringMQMessage(putMQmassage).equals(toStringMQMessage(getMQmassage)))
 				return ((putMQmassage.priority == (getMQmassage.priority))
