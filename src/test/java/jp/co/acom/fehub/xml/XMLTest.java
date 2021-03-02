@@ -90,6 +90,8 @@ public interface XMLTest {
 		return (size == 0);
 	}
 
+	
+	//xmlcenterへts3も
 	default String createMQMAssageBody() throws IOException {
 		return pathToString(path);
 	}

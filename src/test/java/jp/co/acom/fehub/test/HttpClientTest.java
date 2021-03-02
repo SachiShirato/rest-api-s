@@ -45,12 +45,12 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 	MQMessage setUpCreateMQ(String body, String outQueueName) throws Exception {
 		return setUpCreateMQ(body, outQueueName, "SERVICEID");
 	}
-
+//上のメゾットいらない。下メゾットのアプリ引数けして、上メゾット消す
 	MQMessage setUpCreateMQ(String body, String outQueueName, String applicationIdData) throws Exception {
 
 		MQMessage putMQmassage = createMQMessage(body);
-		putMQmassage.replyToQueueManagerName = qmgrname();
-		putMQmassage.replyToQueueName = outQueueName;
+//		putMQmassage.replyToQueueManagerName = qmgrname();
+//		putMQmassage.replyToQueueName = outQueueName;
 		putMQmassage.correlationId = getUnique24().getBytes();
 		putMQmassage.applicationIdData = applicationIdData;
 		return putMQmassage;
@@ -169,6 +169,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+			System.out.println(toStringMQMessage(putMQmassage).replaceAll(System.lineSeparator(), ""));
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
 		}
 

@@ -39,12 +39,14 @@ public interface MQTest {
 	}
 
 	default MQMessage createMQMessage(String MQMassageBody) throws IOException {
-
+//最後にrequestをメゾット名に付ける
 		MQMessage putBody = new MQMessage();
 		putBody.priority = PRIORITY;
 		putBody.characterSet = CHARACTER_SET;
-
-		putBody.messageType = MQC.MQMT_REQUEST;
+//移動する。したの３つを別メゾットにして、上コメのメゾットをつくる。
+//		putBody.messageType = MQC.MQMT_REQUEST;
+//		putMQmassage.replyToQueueManagerName = qmgrname();
+//		putMQmassage.replyToQueueName = outQueueName;
 		putBody.format = MQC.MQFMT_STRING;
 		putBody.persistence = MQC.MQPER_NOT_PERSISTENT;
 		putBody.expiry = 30000; // 100ms
