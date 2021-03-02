@@ -1,5 +1,6 @@
 package jp.co.acom.fehub.xml;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,10 +9,12 @@ import java.util.List;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 
 public interface XMLCENTERTest extends XMLTest {
 
+	String path = "/ts3.xml";
 	List<String> TsList = new ArrayList<String>() {
 		{
 			add("@KBN");
@@ -79,5 +82,42 @@ public interface XMLCENTERTest extends XMLTest {
 		return new SimpleDateFormat("yyyyMMddhhmmssSSS").parse(getXmlEvaluate(
 				xmlGlbPath("TIMESTAMP", "TS[" + getMQmassage.getElementsByTagName("TS").getLength() + "]"),
 				getMQmassage));
+	}
+
+	default String createMQMAssageBody() throws IOException {
+		return pathToString(path);
+	}
+
+	default String getXmlTag(String body, String tag) throws IOException {
+		String headtag = "<" + tag + ">";
+		String lasttag = "</" + tag + ">";
+		return body.substring(body.indexOf(headtag) + headtag.length(), body.indexOf(lasttag));
+	}
+
+	default String createBreakeServiceid(String body, String serviceid) throws Exception {
+
+		return body.replace("<SERVICEID>" + getXmlTag(body, "SERVICEID") + "</SERVICEID>",
+				"<SERVICEID>" + serviceid + "</SERVICEID>");
+	}
+
+	default String createBreakeRc(String body, String rc) throws Exception {
+
+//		return body.replaceAll("<RC>" + getXmlTag(body, "RC") + "</RC>", "<RC>" + rc + "</RC>");
+		return body.replaceAll("<RC>.*</RC>", "<RC>" + rc + "</RC>");
+
+	}
+
+	default String createBreakeRequestid(String body, String requestid) throws Exception {
+		return body.replace("<REQUESTID>" + getXmlTag(body, "REQUESTID") + "</REQUESTID>",
+				StringUtils.isEmpty(requestid) ? "<REQUESTID/>" : "<REQUESTID>" + requestid + "</REQUESTID>");
+	}
+
+	default String createBreakeEndtag(String body, String endtag) throws Exception {
+		return body.replace("</" + endtag + ">", "<" + endtag + ">");
+	}
+
+	default String createBreakeBody(String body) throws Exception {
+		return body.replace("CENTER xmlns=\"http://www.acom.co.jp/ACOM\"",
+				"CENTER xmlns=\"http://www.acom.co.jp/ACOMMM\"");
 	}
 }
