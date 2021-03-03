@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -34,28 +35,45 @@ import jp.co.acom.fehub.xml.XMLCENTERTest;
 
 public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
-	public static String path = "/ts3.xml";
 	Map<String, String> checkflg = new HashMap<>();
 
 	@BeforeEach
 	void setUpAll() throws Exception {
 		mqtoEmpty(getList());
 	}
+	@AfterEach
+	void setAll() throws Exception {
+		assertTrue(mqtoEmpty(getList()));
+	}
 
 	MQMessage setUpCreateMQ(String body, String outQueueName) throws Exception {
-		return setUpCreateMQ(body, outQueueName, "SERVICEID");
-	}
-//上のメゾットいらない。下メゾットのアプリ引数けして、上メゾット消す
-	MQMessage setUpCreateMQ(String body, String outQueueName, String applicationIdData) throws Exception {
-
-		MQMessage putMQmassage = createMQMessage(body);
-//		putMQmassage.replyToQueueManagerName = qmgrname();
-//		putMQmassage.replyToQueueName = outQueueName;
+		MQMessage putMQmassage = createMQMessageRequest(body, outQueueName);
 		putMQmassage.correlationId = getUnique24().getBytes();
-		putMQmassage.applicationIdData = applicationIdData;
+		putMQmassage.applicationIdData = "SERVICEID";
 		return putMQmassage;
 	}
+	void lastCheckB(MQMessage putMQmassage, MQMessage getMQmassage,  int flg){
+		flg:0/2
+		ドキュメントチェック
+		
+	}
+	void lastCheckM(MQMessage putMQmassage, MQMessage getMQmassage, String getMQname, int flg){
+		flg:0/2/999
+		
+	}
+	
 
+	
+	void lastCheck(MQMessage putMQmassage, MQMessage getMQmassage, String getMQname, int flg) throws Exception {
+		lastCheckM();
+		lastCheckB();
+				
+	}
+
+
+		
+	
+	
 	void lastCheck(MQMessage putMQmassage, MQMessage getMQmassage, String getMQname, int flg) throws Exception {
 
 		if (getMQname == QUEUE.QL_DH_ERR.getQName()) {
@@ -66,8 +84,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 		} else {
 			assertAll(
-					() -> assertNotEquals(toStringMQMessage(putMQmassage).replaceAll(System.lineSeparator(), ""),
-							toStringMQMessage(getMQmassage).replaceAll(System.lineSeparator(), "")),
+					() -> assertEquals(toStringMQMessage(putMQmassage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""),
+							toStringMQMessage(getMQmassage).replaceAll(System.lineSeparator(), "").replaceAll("\t", "")),
 					() -> assertNotEquals(MQC.MQEI_UNLIMITED, getMQmassage.expiry), () -> {
 						if (flg == 0) {
 							assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmassage.persistence);
@@ -81,9 +99,18 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			checkflg.put("expiry", "1");
 
 		}
+		
+		Document putMQmassageDocument = changeStringToDocument(toStringMQMessage(putMQmassage));
+		Document getMQmassageDocument = changeStringToDocument(toStringMQMessage(getMQmassage));
+		String getRc = getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument);
+
+		List<String> list = new ArrayList<>();
+		list.add("TIMESTAMP");
+		list.add("RC");
 
 		switch (flg) {
-
+		
+//bodyチェック
 		case 0:
 			assertAll(
 					() -> assertEquals(DatatypeConverter.printHexBinary(putMQmassage.correlationId),
@@ -97,18 +124,18 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 			break;
 		case 2:
-			Document putMQmassageDocument = changeStringToDocument(toStringMQMessage(putMQmassage));
-			Document getMQmassageDocument = changeStringToDocument(toStringMQMessage(getMQmassage));
-			String getRc = getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument);
-
-			List<String> list = new ArrayList<>();
-			list.add("TIMESTAMP");
-			list.add("RC");
+//			Document putMQmassageDocument = changeStringToDocument(toStringMQMessage(putMQmassage));
+//			Document getMQmassageDocument = changeStringToDocument(toStringMQMessage(getMQmassage));
+//			String getRc = getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument);
+//
+//			List<String> list = new ArrayList<>();
+//			list.add("TIMESTAMP");
+//			list.add("RC");
 
 			assertAll(() -> assertEquals("02", getRc),
 					() -> assertEquals(DatatypeConverter.printHexBinary(putMQmassage.correlationId),
 							(DatatypeConverter.printHexBinary(getMQmassage.messageId))),
-					() -> assertTrue(check(putMQmassageDocument, getMQmassageDocument, list)),
+//					() -> assertTrue(check(putMQmassageDocument, getMQmassageDocument, list)),
 					() -> assertEquals(putMQmassage.format.trim(), getMQmassage.format.trim()),
 					() -> assertEquals(MQC.MQMT_REQUEST, getMQmassage.messageType));
 			checkflg.put("body", "1");
@@ -120,6 +147,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		}
 
 		assertAll(() -> assertTrue(mqCheck(putMQmassage, getMQmassage)),
+				() -> assertTrue(check(putMQmassageDocument, getMQmassageDocument, list)),
 				() -> assertEquals(putMQmassage.encoding, getMQmassage.encoding),
 				() -> assertEquals(putMQmassage.applicationIdData, getMQmassage.applicationIdData.trim()));
 
@@ -170,6 +198,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			System.out.println(toStringMQMessage(putMQmassage).replaceAll(System.lineSeparator(), ""));
+			System.out.println(toStringMQMessage(getMQmassage).replaceAll(System.lineSeparator(), ""));
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
 		}
 
@@ -216,7 +245,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test4_ParseError")
 		@MethodSource("test4_Per")
 		void test4_ParseError(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName(), "DF200");
+			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
 			lastCheck999(putMQmassage, getMQmassage);
@@ -271,7 +300,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test7_HTTPTimeout")
 		protected void test7_HTTPTimeout() throws Exception {
 			MQMessage putMQmassage = setUpCreateMQ((createBreakeServiceid(createMQMAssageBody(), "DF300")),
-					QUEUE.QL_DW_REP.getQName(), "DF300");
+					QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 		}
 
@@ -331,6 +360,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWait(QUEUE.QL_DW_REP.getQName());
 			lastCheck800(putMQmassage, getMQmassage);
+			
 
 		}
 
@@ -374,6 +404,9 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			putMQmassage.format = MQC.MQFMT_NONE;
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+			System.out.println(toStringMQMessage(putMQmassage).replaceAll(System.lineSeparator(), ""));
+			System.out.println(toStringMQMessage(getMQmassage).replaceAll(System.lineSeparator(), ""));
+
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 2);
 		}
 
@@ -437,7 +470,6 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-				mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			} finally {
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 				putEnabled(QUEUE.QL_DH_ERR.getQName());
