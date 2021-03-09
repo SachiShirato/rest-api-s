@@ -120,7 +120,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
-	class MqXmlTestMainSotuStopAPI {
+	class HttpClientTestMain {
 
 		@ParameterizedTest
 		@MethodSource("test1and6_Per")
@@ -311,7 +311,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
-	class MqXmlTestMainSotuStopAPI_手動 {
+	class HttpClientTestMainStop {
 
 		@Test
 		@DisplayName("test_手動テスト")
