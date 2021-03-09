@@ -39,18 +39,12 @@ public interface MQTest {
 	}
 
 	default MQMessage createMQMessage(String MQMassageBody) throws IOException {
-//最後にrequestをメゾット名に付ける
 		MQMessage putBody = new MQMessage();
 		putBody.priority = PRIORITY;
 		putBody.characterSet = CHARACTER_SET;
-//移動する。したの３つを別メゾットにして、上コメのメゾットをつくる。
-//		putBody.messageType = MQC.MQMT_REQUEST;
-//		putMQmassage.replyToQueueManagerName = qmgrname();
-//		putMQmassage.replyToQueueName = outQueueName;
 		putBody.format = MQC.MQFMT_STRING;
 		putBody.persistence = MQC.MQPER_NOT_PERSISTENT;
 		putBody.expiry = 30000; // 100ms
-
 		putBody.writeString(MQMassageBody);
 		putBody.messageId = MQC.MQMI_NONE;
 
@@ -58,12 +52,18 @@ public interface MQTest {
 
 	}
 
-	
-	
-	
-	
-	default void mqtoEmpty(List<String> ACCESS_QUEUE_NAME_LIST) throws IOException, MQException {
+	default MQMessage createMQMessageRequest(String MQMassageBody, String outQueueName) throws IOException {
+		MQMessage putBody = createMQMessage(MQMassageBody);
+		putBody.messageType = MQC.MQMT_REQUEST;
+		putBody.replyToQueueManagerName = qmgrname();
+		putBody.replyToQueueName = outQueueName;
+		return (putBody);
 
+	}
+
+	default boolean mqtoEmpty(List<String> ACCESS_QUEUE_NAME_LIST) throws IOException, MQException {
+
+		String flg = "0";
 		for (String name : ACCESS_QUEUE_NAME_LIST) {
 			int i = 1;
 			MQMessage str;
@@ -72,9 +72,11 @@ public interface MQTest {
 				if (str != null) {
 //					System.out.println("MQname:" + name + "/ごみ:" + str + "/件数:" + i++);
 					System.out.println("MQname:" + name + "/件数:" + i++);
+					flg = "1";
 				}
 			} while (str != null);
 		}
+		return (flg == "0");
 	}
 
 	default void mqputAll(List<String> ACCESS_QUEUE_NAME_LIST) throws IOException, MQException {
@@ -114,12 +116,11 @@ public interface MQTest {
 //				"getMQmassage(correlationId) :" + DatatypeConverter.printHexBinary(getMQmassage.correlationId));
 
 //		return ((toStringMQMessage(putMQmassage).equals(toStringMQMessage(getMQmassage)))
-				return ((putMQmassage.priority == (getMQmassage.priority))
+		return ((putMQmassage.priority == (getMQmassage.priority))
 				&& (putMQmassage.characterSet == (getMQmassage.characterSet)));
 //				&& (DatatypeConverter.printHexBinary(putMQmassage.messageId)
 //						.equals(DatatypeConverter.printHexBinary(getMQmassage.messageId))));
 	}
-
 
 	default boolean mqCheck(String putMassage, String getMassage) {
 		System.out.println("putMassage :" + putMassage + ":");
@@ -258,14 +259,11 @@ public interface MQTest {
 		}
 		return sb.reverse().toString();
 	}
-	
-	
-	
-	
-	
+
 	default void putEnabled(String qName) throws MQException {
 		this.alterQueue(qName, new int[] { MQC.MQIA_INHIBIT_PUT }, new int[] { MQC.MQQA_PUT_ALLOWED });
 	}
+
 	/**
 	 * キュー属性を PUT(DISABLED)に変更する。
 	 * 
@@ -275,6 +273,7 @@ public interface MQTest {
 	default void putDisabled(String qName) throws MQException {
 		this.alterQueue(qName, new int[] { MQC.MQIA_INHIBIT_PUT }, new int[] { MQC.MQQA_PUT_INHIBITED });
 	}
+
 	/**
 	 * キュー属性を GET(ENABLED)に変更する。
 	 * 
@@ -284,6 +283,7 @@ public interface MQTest {
 	default void getEnabled(String qName) throws MQException {
 		this.alterQueue(qName, new int[] { MQC.MQIA_INHIBIT_GET }, new int[] { MQC.MQQA_GET_ALLOWED });
 	}
+
 	/**
 	 * キュー属性を GET(DISABLED)に変更する。
 	 * 
@@ -293,6 +293,7 @@ public interface MQTest {
 	default void getDisabled(String qName) throws MQException {
 		this.alterQueue(qName, new int[] { MQC.MQIA_INHIBIT_GET }, new int[] { MQC.MQQA_GET_INHIBITED });
 	}
+
 	/**
 	 * キュー属性を変更する。
 	 * 

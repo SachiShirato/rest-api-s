@@ -96,19 +96,18 @@ public interface XMLCENTERTest extends XMLTest {
 
 	default String createBreakeServiceid(String body, String serviceid) throws Exception {
 
-		return body.replace("<SERVICEID>" + getXmlTag(body, "SERVICEID") + "</SERVICEID>",
-				"<SERVICEID>" + serviceid + "</SERVICEID>");
+		return body.replaceAll("<SERVICEID>.*</SERVICEID>",
+				StringUtils.isEmpty(serviceid) ? "<SERVICEID/>" : "<SERVICEID>" + serviceid + "</SERVICEID>");
 	}
 
 	default String createBreakeRc(String body, String rc) throws Exception {
 
-//		return body.replaceAll("<RC>" + getXmlTag(body, "RC") + "</RC>", "<RC>" + rc + "</RC>");
-		return body.replaceAll("<RC>.*</RC>", "<RC>" + rc + "</RC>");
+		return body.replaceAll("<RC>.*</RC>", StringUtils.isEmpty(rc) ? "<RC/>" : "<RC>" + rc + "</RC>");
 
 	}
 
 	default String createBreakeRequestid(String body, String requestid) throws Exception {
-		return body.replace("<REQUESTID>" + getXmlTag(body, "REQUESTID") + "</REQUESTID>",
+		return body.replaceAll("<REQUESTID>.*</REQUESTID>",
 				StringUtils.isEmpty(requestid) ? "<REQUESTID/>" : "<REQUESTID>" + requestid + "</REQUESTID>");
 	}
 

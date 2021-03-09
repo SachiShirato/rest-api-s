@@ -24,10 +24,7 @@ import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.Diff;
 import org.xmlunit.diff.Difference;
 
-
-
 public interface XMLTest {
-	String path = "/ts3.xml";
 
 	default Document changeStringToDocument(String xmlString)
 			throws ParserConfigurationException, SAXException, IOException {
@@ -90,30 +87,4 @@ public interface XMLTest {
 		return (size == 0);
 	}
 
-	
-	//xmlcenterへts3も
-	default String createMQMAssageBody() throws IOException {
-		return pathToString(path);
-	}
-
-	default String createBreakeServiceid(String body, String serviceid) throws Exception {
-		return body.replace("DF200", serviceid);
-	}
-
-	default String createBreakeRc(String body, String rc) throws Exception {
-		return body.replace("<RC>R</RC>", "<RC>" + rc + "</RC>");
-	}
-
-	default String createBreakeRequestid(String body, String requestid) throws Exception {
-		return body.replace("<REQUESTID>R</REQUESTID>", "<REQUESTID>" + requestid + "</REQUESTID>");
-	}
-
-	default String createBreakeEndtag(String body, String endtag) throws Exception {
-		return body.replace("</" + endtag + ">", "<" + endtag + ">");
-	}
-
-	default String createBreakeBody(String body) throws Exception {
-		return body.replace("CENTER xmlns=\"http://www.acom.co.jp/ACOM\"",
-				"CENTER xmlns=\"http://www.acom.co.jp/ACOMMM\"");
-	}
 }

@@ -29,5 +29,4 @@ public interface QMFH01Test extends MQTest {
 		return PORT;
 	}
 
-
 }
