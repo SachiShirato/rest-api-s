@@ -163,9 +163,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 		// TODO params_Normal
 		Stream<Arguments> test1and6_Per() throws Exception {
-			return Stream.of(Arguments.of(createMQMAssageBody()),
-					Arguments.of(createBreakeRc(createMQMAssageBody(), "")),
-					Arguments.of(createBreakeRequestid(createMQMAssageBody(), "")));
+			return Stream.of(Arguments.of(createMQMessageBody()), Arguments.of(setTag(createMQMessageBody(), "RC", "")),
+					Arguments.of(setTag(createMQMessageBody(), "REQUESTID", "")));
 		}
 
 		@ParameterizedTest
@@ -181,10 +180,10 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 		// TODO params_ServiceidError
 		Stream<Arguments> test2_Per() throws Exception {
-			return Stream.of(Arguments.of(createBreakeRc(createBreakeServiceid(createMQMAssageBody(), "S"), "01")),
-					Arguments.of(createBreakeRc(createBreakeServiceid(createMQMAssageBody(), "S"), "")),
-					Arguments.of(createBreakeServiceid(createMQMAssageBody(), "S")),
-					Arguments.of(createBreakeServiceid(createMQMAssageBody(), "")));
+			return Stream.of(Arguments.of(setTag(setTag(createMQMessageBody(), "SERVICEID", "S"), "RC", "01")),
+					Arguments.of(setTag(setTag(createMQMessageBody(), "SERVICEID", "S"), "RC", "")),
+					Arguments.of(setTag(createMQMessageBody(), "SERVICEID", "S")),
+					Arguments.of(setTag(createMQMessageBody(), "SERVICEID", "")));
 		}
 
 		@ParameterizedTest
@@ -219,10 +218,10 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 		// TODO params_ParseError
 		Stream<Arguments> test4_Per() throws Exception {
-			return Stream.of(Arguments.of(createBreakeBody(createMQMAssageBody())),
-					Arguments.of(createBreakeEndtag(createMQMAssageBody(), "APL_DATA")),
-					Arguments.of(createBreakeEndtag(createMQMAssageBody(), "REQUESTID")),
-					Arguments.of(createBreakeEndtag(createMQMAssageBody(), "SERVICEID")));
+			return Stream.of(Arguments.of(createBreakeBody(createMQMessageBody())),
+					Arguments.of(createBreakeEndtag(createMQMessageBody(), "APL_DATA")),
+					Arguments.of(createBreakeEndtag(createMQMessageBody(), "REQUESTID")),
+					Arguments.of(createBreakeEndtag(createMQMessageBody(), "SERVICEID")));
 		}
 
 		@ParameterizedTest
@@ -252,7 +251,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test5_ParseErrorAndDeadEnd")
 		@MethodSource("test4_Per")
 		void test5_ParseErrorAndDeadEnd(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(createBreakeBody(createMQMAssageBody()), QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(createBreakeBody(createMQMessageBody()), QUEUE.QL_DW_REP.getQName());
 			try {
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
 
@@ -269,7 +268,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@Test
 		@DisplayName("test7_HTTPTimeout")
 		protected void test7_HTTPTimeout() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ((createBreakeServiceid(createMQMAssageBody(), "DF300")),
+			MQMessage putMQmassage = setUpCreateMQ((setTag(createMQMessageBody(), "SERVICEID", "DF300")),
 					QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 		}
@@ -289,9 +288,9 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		Stream<Arguments> test7_Per() throws Exception {
 			return Stream.of(
 					// TODO 404?
-					Arguments.of(createBreakeServiceid(createMQMAssageBody(), "DF999")),
-					Arguments.of(createBreakeServiceid(createMQMAssageBody(), "DF400")),
-					Arguments.of(createBreakeServiceid(createMQMAssageBody(), "DF500")));
+					Arguments.of(setTag(createMQMessageBody(), "SERVICEID", "DF999")),
+					Arguments.of(setTag(createMQMessageBody(), "SERVICEID", "DF400")),
+					Arguments.of(setTag(createMQMessageBody(), "SERVICEID", "DF500")));
 		}
 
 		@ParameterizedTest
@@ -332,7 +331,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("Test6_Normal_NonXml")
 		// TODO test1and6_NonXml
 		protected void Test6_Normal_NonXml() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ((createBreakeServiceid(createMQMAssageBody(), "DF800")),
+			MQMessage putMQmassage = setUpCreateMQ((setTag(createMQMessageBody(), "SERVICEID", "DF800")),
 					QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWait(QUEUE.QL_DW_REP.getQName());
@@ -365,7 +364,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test_手動テスト")
 		void test_手動テスト() throws Exception {
 
-			MQMessage putMQmassage = setUpCreateMQ(createMQMAssageBody(), QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody(), QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
@@ -378,7 +377,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test_手動テスト_ReplyDead")
 		void test_手動テスト_ReplyDead() throws Exception {
 
-			MQMessage putMQmassage = setUpCreateMQ(createMQMAssageBody(), QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody(), QUEUE.QL_DW_REP.getQName());
 
 			try {
 
@@ -403,7 +402,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test_手動テスト_ReplyDeadAndDeadEnd")
 		void test_手動テスト_ReplyDeadAndDeadEnd() throws Exception {
 
-			MQMessage putMQmassage = setUpCreateMQ(createMQMAssageBody(), QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody(), QUEUE.QL_DW_REP.getQName());
 
 			try {
 

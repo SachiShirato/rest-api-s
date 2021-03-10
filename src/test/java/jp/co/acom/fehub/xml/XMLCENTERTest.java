@@ -15,7 +15,7 @@ import org.w3c.dom.Document;
 public interface XMLCENTERTest extends XMLTest {
 
 	// TODO 大文字
-	String path = "/ts3.xml";
+	String Path = "/ts3.xml";
 
 	List<String> TsList = new ArrayList<String>() {
 		{
@@ -87,8 +87,8 @@ public interface XMLCENTERTest extends XMLTest {
 	}
 
 	// TODO Message
-	default String createMQMAssageBody() throws IOException {
-		return pathToString(path);
+	default String createMQMessageBody() throws IOException {
+		return pathToString(Path);
 	}
 
 	default String getXmlTag(String body, String tag) throws IOException {
@@ -98,21 +98,10 @@ public interface XMLCENTERTest extends XMLTest {
 	}
 
 	// TODO setServiceid
-	default String createBreakeServiceid(String body, String serviceid) throws Exception {
+	default String setTag(String body, String tag, String data) throws Exception {
 
-		return body.replaceAll("<SERVICEID>.*</SERVICEID>",
-				StringUtils.isEmpty(serviceid) ? "<SERVICEID/>" : "<SERVICEID>" + serviceid + "</SERVICEID>");
-	}
-
-	default String createBreakeRc(String body, String rc) throws Exception {
-
-		return body.replaceAll("<RC>.*</RC>", StringUtils.isEmpty(rc) ? "<RC/>" : "<RC>" + rc + "</RC>");
-
-	}
-
-	default String createBreakeRequestid(String body, String requestid) throws Exception {
-		return body.replaceAll("<REQUESTID>.*</REQUESTID>",
-				StringUtils.isEmpty(requestid) ? "<REQUESTID/>" : "<REQUESTID>" + requestid + "</REQUESTID>");
+		return body.replaceAll("<" + tag + ">.*</" + tag + ">",
+				StringUtils.isEmpty(data) ? "<" + tag + "/>" : "<" + tag + ">" + data + "</" + tag + ">");
 	}
 
 	default String createBreakeEndtag(String body, String endtag) throws Exception {
