@@ -38,33 +38,44 @@ import jp.co.acom.fehub.xml.XMLCENTERTest;
 
 public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
+	// TODO 不要
 	Map<String, String> checkflg = new HashMap<>();
 
 	@BeforeEach
+	// TODO setUp
 	void setUpAll() throws Exception {
 		mqtoEmpty(getList());
 	}
 
 	@AfterEach
+	// TODO tearDown
 	void setAll() throws Exception {
 		assertTrue(mqtoEmpty(getList()));
 	}
 
+	// TODO replyToQ、常に一緒
 	MQMessage setUpCreateMQ(String body, String outQueueName) throws Exception {
+
 		MQMessage putMQmassage = createMQMessageRequest(body, outQueueName);
+
 		putMQmassage.correlationId = getUnique24().getBytes();
 		putMQmassage.applicationIdData = "SERVICEID";
+
 		return putMQmassage;
 	}
 
+	// TODO boolean reply
 	void lastCheckBody(MQMessage putMQmassage, MQMessage getMQmassage, int flg)
 			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
 
+		// TODO いらない
 		if (flg == (0 | 2)) {
+
 			Document putMQmassageDocument = changeStringToDocument(toStringMQMessage(putMQmassage));
 			Document getMQmassageDocument = changeStringToDocument(toStringMQMessage(getMQmassage));
 
 			List<String> list = new ArrayList<>();
+			// TODO いらない
 			list.add("TIMESTAMP");
 
 			if (flg == 2) {
@@ -75,11 +86,23 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		}
 	}
 
+	// TODO boolean errQ, boolean reply
 	void lastCheckMqmd(MQMessage putMQmassage, MQMessage getMQmassage, String getMQname, int flg) {
 
-		assertAll(() -> assertTrue(mqCheck(putMQmassage, getMQmassage)),
-				() -> assertEquals(putMQmassage.encoding, getMQmassage.encoding),
-				() -> assertEquals(putMQmassage.applicationIdData, getMQmassage.applicationIdData.trim()), () -> {
+		assertAll(
+
+				() -> {
+					if (flg == 0) {
+						assertEquals(MQC.MQMT_REPLY, getMQmassage.messageType);
+					}
+
+					// TODO 同じ
+					if (flg == (2 | 999)) {
+						assertEquals(MQC.MQMT_REQUEST, getMQmassage.messageType);
+					}
+				},
+
+				() -> {
 					if (flg == 0) {
 						assertEquals(MQC.MQFMT_STRING.trim(), getMQmassage.format.trim());
 					}
@@ -88,39 +111,45 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 					}
 				},
 
+				// TODO mqCheck
+				() -> assertTrue(mqCheck(putMQmassage, getMQmassage)),
+
+				() -> assertEquals(putMQmassage.encoding, getMQmassage.encoding),
+
 				() -> {
-					if (flg == 0) {
-						assertEquals(MQC.MQMT_REPLY, getMQmassage.messageType);
-					}
-					if (flg == (2 | 999)) {
-						assertEquals(MQC.MQMT_REQUEST, getMQmassage.messageType);
-					}
-				}, () -> {
 					if (getMQname == QUEUE.QL_DH_REP.getQName()) {
 						assertNotEquals(MQC.MQEI_UNLIMITED, getMQmassage.expiry);
 					}
 					if (getMQname == QUEUE.QL_DH_ERR.getQName()) {
 						assertEquals(MQC.MQEI_UNLIMITED, getMQmassage.expiry);
 					}
-				}, () -> {
+				},
+
+				() -> {
+					// TODO repQ & reqest 同じ
 					if (getMQname == QUEUE.QL_DH_REP.getQName()) {
 						assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmassage.persistence);
 					}
 					if (getMQname == QUEUE.QL_DH_ERR.getQName()) {
 						assertEquals(MQC.MQPER_PERSISTENT, getMQmassage.persistence);
 					}
-				});
+				},
+
+				() -> assertEquals(putMQmassage.applicationIdData, getMQmassage.applicationIdData.trim())
+
+		);
 	}
 
 	void lastCheck(MQMessage putMQmassage, MQMessage getMQmassage, String getMQname, int flg) throws Exception {
+
 		lastCheckMqmd(putMQmassage, getMQmassage, getMQname, flg);
 		lastCheckBody(putMQmassage, getMQmassage, flg);
-
 	}
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
-	class HttpClientTestMain {
+	// TODO StartingRizaTest
+	class Main {
 
 		@ParameterizedTest
 		@MethodSource("test1and6_Per")
@@ -132,6 +161,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
 		}
 
+		// TODO params_Normal
 		Stream<Arguments> test1and6_Per() throws Exception {
 			return Stream.of(Arguments.of(createMQMAssageBody()),
 					Arguments.of(createBreakeRc(createMQMAssageBody(), "")),
@@ -141,6 +171,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@ParameterizedTest
 		@DisplayName("test2_HTTPRequestError")
 		@MethodSource("test2_Per")
+		// TODO test2_ServiceidError
 		void test2_HTTPRequestError(String str) throws Exception {
 			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
@@ -148,6 +179,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 2);
 		}
 
+		// TODO params_ServiceidError
 		Stream<Arguments> test2_Per() throws Exception {
 			return Stream.of(Arguments.of(createBreakeRc(createBreakeServiceid(createMQMAssageBody(), "S"), "01")),
 					Arguments.of(createBreakeRc(createBreakeServiceid(createMQMAssageBody(), "S"), "")),
@@ -158,15 +190,18 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@ParameterizedTest
 		@DisplayName("test3_HTTPRequestErrorAndReplyDead")
 		@MethodSource("test2_Per")
+		// TODO test3_ServiceidErrorAndReplyDead
 		void test3_HTTPRequestErrorAndReplyDead(String str) throws Exception {
 			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
 			try {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+				// TODO いらない
 				mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			} finally {
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 			}
+			// TODO idで拾いたい
 			MQMessage getMQmassage = mqGet(QUEUE.QL_DH_ERR.getQName());
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 2);
 		}
@@ -182,6 +217,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			assertEquals(toStringMQMessage(putMQmassage), toStringMQMessage(getMQmassage));
 		}
 
+		// TODO params_ParseError
 		Stream<Arguments> test4_Per() throws Exception {
 			return Stream.of(Arguments.of(createBreakeBody(createMQMAssageBody())),
 					Arguments.of(createBreakeEndtag(createMQMAssageBody(), "APL_DATA")),
@@ -192,6 +228,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@ParameterizedTest
 		@DisplayName("test5_HTTPRequestErrorAndReplyDeadAndDeadEnd")
 		@MethodSource("test2_Per")
+		// TODO test5_ServiceidErrorAndReplyDeadAndDeadEnd
 		void test5_HTTPRequestErrorAndReplyDeadAndDeadEnd(String str) throws Exception {
 			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
 
@@ -199,6 +236,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+				// TODO いらない
 				mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			} finally {
 				putEnabled(QUEUE.QL_DW_REP.getQName());
@@ -219,6 +257,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
 
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+				// TODO いらない
 				mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			} finally {
 				putEnabled(QUEUE.QL_DH_ERR.getQName());
@@ -238,14 +277,19 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@ParameterizedTest
 		@DisplayName("test7_HTTPResponseError")
 		@MethodSource("test7_Per")
+		// TODO test7_HTTPResponseError
 		void test7_HTTPTimeout_HTTPResponseError(String str) throws Exception {
 			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+			// TODO いらない
 			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 		}
 
+		// TODO params_HTTPResponseError
 		Stream<Arguments> test7_Per() throws Exception {
-			return Stream.of(Arguments.of(createBreakeServiceid(createMQMAssageBody(), "DF999")),
+			return Stream.of(
+					// TODO 404?
+					Arguments.of(createBreakeServiceid(createMQMAssageBody(), "DF999")),
 					Arguments.of(createBreakeServiceid(createMQMAssageBody(), "DF400")),
 					Arguments.of(createBreakeServiceid(createMQMAssageBody(), "DF500")));
 		}
@@ -259,6 +303,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			try {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+				// TODO いらない
 				mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			} finally {
 				putEnabled(QUEUE.QL_DW_REP.getQName());
@@ -285,6 +330,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 		@Test
 		@DisplayName("Test6_Normal_NonXml")
+		// TODO test1and6_NonXml
 		protected void Test6_Normal_NonXml() throws Exception {
 			MQMessage putMQmassage = setUpCreateMQ((createBreakeServiceid(createMQMAssageBody(), "DF800")),
 					QUEUE.QL_DW_REP.getQName());
@@ -311,52 +357,69 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
+	// TODO StoppedRizaTest
 	class HttpClientTestMainStop {
 
 		@Test
+		// TODO test2_HTTPRequestError
 		@DisplayName("test_手動テスト")
 		void test_手動テスト() throws Exception {
 
 			MQMessage putMQmassage = setUpCreateMQ(createMQMAssageBody(), QUEUE.QL_DW_REP.getQName());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 2);
 		}
 
 		@Test
+		// TODO test3_HTTPRequestErrorAndReplyDead
 		@DisplayName("test_手動テスト_ReplyDead")
 		void test_手動テスト_ReplyDead() throws Exception {
 
 			MQMessage putMQmassage = setUpCreateMQ(createMQMAssageBody(), QUEUE.QL_DW_REP.getQName());
+
 			try {
+
 				putDisabled(QUEUE.QL_DW_REP.getQName());
+
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+				// TODO いらない
 				mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
+
 			} finally {
+
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 			}
+
+			// TODO idで拾いたい
 			MQMessage getMQmassage = mqGet(QUEUE.QL_DH_ERR.getQName());
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 2);
 		}
 
 		@Test
+		// TODO test5_HTTPRequestErrorAndReplyDeadAndDeadEnd
 		@DisplayName("test_手動テスト_ReplyDeadAndDeadEnd")
 		void test_手動テスト_ReplyDeadAndDeadEnd() throws Exception {
+
 			MQMessage putMQmassage = setUpCreateMQ(createMQMAssageBody(), QUEUE.QL_DW_REP.getQName());
 
 			try {
+
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
+
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
 			} finally {
+
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 				putEnabled(QUEUE.QL_DH_ERR.getQName());
 			}
+
 			MQMessage getMQmassage = mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
 			assertNotNull(getMQmassage);
 		}
-
 	}
-
 }

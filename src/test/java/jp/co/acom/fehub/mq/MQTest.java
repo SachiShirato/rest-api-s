@@ -7,8 +7,6 @@ import java.rmi.server.UID;
 import java.util.List;
 import java.util.Objects;
 
-import javax.xml.bind.DatatypeConverter;
-
 import com.ibm.mq.MQException;
 import com.ibm.mq.constants.CMQC;
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;
@@ -39,38 +37,49 @@ public interface MQTest {
 	}
 
 	default MQMessage createMQMessage(String MQMassageBody) throws IOException {
+
 		MQMessage putBody = new MQMessage();
-		putBody.priority = PRIORITY;
-		putBody.characterSet = CHARACTER_SET;
+
 		putBody.format = MQC.MQFMT_STRING;
-		putBody.persistence = MQC.MQPER_NOT_PERSISTENT;
+		putBody.characterSet = CHARACTER_SET;
 		putBody.expiry = 30000; // 100ms
-		putBody.writeString(MQMassageBody);
+		putBody.persistence = MQC.MQPER_NOT_PERSISTENT;
 		putBody.messageId = MQC.MQMI_NONE;
 
-		return (putBody);
+		putBody.priority = PRIORITY;
 
+		putBody.writeString(MQMassageBody);
+
+		return (putBody);
 	}
 
 	default MQMessage createMQMessageRequest(String MQMassageBody, String outQueueName) throws IOException {
+
 		MQMessage putBody = createMQMessage(MQMassageBody);
+
 		putBody.messageType = MQC.MQMT_REQUEST;
+		
+		// TODO qmgrName
 		putBody.replyToQueueManagerName = qmgrname();
 		putBody.replyToQueueName = outQueueName;
-		return (putBody);
 
+		return (putBody);
 	}
 
+	// TODO ACCESS_QUEUE_NAME_LIST小文字
 	default boolean mqtoEmpty(List<String> ACCESS_QUEUE_NAME_LIST) throws IOException, MQException {
 
+		// TODO boolean
 		String flg = "0";
 		for (String name : ACCESS_QUEUE_NAME_LIST) {
+
+			// TODO 0
 			int i = 1;
 			MQMessage str;
 			do {
+
 				str = mqGet(name);
 				if (str != null) {
-//					System.out.println("MQname:" + name + "/ごみ:" + str + "/件数:" + i++);
 					System.out.println("MQname:" + name + "/件数:" + i++);
 					flg = "1";
 				}

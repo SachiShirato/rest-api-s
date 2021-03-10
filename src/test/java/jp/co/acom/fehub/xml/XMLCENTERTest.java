@@ -14,7 +14,9 @@ import org.w3c.dom.Document;
 
 public interface XMLCENTERTest extends XMLTest {
 
+	// TODO 大文字
 	String path = "/ts3.xml";
+
 	List<String> TsList = new ArrayList<String>() {
 		{
 			add("@KBN");
@@ -84,6 +86,7 @@ public interface XMLCENTERTest extends XMLTest {
 				getMQmassage));
 	}
 
+	// TODO Message
 	default String createMQMAssageBody() throws IOException {
 		return pathToString(path);
 	}
@@ -94,6 +97,7 @@ public interface XMLCENTERTest extends XMLTest {
 		return body.substring(body.indexOf(headtag) + headtag.length(), body.indexOf(lasttag));
 	}
 
+	// TODO setServiceid
 	default String createBreakeServiceid(String body, String serviceid) throws Exception {
 
 		return body.replaceAll("<SERVICEID>.*</SERVICEID>",
