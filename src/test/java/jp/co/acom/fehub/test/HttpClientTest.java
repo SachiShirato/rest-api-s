@@ -54,9 +54,18 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 	}
 
 	// TODO replyToQ、常に一緒
-	MQMessage setUpCreateMQ(String body, String outQueueName) throws Exception {
+//	MQMessage setUpCreateMQ(String body, String outQueueName) throws Exception {
+//
+//		MQMessage putMQmassage = createMQMessageRequest(body);
+//
+//		putMQmassage.correlationId = getUnique24().getBytes();
+//		putMQmassage.applicationIdData = "SERVICEID";
+//
+//		return putMQmassage;
+//	}
+	MQMessage setUpCreateMQ(String body) throws Exception {
 
-		MQMessage putMQmassage = createMQMessageRequest(body, outQueueName);
+		MQMessage putMQmassage = createMQMessageRequest(body);
 
 		putMQmassage.correlationId = getUnique24().getBytes();
 		putMQmassage.applicationIdData = "SERVICEID";
@@ -155,7 +164,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@MethodSource("test1and6_Per")
 		@DisplayName("test1and6_Normal")
 		void test1and6_Normal(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(str);
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
@@ -172,7 +181,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@MethodSource("test2_Per")
 		// TODO test2_ServiceidError
 		void test2_HTTPRequestError(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(str);
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 2);
@@ -191,7 +200,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@MethodSource("test2_Per")
 		// TODO test3_ServiceidErrorAndReplyDead
 		void test3_HTTPRequestErrorAndReplyDead(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(str);
 			try {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
@@ -209,7 +218,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test4_ParseError")
 		@MethodSource("test4_Per")
 		void test4_ParseError(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(str);
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
 			lastCheckMqmd(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 999);
@@ -229,7 +238,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@MethodSource("test2_Per")
 		// TODO test5_ServiceidErrorAndReplyDeadAndDeadEnd
 		void test5_HTTPRequestErrorAndReplyDeadAndDeadEnd(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(str);
 
 			try {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
@@ -251,7 +260,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test5_ParseErrorAndDeadEnd")
 		@MethodSource("test4_Per")
 		void test5_ParseErrorAndDeadEnd(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(createBreakeBody(createMQMessageBody()), QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(createBreakeBody(createMQMessageBody()));
 			try {
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
 
@@ -268,8 +277,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@Test
 		@DisplayName("test7_HTTPTimeout")
 		protected void test7_HTTPTimeout() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ((setTag(createMQMessageBody(), "SERVICEID", "DF300")),
-					QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ((setTag(createMQMessageBody(), "SERVICEID", "DF300")));
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 		}
 
@@ -278,7 +286,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@MethodSource("test7_Per")
 		// TODO test7_HTTPResponseError
 		void test7_HTTPTimeout_HTTPResponseError(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(str);
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			// TODO いらない
 			mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
@@ -297,7 +305,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@MethodSource("test1and6_Per")
 		@DisplayName("test8_ReplyDead")
 		void test8_ReplyDead(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(str);
 
 			try {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
@@ -315,7 +323,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@MethodSource("test1and6_Per")
 		@DisplayName("test9_ReplyDeadAndDeadEnd")
 		void test9_ReplyDeadAndDeadEnd(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(str);
 
 			try {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
@@ -331,8 +339,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("Test6_Normal_NonXml")
 		// TODO test1and6_NonXml
 		protected void Test6_Normal_NonXml() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ((setTag(createMQMessageBody(), "SERVICEID", "DF800")),
-					QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ((setTag(createMQMessageBody(), "SERVICEID", "DF800")));
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWait(QUEUE.QL_DW_REP.getQName());
 			lastCheckMqmd(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
@@ -344,7 +351,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@MethodSource("test1and6_Per")
 		@DisplayName("test1and6_PERSISTENCE_FORMAT")
 		void test1and6_PERSISTENCE_FORMAT(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str, QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(str);
 			putMQmassage.persistence = MQC.MQPER_PERSISTENT;
 			putMQmassage.format = MQC.MQFMT_NONE;
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
@@ -364,7 +371,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test_手動テスト")
 		void test_手動テスト() throws Exception {
 
-			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody(), QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
@@ -377,7 +384,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test_手動テスト_ReplyDead")
 		void test_手動テスト_ReplyDead() throws Exception {
 
-			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody(), QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody());
 
 			try {
 
@@ -402,7 +409,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test_手動テスト_ReplyDeadAndDeadEnd")
 		void test_手動テスト_ReplyDeadAndDeadEnd() throws Exception {
 
-			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody(), QUEUE.QL_DW_REP.getQName());
+			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody());
 
 			try {
 

@@ -22,7 +22,7 @@ public interface MQTest {
 	int PRIORITY = 5;
 	int CHARACTER_SET = 1208;
 
-	String qmgrname();
+	String qmgrName();
 
 	String host();
 
@@ -53,27 +53,27 @@ public interface MQTest {
 		return (putBody);
 	}
 
-	default MQMessage createMQMessageRequest(String MQMassageBody, String outQueueName) throws IOException {
+	default MQMessage createMQMessageRequest(String MQMassageBody) throws IOException {
 
 		MQMessage putBody = createMQMessage(MQMassageBody);
 
 		putBody.messageType = MQC.MQMT_REQUEST;
-		
+
 		// TODO qmgrName
-		putBody.replyToQueueManagerName = qmgrname();
-		putBody.replyToQueueName = outQueueName;
+		putBody.replyToQueueManagerName = qmgrName();
+		putBody.replyToQueueName = QUEUE.QL_DW_REP.getQName();
 
 		return (putBody);
 	}
 
 	// TODO ACCESS_QUEUE_NAME_LIST小文字
-	default boolean mqtoEmpty(List<String> ACCESS_QUEUE_NAME_LIST) throws IOException, MQException {
+	default boolean mqtoEmpty(List<String> accessQueueNameList) throws IOException, MQException {
 
 		// TODO boolean
-		String flg = "0";
-		for (String name : ACCESS_QUEUE_NAME_LIST) {
+		Boolean flg = true;
+		for (String name : accessQueueNameList) {
 
-			// TODO 0
+			// TODO 0 (白)forとdoの間で1に直したい
 			int i = 1;
 			MQMessage str;
 			do {
@@ -81,11 +81,11 @@ public interface MQTest {
 				str = mqGet(name);
 				if (str != null) {
 					System.out.println("MQname:" + name + "/件数:" + i++);
-					flg = "1";
+					flg = false;
 				}
 			} while (str != null);
 		}
-		return (flg == "0");
+		return (flg);
 	}
 
 	default void mqputAll(List<String> ACCESS_QUEUE_NAME_LIST) throws IOException, MQException {
@@ -111,24 +111,9 @@ public interface MQTest {
 
 	default boolean mqCheck(MQMessage putMQmassage, MQMessage getMQmassage) throws IOException {
 
-//		System.out.println("putMQmassage(body) :" + toStringMQMessage(putMQmassage).replaceAll(System.lineSeparator(), "") + ":");
-//		System.out.println("getMQmassage(body) :" + toStringMQMessage(getMQmassage).replaceAll(System.lineSeparator(), "") + ":");
-//		System.out.println("putMQmassage(priority) :" + putMQmassage.priority);
-//		System.out.println("getMQmassage(priority) :" + getMQmassage.priority);
-//		System.out.println("putMQmassage(characterSet) :" + putMQmassage.characterSet);
-//		System.out.println("getMQmassage(characterSet) :" + getMQmassage.characterSet);
-//		System.out.println("putMQmassage(messageId) :" + DatatypeConverter.printHexBinary(putMQmassage.messageId));
-//		System.out.println("getMQmassage(messageId) :" + DatatypeConverter.printHexBinary(getMQmassage.messageId));
-//		System.out.println(
-//				"putMQmassage(correlationId) :" + DatatypeConverter.printHexBinary(putMQmassage.correlationId));
-//		System.out.println(
-//				"getMQmassage(correlationId) :" + DatatypeConverter.printHexBinary(getMQmassage.correlationId));
-
-//		return ((toStringMQMessage(putMQmassage).equals(toStringMQMessage(getMQmassage)))
 		return ((putMQmassage.priority == (getMQmassage.priority))
 				&& (putMQmassage.characterSet == (getMQmassage.characterSet)));
-//				&& (DatatypeConverter.printHexBinary(putMQmassage.messageId)
-//						.equals(DatatypeConverter.printHexBinary(getMQmassage.messageId))));
+
 	}
 
 	default boolean mqCheck(String putMassage, String getMassage) {
@@ -142,7 +127,7 @@ public interface MQTest {
 		MQQueueManager qmgr = null;
 		MQQueue queue = null;
 		try {
-			qmgr = new MQQueueManager(qmgrname());
+			qmgr = new MQQueueManager(qmgrName());
 			queue = qmgr.accessQueue(accessQueueName, MQC.MQOO_OUTPUT | MQC.MQOO_SET_IDENTITY_CONTEXT);
 
 			MQPutMessageOptions mqmo = new MQPutMessageOptions();
@@ -212,7 +197,7 @@ public interface MQTest {
 		MQQueueManager qmgr = null;
 		MQQueue queue = null;
 		try {
-			qmgr = new MQQueueManager(qmgrname());
+			qmgr = new MQQueueManager(qmgrName());
 
 			queue = qmgr.accessQueue(accessQueueName, MQC.MQOO_INPUT_AS_Q_DEF);
 
@@ -316,7 +301,7 @@ public interface MQTest {
 		MQQueueManager qmgr = null;
 		MQQueue queue = null;
 		try {
-			qmgr = new MQQueueManager(qmgrname());
+			qmgr = new MQQueueManager(qmgrName());
 			queue = qmgr.accessQueue(qName, MQC.MQOO_SET);
 			queue.set(column, value, null);
 		} finally {

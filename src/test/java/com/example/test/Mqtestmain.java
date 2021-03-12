@@ -26,7 +26,7 @@ public class Mqtestmain implements QMFH01Test {
 		String putMassage = "HHHkkkkkkkkkkkkk";
 
 		MQMessage putMQmassage = createMQMessage(putMassage);
-		putMQmassage.replyToQueueManagerName = qmgrname();
+		putMQmassage.replyToQueueManagerName = qmgrName();
 		putMQmassage.replyToQueueName = QUEUE.QL_DW_REP.getQName();
 //		putMQmassage.replyToQueueName=ACCESS_QUEUE_NAME;
 

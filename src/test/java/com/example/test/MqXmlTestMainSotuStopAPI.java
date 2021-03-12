@@ -28,7 +28,7 @@ public class MqXmlTestMainSotuStopAPI implements QMFH01Test, XMLCENTERTest {
 	protected void test_手動テスト() throws Exception {
 		
 		MQMessage putMQmassage = createMQMessage(createMQMessageBody());
-		putMQmassage.replyToQueueManagerName = qmgrname();
+		putMQmassage.replyToQueueManagerName = qmgrName();
 		putMQmassage.replyToQueueName = QUEUE.QL_DW_REP.getQName();
 		putMQmassage.correlationId = getUnique24().getBytes();
 		putMQmassage.applicationIdData = getXmlEvaluate(xmlGlbPath("SERVICEID"),

@@ -31,7 +31,7 @@ public class MqXmlTestMain implements QMFH01Test, XMLCENTERTest {
 		String path = "/ts3.xml";
 
 		MQMessage putMQmassage = createMQMessage(pathToString(path));
-		putMQmassage.replyToQueueManagerName = qmgrname();
+		putMQmassage.replyToQueueManagerName = qmgrName();
 		putMQmassage.replyToQueueName = QUEUE.QL_DW_REP.getQName();
 		mqput(QUEUE.QC_DH_REQ.getQName(), putMQmassage);
 
