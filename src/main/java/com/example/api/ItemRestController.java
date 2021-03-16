@@ -29,6 +29,7 @@ import com.example.service.ItemService;
 public class ItemRestController {
 	@Autowired
 	ItemService itemService;
+	public final static String STR_DF800 = "aaaaaa";
 
 	/**
 	 * 商品一覧取得API
@@ -48,24 +49,18 @@ public class ItemRestController {
 
 	/**
 	 * 商品名を検索して、結果のみ出力
-
-	@GetMapping("findbyname")
-	public Optional<Item> get(@RequestParam("name") String name) {
-		return itemService.findByName(name);
-	}
+	 * 
+	 * @GetMapping("findbyname") public Optional<Item> get(@RequestParam("name")
+	 * String name) { return itemService.findByName(name); }
 	 */
 	/**
 	 * 商品名を検索して、結果のみ出力
 	 */
 	@GetMapping("findbynameprice")
-	public Optional<Item> get(
-			@RequestParam("name") String name,
-			@RequestParam("price") Integer price)
-			 {
-		return itemService.findByNamePrice(name,price);
+	public Optional<Item> get(@RequestParam("name") String name, @RequestParam("price") Integer price) {
+		return itemService.findByNamePrice(name, price);
 	}
-	
-	
+
 	/**
 	 * 商品登録API
 	 * 
@@ -84,7 +79,7 @@ public class ItemRestController {
 		System.out.println(body.replaceAll(System.lineSeparator(), ""));
 		return body;
 	}
-	
+
 	@PostMapping(path = "/DF300")
 	@ResponseStatus(HttpStatus.CREATED)
 	String postItem2(@RequestBody String body) throws Exception {
@@ -97,36 +92,37 @@ public class ItemRestController {
 		throw new Exception();
 //		return null;
 	}
+
 	@PostMapping(path = "/DF400")
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	String postItem4(@RequestBody String body) {
 		return body;
 	}
-	
-	
-    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    @ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
-    @PostMapping(path = "/DF401")
-    @ResponseBody
-    public Map<String, Object> handleError() {
-        Map<String, Object> errorMap = new HashMap<String, Object>();
-        errorMap.put("message", "許可されていないメソッド");
-        errorMap.put("status", HttpStatus.METHOD_NOT_ALLOWED);
-        return errorMap;}
-	
+
+	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+	@ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
+	@PostMapping(path = "/DF401")
+	@ResponseBody
+	public Map<String, Object> handleError() {
+		Map<String, Object> errorMap = new HashMap<String, Object>();
+		errorMap.put("message", "許可されていないメソッド");
+		errorMap.put("status", HttpStatus.METHOD_NOT_ALLOWED);
+		return errorMap;
+	}
+
 	@PostMapping(path = "/DF500")
 	@ResponseStatus(HttpStatus.NOT_EXTENDED)
 	String postItem5(@RequestBody String body) {
 		return body;
 	}
-	
+
 	@PostMapping(path = "/DF800")
 	@ResponseStatus(HttpStatus.CREATED)
 	String postItem8(@RequestBody String body) {
-		
-		return "aaaaaa";
+
+		return STR_DF800;
 	}
-	
+
 	/**
 	 * 商品削除API
 	 * 

@@ -27,6 +27,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import com.example.api.ItemRestController;
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
@@ -53,7 +54,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 	// TODO replyToQ、常に一緒
 	MQMessage setUpCreateMQ(String body) throws Exception {
 
-		MQMessage putMQmassage = createMQMessageRequest(body);
+		MQMessage putMQmassage = createMQMessageRequest(body, QUEUE.QL_DW_REP.getQName());
 
 		putMQmassage.correlationId = getUnique24().getBytes();
 		putMQmassage.applicationIdData = "SERVICEID";
@@ -115,10 +116,14 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 				() -> {
 					// TODO repQ & reqest 同じ (白)1-6 ~FORMAT で値が違う
-					if (errQ == true) {
+					if (errQ) {
 						assertEquals(MQC.MQPER_PERSISTENT, getMQmassage.persistence);
 					} else {
-						assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmassage.persistence);
+						if (reply) {
+							assertEquals(putMQmassage.persistence, getMQmassage.persistence);
+						} else {
+							assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmassage.persistence);
+						}
 					}
 				},
 
@@ -150,8 +155,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 		// TODO params_Normal
 		Stream<Arguments> params_Normal() throws Exception {
-			return Stream.of(Arguments.of(createMQMessageBody()), Arguments.of(setTag(createMQMessageBody(), "RC", "")),
-					Arguments.of(setTag(createMQMessageBody(), "REQUESTID", "")));
+			return Stream.of(Arguments.of(createMQMessageBody()), Arguments.of(setRc(createMQMessageBody(), "")),
+					Arguments.of(setRequestid(createMQMessageBody(), "")));
 		}
 
 		@ParameterizedTest
@@ -167,10 +172,10 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 		// TODO params_ServiceidError
 		Stream<Arguments> params_ServiceidError() throws Exception {
-			return Stream.of(Arguments.of(setTag(setTag(createMQMessageBody(), "SERVICEID", "S"), "RC", "01")),
-					Arguments.of(setTag(setTag(createMQMessageBody(), "SERVICEID", "S"), "RC", "")),
-					Arguments.of(setTag(createMQMessageBody(), "SERVICEID", "S")),
-					Arguments.of(setTag(createMQMessageBody(), "SERVICEID", "")));
+			return Stream.of(Arguments.of(setRc(setServiceid(createMQMessageBody(), "S"), "01")),
+					Arguments.of(setRc(setServiceid(createMQMessageBody(), "S"), "")),
+					Arguments.of(setServiceid(createMQMessageBody(), "S")),
+					Arguments.of(setServiceid(createMQMessageBody(), "")));
 		}
 
 		@ParameterizedTest
@@ -249,7 +254,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@Test
 		@DisplayName("test7_HTTPTimeout")
 		protected void test7_HTTPTimeout() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ((setTag(createMQMessageBody(), "SERVICEID", "DF300")));
+			MQMessage putMQmassage = setUpCreateMQ((setServiceid(createMQMessageBody(), "DF300")));
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 		}
 
@@ -267,9 +272,9 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		Stream<Arguments> params_HTTPResponseError() throws Exception {
 			return Stream.of(
 					// TODO 404?
-					Arguments.of(setTag(createMQMessageBody(), "SERVICEID", "DF999")),
-					Arguments.of(setTag(createMQMessageBody(), "SERVICEID", "DF400")),
-					Arguments.of(setTag(createMQMessageBody(), "SERVICEID", "DF500")));
+					Arguments.of(setServiceid(createMQMessageBody(), "DF999")),
+					Arguments.of(setServiceid(createMQMessageBody(), "DF400")),
+					Arguments.of(setServiceid(createMQMessageBody(), "DF500")));
 		}
 
 		@ParameterizedTest
@@ -311,12 +316,12 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test1and6_NonXml")
 		// TODO test1and6_NonXml
 		protected void test1and6_NonXml() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ((setTag(createMQMessageBody(), "SERVICEID", "DF800")));
+			MQMessage putMQmassage = setUpCreateMQ((setServiceid(createMQMessageBody(), "DF800")));
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			// TODO (白)GetWait()から修正
 			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
 			lastCheckMqmd(putMQmassage, getMQmassage, false, false);
-			assertEquals("aaaaaa", toStringMQMessage(getMQmassage));
+			assertEquals(ItemRestController.STR_DF800, toStringMQMessage(getMQmassage));
 
 		}
 

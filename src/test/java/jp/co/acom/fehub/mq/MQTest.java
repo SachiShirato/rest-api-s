@@ -19,6 +19,7 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQQueueManager;
 
 public interface MQTest {
 
+	
 	int PRIORITY = 5;
 	int CHARACTER_SET = 1208;
 
