@@ -72,7 +72,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 		List<String> list = new ArrayList<>();
 		// TODO いらない
-		if (reply == true) {
+		if (reply) {
 			list.add("RC");
 			return ("02".equals(getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument)));
 		}
@@ -86,7 +86,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 				() -> {
 					// TODO 同じ
-					if (reply == true) {
+					if (reply) {
 						assertEquals(putMQmassage.messageType, getMQmassage.messageType);
 					} else {
 						assertEquals(MQC.MQMT_REPLY, getMQmassage.messageType);
@@ -94,7 +94,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				},
 
 				() -> {
-					if (reply == true) {
+					if (reply) {
 						assertEquals(putMQmassage.format.trim(), getMQmassage.format.trim());
 					} else {
 						assertEquals(MQC.MQFMT_STRING.trim(), getMQmassage.format.trim());
@@ -107,10 +107,10 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				() -> assertEquals(putMQmassage.encoding, getMQmassage.encoding),
 
 				() -> {
-					if (errQ == false) {
-						assertNotEquals(MQC.MQEI_UNLIMITED, getMQmassage.expiry);
-					} else {
+					if (errQ) {
 						assertEquals(MQC.MQEI_UNLIMITED, getMQmassage.expiry);
+					} else {
+						assertNotEquals(MQC.MQEI_UNLIMITED, getMQmassage.expiry);
 					}
 				},
 
