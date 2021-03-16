@@ -129,8 +129,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 	void lastCheck(MQMessage putMQmassage, MQMessage getMQmassage, String getMQname, int flg) throws Exception {
 
-		lastCheckMqmd(putMQmassage, getMQmassage, getMQname == QUEUE.QL_DH_ERR.getQName(), flg==0);
-		lastCheckBody(putMQmassage, getMQmassage, flg==0);
+		lastCheckMqmd(putMQmassage, getMQmassage, getMQname == QUEUE.QL_DH_ERR.getQName(), flg == 0);
+		lastCheckBody(putMQmassage, getMQmassage, flg == 0);
 	}
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -144,8 +144,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		void test1and6_Normal(String str) throws Exception {
 			MQMessage putMQmassage = setUpCreateMQ(str);
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 1);
+			lastCheck(putMQmassage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId),
+					QUEUE.QL_DW_REP.getQName(), 1);
 		}
 
 		// TODO params_Normal
@@ -161,8 +161,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		void test2_ServiceidError(String str) throws Exception {
 			MQMessage putMQmassage = setUpCreateMQ(str);
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
+			lastCheck(putMQmassage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId),
+					QUEUE.QL_DW_REP.getQName(), 0);
 		}
 
 		// TODO params_ServiceidError
@@ -183,8 +183,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 				// TODO idで拾いたい
-				MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-				lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 0);
+				lastCheck(putMQmassage, mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId),
+						QUEUE.QL_DH_ERR.getQName(), 0);
 			} finally {
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 			}
@@ -197,7 +197,6 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			MQMessage putMQmassage = setUpCreateMQ(str);
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 			MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-
 			lastCheckMqmd(putMQmassage, getMQmassage, true, true);
 			assertEquals(toStringMQMessage(putMQmassage), toStringMQMessage(getMQmassage));
 		}
@@ -222,8 +221,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 				// TODO いらない (白)ないとERRへ入る waitしないと、enabledが先に動く？
-				MQMessage getMQmassage = mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
-				assertNotNull(getMQmassage);
+				assertNotNull(mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName()));
 			} finally {
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 				putEnabled(QUEUE.QL_DH_ERR.getQName());
@@ -239,11 +237,9 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			MQMessage putMQmassage = setUpCreateMQ(createBreakeBody(createMQMessageBody()));
 			try {
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
-
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 				// TODO いらない (白)ないとQA.DH.DFへ入る waitしないと、enabledが先に動く？
-				MQMessage getMQmassage = mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
-				assertNotNull(getMQmassage);
+				assertNotNull(mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName()));
 			} finally {
 				putEnabled(QUEUE.QL_DH_ERR.getQName());
 			}
@@ -287,8 +283,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 				// TODO いらない (白)なくても大丈夫だが、他とそろえるなら残？ たぶんコンディションで結果がぶれる
 				// TODO (白)mqWaitから修正
-				MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-				lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 1);
+				lastCheck(putMQmassage, mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId),
+						QUEUE.QL_DH_ERR.getQName(), 1);
 			} finally {
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 			}
@@ -332,8 +328,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			putMQmassage.persistence = MQC.MQPER_PERSISTENT;
 			putMQmassage.format = MQC.MQFMT_NONE;
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 1);
+			lastCheck(putMQmassage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId),
+					QUEUE.QL_DW_REP.getQName(), 1);
 		}
 
 	}
@@ -350,8 +346,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody());
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-			lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DW_REP.getQName(), 0);
+			lastCheck(putMQmassage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId),
+					QUEUE.QL_DW_REP.getQName(), 0);
 		}
 
 		@Test
@@ -364,8 +360,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 				// TODO いらない (白)なくても大丈夫だが、そろえるなら残
 				// TODO idで拾いたい
-				MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-				lastCheck(putMQmassage, getMQmassage, QUEUE.QL_DH_ERR.getQName(), 0);
+				lastCheck(putMQmassage, mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId),
+						QUEUE.QL_DH_ERR.getQName(), 0);
 			} finally {
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 			}
@@ -380,8 +376,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-				MQMessage getMQmassage = mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName());
-				assertNotNull(getMQmassage);
+				assertNotNull(mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName()));
 			} finally {
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 				putEnabled(QUEUE.QL_DH_ERR.getQName());
