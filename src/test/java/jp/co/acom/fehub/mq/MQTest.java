@@ -244,7 +244,6 @@ public interface MQTest {
 			queue.close();
 
 		if (qmgr != null)
-//		if (Objects.nonNull(qmgr))
 			qmgr.disconnect();
 	}
 

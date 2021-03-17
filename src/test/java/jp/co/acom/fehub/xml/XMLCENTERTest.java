@@ -14,7 +14,6 @@ import org.w3c.dom.Document;
 
 public interface XMLCENTERTest extends XMLTest {
 
-	// TODO 大文字
 	String PATH = "/ts3.xml";
 
 	List<String> TS_LIST = Arrays.asList("@KBN", "@LVL", "@SVR", "@SVC");
@@ -29,21 +28,22 @@ public interface XMLCENTERTest extends XMLTest {
 		return gblpath;
 	}
 
-	default boolean checkDefault(Document putMQmassage, Document getMQmassage)
+	// TODO ！！！！！message → message
+	default boolean checkDefault(Document putMQmessage, Document getMQmessage)
 			throws ParseException, XPathExpressionException {
 
-		return (checkDefaultRc(getMQmassage) && (checkDefaultTs(putMQmassage, getMQmassage)));
+		return (checkDefaultRc(getMQmessage) && (checkDefaultTs(putMQmessage, getMQmessage)));
 	}
 
-	default boolean checkDefaultRc(Document getMQmassage) throws ParseException, XPathExpressionException {
+	default boolean checkDefaultRc(Document getMQmessage) throws ParseException, XPathExpressionException {
 
-		return "R".equals((getXmlEvaluate(xmlGlbPath("RC"), getMQmassage)).toString());
+		return "R".equals((getXmlEvaluate(xmlGlbPath("RC"), getMQmessage)).toString());
 	}
 
-	default boolean checkDefaultTs(Document putMQmassage, Document getMQmassage)
+	default boolean checkDefaultTs(Document putMQmessage, Document getMQmessage)
 			throws ParseException, XPathExpressionException {
 
-		for (int i = 0; i < putMQmassage.getElementsByTagName("TS").getLength(); i++) {
+		for (int i = 0; i < putMQmessage.getElementsByTagName("TS").getLength(); i++) {
 
 			String ts = "TS[" + (i + 1) + "]";
 
@@ -51,34 +51,32 @@ public interface XMLCENTERTest extends XMLTest {
 
 				String tsName = TS_LIST.get(x);
 
-				if (!((getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), putMQmassage))
-						.equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), getMQmassage))))
+				if (!((getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), putMQmessage))
+						.equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), getMQmessage))))
 					return false;
 			}
 
-			if (!(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts), putMQmassage)
-					.equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts), getMQmassage))))
+			if (!(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts), putMQmessage)
+					.equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts), getMQmessage))))
 				return false;
 		}
 
 		return true;
 	}
 
-	default boolean checkGetTs(Document getMQmassage) throws ParseException, XPathExpressionException {
+	default boolean checkGetTs(Document getMQmessage) throws ParseException, XPathExpressionException {
 
-		// TODO return
-		return ("2".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(0)), getMQmassage))
-				&& ("1".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(1)), getMQmassage)))
-				&& ("RSHUBF ".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(2)), getMQmassage)))
-				&& ("S".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(3)), getMQmassage))));
-
+		return ("2".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(0)), getMQmessage))
+				&& ("1".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(1)), getMQmessage)))
+				&& ("RSHUBF ".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(2)), getMQmessage)))
+				&& ("S".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(3)), getMQmessage))));
 	}
 
-	default Date getTimestamp(Document getMQmassage) throws ParseException, XPathExpressionException {
+	default Date getTimestamp(Document getMQmessage) throws ParseException, XPathExpressionException {
 
 		return new SimpleDateFormat("yyyyMMddhhmmssSSS").parse(getXmlEvaluate(
-				xmlGlbPath("TIMESTAMP", "TS[" + getMQmassage.getElementsByTagName("TS").getLength() + "]"),
-				getMQmassage));
+				xmlGlbPath("TIMESTAMP", "TS[" + getMQmessage.getElementsByTagName("TS").getLength() + "]"),
+				getMQmessage));
 	}
 
 	default String createMQMessageBody() throws IOException {
@@ -94,7 +92,6 @@ public interface XMLCENTERTest extends XMLTest {
 		return body.substring(body.indexOf(headtag) + headtag.length(), body.indexOf(lasttag));
 	}
 
-	// TODO setServiceid
 	default String setTag(String body, String tag, String data) throws Exception {
 
 		return body.replaceAll("<" + tag + ">.*</" + tag + ">",
@@ -102,14 +99,17 @@ public interface XMLCENTERTest extends XMLTest {
 	}
 
 	default String setServiceid(String body, String serviceid) throws Exception {
+
 		return setTag(body, "SERVICEID", serviceid);
 	}
 
 	default String setRc(String body, String rc) throws Exception {
+
 		return setTag(body, "RC", rc);
 	}
 
 	default String setRequestid(String body, String requestid) throws Exception {
+
 		return setTag(body, "REQUESTID", requestid);
 	}
 
