@@ -5,7 +5,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.server.UID;
 import java.util.List;
-import java.util.Objects;
 
 import com.ibm.mq.MQException;
 import com.ibm.mq.constants.CMQC;
@@ -37,7 +36,8 @@ public interface MQTest {
 		MQEnvironment.port = port();
 	}
 
-	default MQMessage createMQMessage(String MQMassageBody) throws IOException {
+	// TODO 変数大文字いかん
+	default MQMessage createMQMessage(String mqMessageBody) throws IOException {
 
 		MQMessage putBody = new MQMessage();
 		putBody.format = MQC.MQFMT_STRING;
@@ -46,18 +46,18 @@ public interface MQTest {
 		putBody.persistence = MQC.MQPER_NOT_PERSISTENT;
 		putBody.messageId = MQC.MQMI_NONE;
 		putBody.priority = PRIORITY;
-		putBody.writeString(MQMassageBody);
+		putBody.writeString(mqMessageBody);
 
 		return putBody;
 	}
 
-	default MQMessage createMQMessageRequest(String MQMassageBody, String QueueName) throws IOException {
+	// TODO 変数大文字いかん
+	default MQMessage createMQMessageRequest(String mqMessageBody, String qName) throws IOException {
 
-		MQMessage putBody = createMQMessage(MQMassageBody);
+		MQMessage putBody = createMQMessage(mqMessageBody);
 		putBody.messageType = MQC.MQMT_REQUEST;
 		putBody.replyToQueueManagerName = qmgrName();
-		// TODO 引数でもらう
-		putBody.replyToQueueName = QueueName;
+		putBody.replyToQueueName = qName;
 
 		return putBody;
 	}
@@ -65,31 +65,35 @@ public interface MQTest {
 	default boolean mqtoEmpty(List<String> accessQueueNameList) throws IOException, MQException {
 
 		// TODO boolean
-		Boolean flg = true;
+		boolean flg = true;
 
 		for (String name : accessQueueNameList) {
 
-			// TODO 0 (白)forとdoの間で1に直したい
-			int i = 1;
 			MQMessage str;
-// TODO(白)外にだすと、いつも出力される（strがnullという確認時だけ　　　　　flgをつかうと、一度falseになるとそれ以降が出力される
+			// TODO 0 (白)forとdoの間で1に直したい
+			int i = 0;
+			// TODO(白)外にだすと、いつも出力される（strがnullという確認時だけ flgをつかうと、一度falseになるとそれ以降が出力される
 			do {
 				str = mqGet(name);
 
 				if (str != null) {
-					System.out.println("MQname:" + name + "/件数:" + i++);
+					flg = false;
+					i++;
 				}
 
 			} while (str != null);
-
+			if (i > 0) {
+				System.out.println("MQname:" + name + "/件数:" + i++);
+			}
 		}
 
 		return flg;
 	}
 
-	default void mqputAll(List<String> ACCESS_QUEUE_NAME_LIST) throws IOException, MQException {
+	// TODO 変数大文字いかん
+	default void mqputAll(List<String> accessQueueList) throws IOException, MQException {
 
-		for (String name : ACCESS_QUEUE_NAME_LIST) {
+		for (String name : accessQueueList) {
 
 			mqput(name, "a");
 			mqput(name, "b");
@@ -112,14 +116,11 @@ public interface MQTest {
 		return builder.toString();
 	}
 
-	// TODO
-	default boolean mqCheck(MQMessage putMQmassage, MQMessage getMQmassage) throws IOException {
+	default boolean mqCheck(MQMessage putMQmessage, MQMessage getMQmessage) throws IOException {
 
-		return ((putMQmassage.priority == (getMQmassage.priority))
-				&& (putMQmassage.characterSet == (getMQmassage.characterSet)));
+		return ((putMQmessage.priority == (getMQmessage.priority))
+				&& (putMQmessage.characterSet == (getMQmessage.characterSet)));
 	}
-
-	// TODO
 
 	default void mqput(String accessQueueName, MQMessage putMessage) throws MQException {
 
@@ -143,9 +144,9 @@ public interface MQTest {
 		}
 	}
 
-	default void mqput(String accessQueueName, String massage) throws IOException, MQException {
+	default void mqput(String accessQueueName, String message) throws IOException, MQException {
 
-		mqput(accessQueueName, createMQMessage(massage));
+		mqput(accessQueueName, createMQMessage(message));
 	}
 
 	default MQMessage mqGet(String accessQueueName) throws MQException {
@@ -242,7 +243,8 @@ public interface MQTest {
 		if (queue != null)
 			queue.close();
 
-		if (Objects.nonNull(qmgr))
+		if (qmgr != null)
+//		if (Objects.nonNull(qmgr))
 			qmgr.disconnect();
 	}
 
