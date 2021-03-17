@@ -37,124 +37,124 @@ import jp.co.acom.fehub.xml.XMLCENTERTest;
 
 public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
-	// TODO 不要
-
 	@BeforeEach
-	// TODO setUp
 	void setUp() throws Exception {
+
 		mqtoEmpty(getList());
 	}
 
 	@AfterEach
-	// TODO tearDown
 	void tearDown() throws Exception {
+
 		assertTrue(mqtoEmpty(getList()));
 	}
 
-	// TODO replyToQ、常に一緒
 	MQMessage setUpCreateMQ(String body) throws Exception {
 
-		MQMessage putMQmassage = createMQMessageRequest(body, QUEUE.QL_DW_REP.getQName());
+		MQMessage putMQmessage = createMQMessageRequest(body, QUEUE.QL_DW_REP.getQName());
+		putMQmessage.correlationId = getUnique24().getBytes();
+		putMQmessage.applicationIdData = "SERVICEID";
 
-		putMQmassage.correlationId = getUnique24().getBytes();
-		putMQmassage.applicationIdData = "SERVICEID";
-
-		return putMQmassage;
+		return putMQmessage;
 	}
 
-	// TODO boolean reply
-	boolean lastCheckBody(MQMessage putMQmassage, MQMessage getMQmassage, boolean reply)
+	// TODO void、reply → requestになってる
+	void lastCheckBody(MQMessage putMQmessage, MQMessage getMQmessage, boolean request)
 			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
 
-		// TODO いらない
-		Document putMQmassageDocument = changeStringToDocument(toStringMQMessage(putMQmassage));
-		Document getMQmassageDocument = changeStringToDocument(toStringMQMessage(getMQmassage));
+		Document putMQmessageDocument = changeStringToDocument(toStringMQMessage(putMQmessage));
+		Document getMQmessageDocument = changeStringToDocument(toStringMQMessage(getMQmessage));
 
 		List<String> list = new ArrayList<>();
-		// TODO いらない
-		if (reply) {
+
+		if (request) {
+
 			list.add("RC");
-			return ("02".equals(getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument)));
+			// TODO アサートしてない
+			assertEquals("02", (getXmlEvaluate(xmlGlbPath("RC"), getMQmessageDocument)));
 		}
-		return (check(putMQmassageDocument, getMQmassageDocument, list));
+
+		// TODO アサートしてない
+		assertTrue(check(putMQmessageDocument, getMQmessageDocument, list));
 	}
 
-	// TODO boolean errQ, boolean reply
-	void lastCheckMqmd(MQMessage putMQmassage, MQMessage getMQmassage, boolean errQ, boolean reply) {
+	// TODO reply → requestになってる
+	void lastCheckMqmd(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean request) {
 
 		assertAll(
 
 				() -> {
-					// TODO 同じ
-					if (reply) {
-						assertEquals(putMQmassage.messageType, getMQmassage.messageType);
+					if (request) {
+						assertEquals(putMQmessage.messageType, getMQmessage.messageType);
 					} else {
-						assertEquals(MQC.MQMT_REPLY, getMQmassage.messageType);
+						assertEquals(MQC.MQMT_REPLY, getMQmessage.messageType);
 					}
 				},
 
 				() -> {
-					if (reply) {
-						assertEquals(putMQmassage.format.trim(), getMQmassage.format.trim());
+					if (request) {
+						assertEquals(putMQmessage.format.trim(), getMQmessage.format.trim());
 					} else {
-						assertEquals(MQC.MQFMT_STRING.trim(), getMQmassage.format.trim());
+						assertEquals(MQC.MQFMT_STRING.trim(), getMQmessage.format.trim());
 					}
 				},
 
-				// TODO mqCheck
-				() -> assertTrue(mqCheck(putMQmassage, getMQmassage)),
+				() -> assertTrue(mqCheck(putMQmessage, getMQmessage)),
 
-				() -> assertEquals(putMQmassage.encoding, getMQmassage.encoding),
+				() -> assertEquals(putMQmessage.encoding, getMQmessage.encoding),
 
 				() -> {
 					if (errQ) {
-						assertEquals(MQC.MQEI_UNLIMITED, getMQmassage.expiry);
+						assertEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry);
 					} else {
-						assertNotEquals(MQC.MQEI_UNLIMITED, getMQmassage.expiry);
+						assertNotEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry);
 					}
 				},
 
 				() -> {
-					// TODO repQ & reqest 同じ (白)1-6 ~FORMAT で値が違う
 					if (errQ) {
-						assertEquals(MQC.MQPER_PERSISTENT, getMQmassage.persistence);
+
+						assertEquals(MQC.MQPER_PERSISTENT, getMQmessage.persistence);
+
 					} else {
-						if (reply) {
-							assertEquals(putMQmassage.persistence, getMQmassage.persistence);
+
+						if (request) {
+							assertEquals(putMQmessage.persistence, getMQmessage.persistence);
 						} else {
-							assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmassage.persistence);
+							assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmessage.persistence);
 						}
 					}
 				},
 
-				() -> assertEquals(putMQmassage.applicationIdData, getMQmassage.applicationIdData.trim())
+				() -> assertEquals(putMQmessage.applicationIdData, getMQmessage.applicationIdData.trim())
 
 		);
 	}
 
-	void lastCheck(MQMessage putMQmassage, MQMessage getMQmassage, String getMQname, int flg) throws Exception {
+	void lastCheck(MQMessage putMQmessage, MQMessage getMQmessage, String getMQname, int flg) throws Exception {
 
-		lastCheckMqmd(putMQmassage, getMQmassage, getMQname == QUEUE.QL_DH_ERR.getQName(), flg == 0);
-		lastCheckBody(putMQmassage, getMQmassage, flg == 0);
+		lastCheckMqmd(putMQmessage, getMQmessage, getMQname == QUEUE.QL_DH_ERR.getQName(), flg == 0);
+		lastCheckBody(putMQmessage, getMQmessage, flg == 0);
 	}
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
-	// TODO StartingRizaTest
 	class StartingRizaTest {
 
 		@ParameterizedTest
 		@MethodSource("params_Normal")
 		@DisplayName("test1and6_Normal")
 		void test1and6_Normal(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str);
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			lastCheck(putMQmassage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId),
+
+			MQMessage putMQmessage = setUpCreateMQ(str);
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
+			lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId),
 					QUEUE.QL_DW_REP.getQName(), 1);
 		}
 
-		// TODO params_Normal
 		Stream<Arguments> params_Normal() throws Exception {
+
 			return Stream.of(Arguments.of(createMQMessageBody()), Arguments.of(setRc(createMQMessageBody(), "")),
 					Arguments.of(setRequestid(createMQMessageBody(), "")));
 		}
@@ -162,16 +162,17 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@ParameterizedTest
 		@DisplayName("test2_ServiceidError")
 		@MethodSource("params_ServiceidError")
-		// TODO test2_ServiceidError
 		void test2_ServiceidError(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str);
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			lastCheck(putMQmassage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId),
+
+			MQMessage putMQmessage = setUpCreateMQ(str);
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
+			lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId),
 					QUEUE.QL_DW_REP.getQName(), 0);
 		}
 
-		// TODO params_ServiceidError
 		Stream<Arguments> params_ServiceidError() throws Exception {
+
 			return Stream.of(Arguments.of(setRc(setServiceid(createMQMessageBody(), "S"), "01")),
 					Arguments.of(setRc(setServiceid(createMQMessageBody(), "S"), "")),
 					Arguments.of(setServiceid(createMQMessageBody(), "S")),
@@ -181,16 +182,21 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@ParameterizedTest
 		@DisplayName("test3_ServiceidErrorAndReplyDead")
 		@MethodSource("params_ServiceidError")
-		// TODO test3_ServiceidErrorAndReplyDead
 		void test3_ServiceidErrorAndReplyDead(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str);
+
+			MQMessage putMQmessage = setUpCreateMQ(str);
+
 			try {
+
 				putDisabled(QUEUE.QL_DW_REP.getQName());
-				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-				// TODO idで拾いたい
-				lastCheck(putMQmassage, mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId),
+
+				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
+				lastCheck(putMQmessage, mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId),
 						QUEUE.QL_DH_ERR.getQName(), 0);
+
 			} finally {
+
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 			}
 		}
@@ -199,15 +205,17 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@DisplayName("test4_ParseError")
 		@MethodSource("params_ParseError")
 		void test4_ParseError(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str);
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId);
-			lastCheckMqmd(putMQmassage, getMQmassage, true, true);
-			assertEquals(toStringMQMessage(putMQmassage), toStringMQMessage(getMQmassage));
+
+			MQMessage putMQmessage = setUpCreateMQ(str);
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
+			MQMessage getMQmessage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId);
+			lastCheckMqmd(putMQmessage, getMQmessage, true, true);
+			assertEquals(toStringMQMessage(putMQmessage), toStringMQMessage(getMQmessage));
 		}
 
-		// TODO params_ParseError
 		Stream<Arguments> params_ParseError() throws Exception {
+
 			return Stream.of(Arguments.of(createBreakeBody(createMQMessageBody())),
 					Arguments.of(createBreakeEndtag(createMQMessageBody(), "APL_DATA")),
 					Arguments.of(createBreakeEndtag(createMQMessageBody(), "REQUESTID")),
@@ -217,62 +225,67 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@ParameterizedTest
 		@DisplayName("test5_ServiceidErrorAndReplyDeadAndDeadEnd")
 		@MethodSource("params_ServiceidError")
-		// TODO test5_ServiceidErrorAndReplyDeadAndDeadEnd
 		void test5_ServiceidErrorAndReplyDeadAndDeadEnd(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str);
+
+			MQMessage putMQmessage = setUpCreateMQ(str);
 
 			try {
+
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
-				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-				// TODO いらない (白)ないとERRへ入る waitしないと、enabledが先に動く？
+
+				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
 				assertNotNull(mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName()));
+
 			} finally {
+
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 				putEnabled(QUEUE.QL_DH_ERR.getQName());
-
 			}
-
 		}
 
 		@ParameterizedTest
 		@DisplayName("test5_ParseErrorAndDeadEnd")
 		@MethodSource("params_ParseError")
 		void test5_ParseErrorAndDeadEnd(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(createBreakeBody(createMQMessageBody()));
+
+			MQMessage putMQmessage = setUpCreateMQ(createBreakeBody(createMQMessageBody()));
+
 			try {
+
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
-				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-				// TODO いらない (白)ないとQA.DH.DFへ入る waitしないと、enabledが先に動く？
+
+				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
 				assertNotNull(mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName()));
+
 			} finally {
+
 				putEnabled(QUEUE.QL_DH_ERR.getQName());
 			}
-
 		}
 
 		@Test
 		@DisplayName("test7_HTTPTimeout")
 		protected void test7_HTTPTimeout() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ((setServiceid(createMQMessageBody(), "DF300")));
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+			MQMessage putMQmessage = setUpCreateMQ((setServiceid(createMQMessageBody(), "DF300")));
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
 		}
 
 		@ParameterizedTest
 		@DisplayName("test7_HTTPResponseError")
 		@MethodSource("params_HTTPResponseError")
-		// TODO test7_HTTPResponseError
 		void test7_HTTPResponseError(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str);
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			// TODO いらない
+
+			MQMessage putMQmessage = setUpCreateMQ(str);
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
 		}
 
-		// TODO params_HTTPResponseError
 		Stream<Arguments> params_HTTPResponseError() throws Exception {
-			return Stream.of(
-					// TODO 404?
-					Arguments.of(setServiceid(createMQMessageBody(), "DF999")),
+
+			return Stream.of(Arguments.of(setServiceid(createMQMessageBody(), "DF999")),
 					Arguments.of(setServiceid(createMQMessageBody(), "DF400")),
 					Arguments.of(setServiceid(createMQMessageBody(), "DF500")));
 		}
@@ -281,32 +294,39 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		@MethodSource("params_Normal")
 		@DisplayName("test8_ReplyDead")
 		void test8_ReplyDead(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str);
+
+			MQMessage putMQmessage = setUpCreateMQ(str);
 
 			try {
+
 				putDisabled(QUEUE.QL_DW_REP.getQName());
-				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-				// TODO いらない (白)なくても大丈夫だが、他とそろえるなら残？ たぶんコンディションで結果がぶれる
-				// TODO (白)mqWaitから修正
-				lastCheck(putMQmassage, mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId),
+				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
+				lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId),
 						QUEUE.QL_DH_ERR.getQName(), 1);
+
 			} finally {
+
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 			}
-
 		}
 
 		@ParameterizedTest
 		@MethodSource("params_Normal")
 		@DisplayName("test9_ReplyDeadAndDeadEnd")
 		void test9_ReplyDeadAndDeadEnd(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str);
+
+			MQMessage putMQmessage = setUpCreateMQ(str);
 
 			try {
+
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
-				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
 			} finally {
+
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 				putEnabled(QUEUE.QL_DH_ERR.getQName());
 			}
@@ -314,26 +334,27 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 		@Test
 		@DisplayName("test1and6_NonXml")
-		// TODO test1and6_NonXml
 		protected void test1and6_NonXml() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ((setServiceid(createMQMessageBody(), "DF800")));
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			// TODO (白)GetWait()から修正
-			MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-			lastCheckMqmd(putMQmassage, getMQmassage, false, false);
-			assertEquals(ItemRestController.STR_DF800, toStringMQMessage(getMQmassage));
 
+			MQMessage putMQmessage = setUpCreateMQ((setServiceid(createMQMessageBody(), "DF800")));
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
+			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId);
+			lastCheckMqmd(putMQmessage, getMQmessage, false, false);
+			assertEquals(ItemRestController.STR_DF800, toStringMQMessage(getMQmessage));
 		}
 
 		@ParameterizedTest
 		@MethodSource("params_Normal")
 		@DisplayName("test1and6_PERSISTENCE_FORMAT")
 		void test1and6_PERSISTENCE_FORMAT(String str) throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(str);
-			putMQmassage.persistence = MQC.MQPER_PERSISTENT;
-			putMQmassage.format = MQC.MQFMT_NONE;
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			lastCheck(putMQmassage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId),
+
+			MQMessage putMQmessage = setUpCreateMQ(str);
+			putMQmessage.persistence = MQC.MQPER_PERSISTENT;
+			putMQmessage.format = MQC.MQFMT_NONE;
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
+			lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId),
 					QUEUE.QL_DW_REP.getQName(), 1);
 		}
 
@@ -341,52 +362,60 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
-	// TODO StoppedRizaTest
 	class StoppedRizaTest {
 
 		@Test
-		// TODO test2_HTTPRequestError
 		@DisplayName("test2_HTTPRequestError")
 		void test2_HTTPRequestError() throws Exception {
 
-			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody());
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-			lastCheck(putMQmassage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId),
+			MQMessage putMQmessage = setUpCreateMQ(createMQMessageBody());
+			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
+			lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId),
 					QUEUE.QL_DW_REP.getQName(), 0);
 		}
 
 		@Test
-		// TODO test3_HTTPRequestErrorAndReplyDead
 		@DisplayName("test3_HTTPRequestErrorAndReplyDead")
 		void test3_HTTPRequestErrorAndReplyDead() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody());
+
+			MQMessage putMQmessage = setUpCreateMQ(createMQMessageBody());
+
 			try {
+
 				putDisabled(QUEUE.QL_DW_REP.getQName());
-				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
-				// TODO いらない (白)なくても大丈夫だが、そろえるなら残
-				// TODO idで拾いたい
-				lastCheck(putMQmassage, mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmassage.correlationId),
+
+				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
+				lastCheck(putMQmessage, mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId),
 						QUEUE.QL_DH_ERR.getQName(), 0);
+
 			} finally {
+
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 			}
 		}
 
 		@Test
-		// TODO test5_HTTPRequestErrorAndReplyDeadAndDeadEnd
 		@DisplayName("test5_HTTPRequestErrorAndReplyDeadAndDeadEnd")
 		void test5_HTTPRequestErrorAndReplyDeadAndDeadEnd() throws Exception {
-			MQMessage putMQmassage = setUpCreateMQ(createMQMessageBody());
+
+			MQMessage putMQmessage = setUpCreateMQ(createMQMessageBody());
+
 			try {
+
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
-				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
+
+				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
 				assertNotNull(mqGetWait(QUEUE.SYSTEM_ADMIN_EVENT.getQName()));
+
 			} finally {
+
 				putEnabled(QUEUE.QL_DW_REP.getQName());
 				putEnabled(QUEUE.QL_DH_ERR.getQName());
 			}
-
 		}
 	}
 }
