@@ -67,15 +67,19 @@ public interface MQTest {
 		for (String name : accessQueueNameList) {
 
 			MQMessage str;
+			int i = 0;
 			do {
 				str = mqGet(name);
 
 				if (str != null) {
 					flg = false;
+					i++;
 				}
 
 			} while (str != null);
-
+			if (i > 0) {
+				System.out.println("MQname:" + name + "/件数:" + i);
+			}
 		}
 
 		return flg;
