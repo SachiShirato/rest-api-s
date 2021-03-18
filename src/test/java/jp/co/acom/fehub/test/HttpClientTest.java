@@ -58,7 +58,6 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		return putMQmessage;
 	}
 
-	// TODO void、reply → requestになってる
 	void lastCheckBody(MQMessage putMQmessage, MQMessage getMQmessage, boolean request)
 			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
 
@@ -70,15 +69,13 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 		if (request) {
 
 			list.add("RC");
-			// TODO アサートしてない
+
 			assertEquals("02", (getXmlEvaluate(xmlGlbPath("RC"), getMQmessageDocument)));
 		}
 
-		// TODO アサートしてない
 		assertTrue(check(putMQmessageDocument, getMQmessageDocument, list));
 	}
 
-	// TODO reply → requestになってる
 	void lastCheckMqmd(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean request) {
 
 		assertAll(

@@ -28,7 +28,6 @@ public interface XMLCENTERTest extends XMLTest {
 		return gblpath;
 	}
 
-	// TODO ！！！！！message → message
 	default boolean checkDefault(Document putMQmessage, Document getMQmessage)
 			throws ParseException, XPathExpressionException {
 

@@ -36,7 +36,6 @@ public interface MQTest {
 		MQEnvironment.port = port();
 	}
 
-	// TODO 変数大文字いかん
 	default MQMessage createMQMessage(String mqMessageBody) throws IOException {
 
 		MQMessage putBody = new MQMessage();
@@ -51,7 +50,6 @@ public interface MQTest {
 		return putBody;
 	}
 
-	// TODO 変数大文字いかん
 	default MQMessage createMQMessageRequest(String mqMessageBody, String qName) throws IOException {
 
 		MQMessage putBody = createMQMessage(mqMessageBody);
@@ -64,33 +62,25 @@ public interface MQTest {
 
 	default boolean mqtoEmpty(List<String> accessQueueNameList) throws IOException, MQException {
 
-		// TODO boolean
 		boolean flg = true;
 
 		for (String name : accessQueueNameList) {
 
 			MQMessage str;
-			// TODO 0 (白)forとdoの間で1に直したい
-			int i = 0;
-			// TODO(白)外にだすと、いつも出力される（strがnullという確認時だけ flgをつかうと、一度falseになるとそれ以降が出力される
 			do {
 				str = mqGet(name);
 
 				if (str != null) {
 					flg = false;
-					i++;
 				}
 
 			} while (str != null);
-			if (i > 0) {
-				System.out.println("MQname:" + name + "/件数:" + i++);
-			}
+
 		}
 
 		return flg;
 	}
 
-	// TODO 変数大文字いかん
 	default void mqputAll(List<String> accessQueueList) throws IOException, MQException {
 
 		for (String name : accessQueueList) {
