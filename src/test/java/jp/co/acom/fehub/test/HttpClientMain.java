@@ -9,11 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.ResolverStyle;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,7 +47,7 @@ public class HttpClientMain implements QMFH01Test, XMLCENTERTest {
 
 	MQMessage setUpCreateMQ(String body) throws Exception {
 
-		MQMessage putMQmessage = createMQMessageRequest(body, QUEUE.QL_DW_REP.getQName());
+		MQMessage putMQmessage = createMQMessageRequest(body, GET_QUEUE_NAME);
 //TODO 不要		putMQmessage.correlationId = getUnique24().getBytes();
 		return putMQmessage;
 	}
@@ -148,20 +144,27 @@ public class HttpClientMain implements QMFH01Test, XMLCENTERTest {
 
 				}
 
-//TODO タイムスタンプ 秒を省いている　　端末時間マイナス９→端末依存
-				Calendar calendar = Calendar.getInstance();
-				calendar.add(Calendar.HOUR_OF_DAY, -9);
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-
-				assertEquals(dateFormat.format(calendar.getTime()).substring(0, 12),
-						dateFormat.format(dateFormat.parse(getXmlEvaluate(
-								xmlGlbPath("TIMESTAMP",
-										"TS[" + getMQmessageDocument.getElementsByTagName("TS").getLength() + "]"),
-								getMQmessageDocument))).substring(0, 12));
-				
-				
+				assertTrue(isYmd(getXmlEvaluate(
+						xmlGlbPath("TIMESTAMP",
+								"TS[" + getMQmessageDocument.getElementsByTagName("TS").getLength() + "]"),
+						getMQmessageDocument)));
 
 			}
+		}
+	}
+
+	// TODO 日付チェック 移動する
+	public static boolean isYmd(String ymd) {
+		try {
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			sdf.setLenient(false);
+			sdf.parse(ymd);
+
+			return true;
+
+		} catch (Exception ex) {
+			return false;
 		}
 	}
 
@@ -202,7 +205,7 @@ public class HttpClientMain implements QMFH01Test, XMLCENTERTest {
 
 	void lastCheck(MQMessage putMQmessage, MQMessage getMQmessage, String getMQname, int flg) throws Exception {
 
-		lastCheckMqmd(putMQmessage, getMQmessage, getMQname == QUEUE.QL_DH_ERR.getQName(), flg == 0);
+		lastCheckMqmd(putMQmessage, getMQmessage, getMQname.equals(QUEUE.QL_DH_ERR.getQName()), flg == 0);
 		lastCheckBody(putMQmessage, getMQmessage, flg == 0);
 	}
 }

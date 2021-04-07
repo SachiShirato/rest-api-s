@@ -39,10 +39,8 @@ public class HttpClientIta extends HttpClientMain {
 
 		Stream<Arguments> params_Normal() throws Exception {
 
-			return Stream.of(Arguments.of(pathToString(normalPath)), 
-					Arguments.of(setRc(pathToString(normalPath), "")),
-					Arguments.of(setRequestid(pathToString(normalPath), ""))
-			);
+			return Stream.of(Arguments.of(pathToString(normalPath)), Arguments.of(setRc(pathToString(normalPath), "")),
+					Arguments.of(setRequestid(pathToString(normalPath), "")));
 		}
 
 		@ParameterizedTest
