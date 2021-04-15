@@ -6,6 +6,7 @@ public interface QMFH01Test extends MQTest {
 	String CHANNEL = "SYSTEM.BKR.CONFIG";
 	int PORT = 50014;
 	String QUEUE_MANAGER_NAME = "QMFH01";
+	String GET_QUEUE_NAME = QUEUE.QL_DW_REP.getQName();
 
 	String ACCESS_QUEUE_NAME = QUEUE.QL_DH_ERR.getQName();
 

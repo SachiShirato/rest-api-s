@@ -1,10 +1,13 @@
 package jp.co.acom.fehub.xml;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -63,28 +66,28 @@ public interface XMLTest {
 		}
 	}
 
+	
+
+
+
+
 	default String getXmlEvaluate(String path, Document document) throws XPathExpressionException {
 
 		return XPathFactory.newInstance().newXPath().evaluate(path, document);
 	}
 
-	default <T> boolean check(T putMQmassage, T getMQmassage, List<String> list) {
-
-		Diff diff = DiffBuilder.compare(getMQmassage).withTest(getMQmassage)
+	default <T> boolean check(T putMQmessageDocument, T getMQmessageDocument, List<String> list) {
+		
+		Diff diff = DiffBuilder.compare(putMQmessageDocument).withTest(getMQmessageDocument)
 				.withNodeFilter(node -> !list.contains(node.getNodeName())).build();
 
-//	    Diff diff = DiffBuilder.compare(getMQmassage).withTest(getMQmassage)
-//	    	      .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byName))
-//	    	      .checkForSimilar().build();
-
-//		return diff.hasDifferences();
-		java.util.Iterator<Difference> iter = diff.getDifferences().iterator();
+		Iterator<Difference> iter = diff.getDifferences().iterator();
 		int size = 0;
 		while (iter.hasNext()) {
 			System.out.println(iter.next().toString());
 			size++;
 		}
-		return (size == 0);
+		return(size == 0);
 	}
 
 }

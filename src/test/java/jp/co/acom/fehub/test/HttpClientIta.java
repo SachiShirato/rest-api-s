@@ -18,10 +18,12 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 import jp.co.acom.fehub.mq.QUEUE;
 
 public class HttpClientIta extends HttpClientMain {
+	
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
 	class StartingRizaTest {
+		// TODO パスをts3にする
 		String normalPath = "/ts200.xml";
 
 		@ParameterizedTest
@@ -31,14 +33,11 @@ public class HttpClientIta extends HttpClientMain {
 
 			MQMessage putMQmessage = setUpCreateMQ(str);
 			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
-			MQMessage getMQmessage = mqGetWaitCorrelid(QUEUE.QL_DW_REP.getQName(), putMQmessage.messageId);
-
-			lastCheck(putMQmessage, getMQmessage, QUEUE.QL_DW_REP.getQName(), 0);
+			lastCheck(putMQmessage, mqGetWaitCorrelid(GET_QUEUE_NAME, putMQmessage.messageId), GET_QUEUE_NAME, 0);
 
 		}
 
 		Stream<Arguments> params_Normal() throws Exception {
-
 			return Stream.of(Arguments.of(pathToString(normalPath)), Arguments.of(setRc(pathToString(normalPath), "")),
 					Arguments.of(setRequestid(pathToString(normalPath), "")));
 		}
@@ -78,10 +77,10 @@ public class HttpClientIta extends HttpClientMain {
 
 			MQMessage putMQmessage = setUpCreateMQ(setServiceid(pathToString(normalPath), "DL200"));
 			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
-
-			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
-
-			lastCheck(putMQmessage, getMQmessage, QUEUE.QA_DH_DL.getQName(), 1);
+			// TODO DLどこまで確認するか
+			mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
+//			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
+//			lastCheck(putMQmessage, getMQmessage, QUEUE.QA_DH_DL.getQName(), 1);
 		}
 
 	}

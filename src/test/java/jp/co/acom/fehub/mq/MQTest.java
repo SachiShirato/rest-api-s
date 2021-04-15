@@ -17,9 +17,9 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQQueue;
 import com.ibm.msg.client.wmq.compat.base.internal.MQQueueManager;
 
 public interface MQTest {
-
-	int PRIORITY = 5;
-	int CHARACTER_SET = 1208;
+//TODO 下記二つをいれないで実行したケースを増やす　・　なにか入るはず
+	int PRIORITY_5 = 5;
+	int CHARACTER_SET_1208 = 1208;
 
 	String qmgrName();
 
@@ -40,11 +40,11 @@ public interface MQTest {
 
 		MQMessage putBody = new MQMessage();
 		putBody.format = MQC.MQFMT_STRING;
-		putBody.characterSet = CHARACTER_SET;
+		putBody.characterSet = CHARACTER_SET_1208;
 		putBody.expiry = 30000; // 100ms
 		putBody.persistence = MQC.MQPER_NOT_PERSISTENT;
 		putBody.messageId = MQC.MQMI_NONE;
-		putBody.priority = PRIORITY;
+		putBody.priority = PRIORITY_5;
 		putBody.writeString(mqMessageBody);
 
 		return putBody;
