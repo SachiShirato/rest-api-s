@@ -18,7 +18,6 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 import jp.co.acom.fehub.mq.QUEUE;
 
 public class HttpClientIta extends HttpClientMain {
-	
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
@@ -29,17 +28,29 @@ public class HttpClientIta extends HttpClientMain {
 		@ParameterizedTest
 		@MethodSource("params_Normal")
 		@DisplayName("test1and5_Normal")
-		void test1and5_Normal(String str) throws Exception {
+		void test1and5_Normal(String str, String q) throws Exception {
 
 			MQMessage putMQmessage = setUpCreateMQ(str);
-			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
-			lastCheck(putMQmessage, mqGetWaitCorrelid(GET_QUEUE_NAME, putMQmessage.messageId), GET_QUEUE_NAME, 0);
+			mqput(q, putMQmessage);
+			MQMessage getMQmessage = mqGetWaitCorrelid(GET_QUEUE_NAME, putMQmessage.messageId);
+			if (getMQmessage == null) {
+				MQMessage getMQmessage2 = mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
+				lastCheckMqmd(putMQmessage, getMQmessage2, false);
+			} else {
+				lastCheck(putMQmessage, getMQmessage, false, true);
+			}
 
 		}
 
 		Stream<Arguments> params_Normal() throws Exception {
-			return Stream.of(Arguments.of(pathToString(normalPath)), Arguments.of(setRc(pathToString(normalPath), "")),
-					Arguments.of(setRequestid(pathToString(normalPath), "")));
+			return Stream.of(Arguments.of(pathToString(normalPath), QUEUE.QC_DH_REQ.getQName()),
+					Arguments.of(pathToString(normalPath), QUEUE.QL_DH_REQ.getQName())
+
+			// TODO 消す不要ケース QC QL
+//					,
+//					Arguments.of(setRc(pathToString(normalPath), "")),
+//					Arguments.of(setRequestid(pathToString(normalPath), ""))
+			);
 		}
 
 		@ParameterizedTest
@@ -67,21 +78,20 @@ public class HttpClientIta extends HttpClientMain {
 			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
 
 			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId);
-			lastCheckMqmd(putMQmessage, getMQmessage, true, false);
+			lastCheckMqmd(putMQmessage, getMQmessage, true);
 			assertEquals(ItemRestController.STR_DF800, toStringMQMessage(getMQmessage));
 		}
 
-		@Test
-		@DisplayName("test8_Normal_HeadDL")
-		protected void test8_Normal_HeadDL() throws Exception {
-
-			MQMessage putMQmessage = setUpCreateMQ(setServiceid(pathToString(normalPath), "DL200"));
-			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
-			// TODO DLどこまで確認するか
-			mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
-//			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
-//			lastCheck(putMQmessage, getMQmessage, QUEUE.QA_DH_DL.getQName(), 1);
-		}
+//		@Test
+//		@DisplayName("test8_Normal_HeadDL")
+//		protected void test8_Normal_HeadDL() throws Exception {
+//
+//			MQMessage putMQmessage = setUpCreateMQ(setServiceid(pathToString(normalPath), "DL200"));
+//			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
+//			mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
+////			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
+////			lastCheck(putMQmessage, getMQmessage, QUEUE.QA_DH_DL.getQName(), 1);
+//		}
 
 	}
 

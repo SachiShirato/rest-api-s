@@ -122,32 +122,33 @@ public interface XMLCENTERTest extends XMLTest {
 		return body.replace("CENTER xmlns=\"http://www.acom.co.jp/ACOM\"",
 				"CENTER xmlns=\"http://www.acom.co.jp/ACOMMM\"");
 	}
-	
-	
+
 	default String getTagData(String tag, Document document) throws XPathExpressionException {
 
 		return getXmlEvaluate(xmlGlbPath(tag), document);
 	}
-	
-		default String getTimestampName(int i, int x, Document document) throws XPathExpressionException {
-			
-			return getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[" + i + "]", TS_LIST.get(x)), document);
-		}	
-		default String getTimestampName(int i,Document document) throws XPathExpressionException {
-			
-			return getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[" + i + "]"), document);
+
+	default String getTimestampName(int i, String x, Document document) throws XPathExpressionException {
+
+		return getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[" + i + "]", x), document);
+	}
+
+	default String getTimestampName(int i, Document document) throws XPathExpressionException {
+
+		return getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[" + i + "]"), document);
+	}
+
+	default boolean isYmd(String ymd) {
+		try {
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+			sdf.setLenient(false);
+			sdf.parse(ymd);
+
+			return true;
+
+		} catch (Exception ex) {
+			return false;
 		}
-		default boolean isYmd(String ymd) {
-			try {
-
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-				sdf.setLenient(false);
-				sdf.parse(ymd);
-
-				return true;
-
-			} catch (Exception ex) {
-				return false;
-			}
-		}
+	}
 }
