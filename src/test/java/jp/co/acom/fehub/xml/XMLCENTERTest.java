@@ -137,6 +137,13 @@ public interface XMLCENTERTest extends XMLTest {
 
 		return getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[" + i + "]"), document);
 	}
+	
+	default String getBetweenTag(String str, String tag) throws XPathExpressionException {
+		int start = str.indexOf("<" + tag + ">");
+		int end = str.indexOf("</" + tag + ">");
+
+		return str.substring(start+tag.length()+2, end);
+	}
 
 	default boolean isYmd(String ymd) {
 		try {

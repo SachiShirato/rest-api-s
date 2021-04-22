@@ -27,15 +27,14 @@ public class HttpClientIta extends HttpClientMain {
 
 		@ParameterizedTest
 		@MethodSource("params_Normal")
-		@DisplayName("test1and5_Normal")
-		void test1and5_Normal(String str, String q) throws Exception {
-
+		@DisplayName("test1and5and8_Normal")
+		void test1and5and8_Normal(String str, String q) throws Exception {
 			MQMessage putMQmessage = setUpCreateMQ(str);
 			mqput(q, putMQmessage);
 			MQMessage getMQmessage = mqGetWaitCorrelid(GET_QUEUE_NAME, putMQmessage.messageId);
 			if (getMQmessage == null) {
 				MQMessage getMQmessage2 = mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
-				lastCheckMqmd(putMQmessage, getMQmessage2, false);
+				lastCheckMqmd(putMQmessage, getMQmessage2, false, false);
 			} else {
 				lastCheck(putMQmessage, getMQmessage, false, true);
 			}
@@ -43,8 +42,8 @@ public class HttpClientIta extends HttpClientMain {
 		}
 
 		Stream<Arguments> params_Normal() throws Exception {
-			return Stream.of(Arguments.of(pathToString(normalPath), QUEUE.QC_DH_REQ.getQName()),
-					Arguments.of(pathToString(normalPath), QUEUE.QL_DH_REQ.getQName())
+			return Stream.of(Arguments.of(setUpCreateXML(normalPath), QUEUE.QC_DH_REQ.getQName()),
+					Arguments.of(setUpCreateXML(normalPath), QUEUE.QL_DH_REQ.getQName())
 
 			// TODO 消す不要ケース QC QL
 //					,
@@ -78,20 +77,9 @@ public class HttpClientIta extends HttpClientMain {
 			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
 
 			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId);
-			lastCheckMqmd(putMQmessage, getMQmessage, true);
+			lastCheckMqmd(putMQmessage, getMQmessage, true, true);
 			assertEquals(ItemRestController.STR_DF800, toStringMQMessage(getMQmessage));
 		}
-
-//		@Test
-//		@DisplayName("test8_Normal_HeadDL")
-//		protected void test8_Normal_HeadDL() throws Exception {
-//
-//			MQMessage putMQmessage = setUpCreateMQ(setServiceid(pathToString(normalPath), "DL200"));
-//			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
-//			mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
-////			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
-////			lastCheck(putMQmessage, getMQmessage, QUEUE.QA_DH_DL.getQName(), 1);
-//		}
 
 	}
 
@@ -104,11 +92,8 @@ public class HttpClientIta extends HttpClientMain {
 		void test2_HTTPRequestError() throws Exception {
 
 			MQMessage putMQmessage = setUpCreateMQ(createMQMessageBody());
-
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
-
-//			lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId),
-//					QUEUE.QL_DW_REP.getQName(), 0);
+			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
+			lastCheck(putMQmessage, mqGetWaitMsgid(GET_QUEUE_NAME, putMQmessage.correlationId), false, false);
 		}
 
 	}
