@@ -137,12 +137,25 @@ public interface XMLCENTERTest extends XMLTest {
 
 		return getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[" + i + "]"), document);
 	}
-	
+
 	default String getBetweenTag(String str, String tag) throws XPathExpressionException {
 		int start = str.indexOf("<" + tag + ">");
 		int end = str.indexOf("</" + tag + ">");
 
-		return str.substring(start+tag.length()+2, end);
+		return str.substring(start + tag.length() + 2, end);
+
+	}
+
+	default String changeCode(String str) throws XPathExpressionException {
+
+		String[][] codes = { { "—", "−", "〜", "‖", "¦", "~" }, { "―", "－", "～", "∥", "￤", "~" } };
+
+		for (int i = 0; i < codes[0].length; i++) {
+			str = str.replace(codes[0][i], codes[1][i]);
+		}
+
+		return str;
+
 	}
 
 	default boolean isYmd(String ymd) {

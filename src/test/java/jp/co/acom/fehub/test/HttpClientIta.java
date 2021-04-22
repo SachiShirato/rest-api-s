@@ -58,7 +58,7 @@ public class HttpClientIta extends HttpClientMain {
 		void test6_HTTPResponseError(String str) throws Exception {
 
 			MQMessage putMQmessage = setUpCreateMQ(str);
-			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
 		}
 
 		Stream<Arguments> params_HTTPResponseError() throws Exception {

@@ -61,15 +61,16 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 	void lastCheckBody(MQMessage putMQmessage, MQMessage getMQmessage, boolean request)
 			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
 
-		Document putMQmessageDocument = changeStringToDocument(toStringMQMessage(putMQmessage));
-		Document getMQmessageDocument = changeStringToDocument(toStringMQMessage(getMQmessage));
+		Document putMQmessageDocument = changeStringToDocument(
+				toStringMQMessage(putMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
+		Document getMQmessageDocument = changeStringToDocument(
+				toStringMQMessage(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
 
 		List<String> list = new ArrayList<>();
+		list.add("REQ_PARM");
 
 		if (request) {
-
 			list.add("RC");
-
 			assertEquals("02", (getXmlEvaluate(xmlGlbPath("RC"), getMQmessageDocument)));
 		}
 
