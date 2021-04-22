@@ -67,6 +67,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				toStringMQMessage(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
 
 		List<String> list = new ArrayList<>();
+		//TODO
 		list.add("REQ_PARM");
 
 		if (request) {
