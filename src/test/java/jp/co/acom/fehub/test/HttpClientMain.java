@@ -8,9 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,15 +18,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import org.xmlunit.builder.DiffBuilder;
-import org.xmlunit.diff.Diff;
-import org.xmlunit.diff.Difference;
 
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
 import jp.co.acom.fehub.mq.QMFH01Test;
 import jp.co.acom.fehub.mq.QUEUE;
+import jp.co.acom.fehub.xml.TsAttribute;
 import jp.co.acom.fehub.xml.XMLCENTERTest;
 
 public class HttpClientMain implements QMFH01Test, XMLCENTERTest {
@@ -48,164 +44,140 @@ public class HttpClientMain implements QMFH01Test, XMLCENTERTest {
 	MQMessage setUpCreateMQ(String body) throws Exception {
 
 		MQMessage putMQmessage = createMQMessageRequest(body, GET_QUEUE_NAME);
-//TODO 不要		putMQmessage.correlationId = getUnique24().getBytes();
 		return putMQmessage;
+	}
+
+	String setUpCreateXML(String path) throws Exception {
+		return pathToString(path);
 	}
 
 	void lastCheckBody(MQMessage putMQmessage, MQMessage getMQmessage, boolean request)
 			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException, ParseException {
 
-		Document putMQmessageDocument = changeStringToDocument(
-				toStringMQMessage(putMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
-		Document getMQmessageDocument = changeStringToDocument(toStringMQMessage(getMQmessage)
-				.replaceAll(System.lineSeparator(), "").replaceAll("\t", "").replaceAll("IBM-930", "UTF-8"));
-//		System.out.println(toStringMQMessage(putMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
-//		System.out.println(toStringMQMessage(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
+		String putMQmessageStr = toStringMQMessage(putMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t",
+				"");
+		String getMQmessageStr = toStringMQMessage(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t",
+				"");
+		Document putMQmessageDocument = changeStringToDocument(putMQmessageStr);
+		Document getMQmessageDocument = changeStringToDocument(getMQmessageStr);
 		List<String> list = new ArrayList<>();
-		list.add("TIMESTAMP");
 		list.add("RC");
-		list.add("REPLY");
 		list.add("D");
-//		list.add("REQ_PARM");
-
+		list.add("REPLY");
+		list.add("TIMESTAMP");
 //TODO DLとDFの分岐が必要  DLの時は、エンコーディングと対応外文字を置換 cdata とエンコーディングを別だしでチェックする		
 
-// ここから
-		Diff diff = DiffBuilder.compare(putMQmessageDocument).withTest(getMQmessageDocument)
-				.withNodeFilter(node -> !list.contains(node.getNodeName())).build();
-
-		Iterator<Difference> iter = diff.getDifferences().iterator();
-		int size = 0;
-		while (iter.hasNext()) {
-			System.out.println(iter.next().toString());
-			size++;
-		}
-		assertTrue(size == 0);
-// ここまで
-
+		assertTrue(check(putMQmessageDocument, getMQmessageDocument, list));
 		if (request) {
-			assertEquals("00", (getXmlEvaluate(xmlGlbPath("RC"), getMQmessageDocument)));
-			assertEquals("QMFH01", getXmlEvaluate(xmlGlbPath("R_PVR"), getMQmessageDocument));
-			assertEquals("QL.DW.REP", getXmlEvaluate(xmlGlbPath("R_DST"), getMQmessageDocument));
+			assertEquals("00", getTagData("RC", getMQmessageDocument));
+			assertEquals(getBetweenTag(getMQmessageStr, "D"), changeCode(getBetweenTag(putMQmessageStr, "D")));
 
-			int putSize = putMQmessageDocument.getElementsByTagName("TS").getLength();
-			int getSize = getMQmessageDocument.getElementsByTagName("TS").getLength();
+		} else {
+			assertEquals("03", getTagData("RC", getMQmessageDocument));
+		}
+		assertEquals(putMQmessage.replyToQueueManagerName.trim(), getTagData("R_PVR", getMQmessageDocument));
+		assertEquals(putMQmessage.replyToQueueName.trim(), getTagData("R_DST", getMQmessageDocument));
 
-			for (int i = 0; i < putSize; i++) {
-				String ts = "TS[" + (i + 1) + "]";
-				for (int x = 0; x < TS_LIST.size(); x++) {
-					String tsName = TS_LIST.get(x);
-					assertEquals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), putMQmessageDocument),
-							(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), getMQmessageDocument)));
-				}
-				assertEquals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts), putMQmessageDocument),
-						(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts), getMQmessageDocument)));
+		int putSize = putMQmessageDocument.getElementsByTagName("TS").getLength();
+		int getSize = getMQmessageDocument.getElementsByTagName("TS").getLength();
 
+		for (int i = 0; i < putSize; i++) {
+			for (TsAttribute t : TsAttribute.values()) {
+				assertEquals(getTimestampName(i + 1, t.getTName(), putMQmessageDocument),
+						getTimestampName(i + 1, t.getTName(), getMQmessageDocument));
 			}
+			assertEquals(getTimestampName(i + 1, putMQmessageDocument), getTimestampName(i + 1, getMQmessageDocument));
+		}
 
-			for (int i = putSize; i < getSize; i++) {
-				String ts = "TS[" + (i + 1) + "]";
-				// String getEqual = getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName),
-				// getMQmessageDocument);
+		// TODO サイズチェック 正常4件
+		if (request) {
+			assertEquals(4, getSize - putSize);
+		} else {
+			assertEquals(3, getSize - putSize);
+		}
+		for (int i = putSize; i < getSize; i++) {
 
-				for (int x = 0; x < TS_LIST.size(); x++) {
-					String tsName = TS_LIST.get(x);
-					String getEqual = getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), getMQmessageDocument);
+			for (TsAttribute t : TsAttribute.values()) {
 
-					for (String string : TS_LIST) {
-						switch (string) {
-						case "@KVN":
+				String getEqual = getTimestampName(i + 1, t.getTName(), getMQmessageDocument);
 
-							if (i == putSize || i == putSize + 1) {
-								assertEquals("1", getEqual);
-							} else {
-								assertEquals("2", getEqual);
-							}
-							break;
-						case "LVL":
-							if (i == putSize || i == getSize - 1) {
-								assertEquals("1", getEqual);
-							} else {
-								assertEquals("2", getEqual);
-							}
-							break;
-						case "SVR":
-							if (i < putMQmessageDocument.getElementsByTagName("TS").getLength() + 2) {
-								assertEquals("RSHUBFX", getEqual);
-							} else {
-								assertEquals("QMFH01", getEqual);
-							}
-							break;
-						case "SVC":
-							assertEquals("DF200", getEqual);
-							break;
-						}
+				switch (t) {
+				case KBN:
+					assertEquals(i <= putSize + 1 ? "1" : "2", getEqual);
+					break;
+				case LVL:
+					assertEquals(i <= putSize || i == getSize - 1 ? "1" : "2", getEqual);
+					break;
+				case SVC:
+					assertEquals(getXmlTag(toStringMQMessage(putMQmessage), "SERVICEID"), getEqual);
+					break;
+				case SVR:
+// TODO qmgrName()で書くように全般修正
+					if (request) {
+						assertEquals(qmgrName(), getEqual);
+					} else {
+						assertEquals("RSHUBF", getEqual.substring(0, 6));
 					}
-
+/**
+ * sss
+ * RSHUBFX
+ * RSHUBFX
+ * RSHUBF
+ */
+					
+					break;
 				}
-
-				assertTrue(isYmd(getXmlEvaluate(
-						xmlGlbPath("TIMESTAMP",
-								"TS[" + getMQmessageDocument.getElementsByTagName("TS").getLength() + "]"),
-						getMQmessageDocument)));
-
 			}
+
+			assertTrue(isYmd(getTimestampName(i + 1, getMQmessageDocument)));
 		}
-	}
 
-	// TODO 日付チェック 移動する
-	public static boolean isYmd(String ymd) {
-		try {
-
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-			sdf.setLenient(false);
-			sdf.parse(ymd);
-
-			return true;
-
-		} catch (Exception ex) {
-			return false;
-		}
 	}
 
 	void lastCheckMqmd(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean request)
 			throws IOException {
-		if (errQ) {
-//			assertEquals(putMQmessage.messageType, getMQmessage.messageType);
-//			assertTrue(mqCheck(putMQmessage, getMQmessage));
 
-			assertEquals(MQC.MQMT_REPLY, getMQmessage.messageType);
-			assertTrue(mqCheck(putMQmessage, getMQmessage));
-			assertAll(
-
-					() -> assertEquals(MQC.MQFMT_STRING.trim(), getMQmessage.format.trim()),
-
-					() -> assertEquals(putMQmessage.encoding, getMQmessage.encoding),
-					() -> assertEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry),
-					() -> assertEquals(MQC.MQPER_PERSISTENT, getMQmessage.persistence),
-					() -> assertEquals(getXmlTag(toStringMQMessage(putMQmessage), "SERVICEID"),
-							getMQmessage.applicationIdData.trim()));
-
-		} else {
-//			assertEquals(MQC.MQMT_REPLY, getMQmessage.messageType);
-//			assertTrue(mqCheck(putMQmessage, getMQmessage));
-			assertAll(
-
-					() -> assertEquals(MQC.MQFMT_STRING.trim(), getMQmessage.format.trim()),
-
-					() -> assertEquals(putMQmessage.encoding, getMQmessage.encoding),
-					() -> assertNotEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry),
-					() -> assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmessage.persistence),
-					() -> assertEquals(getXmlTag(toStringMQMessage(putMQmessage), "SERVICEID"),
-							getMQmessage.applicationIdData.trim()));
-
-		}
+//TODO      項目単位　昔見たいの
+		assertAll(() -> {
+			if (request) {
+				assertEquals(MQC.MQMT_REPLY, getMQmessage.messageType);
+			} else {
+				assertEquals(MQC.MQMT_REQUEST, getMQmessage.messageType);
+			}
+		}, () -> assertTrue(mqCheck(putMQmessage, getMQmessage)),
+				() -> assertEquals(MQC.MQFMT_STRING.trim(), getMQmessage.format.trim()),
+				() -> assertEquals(putMQmessage.encoding, getMQmessage.encoding), () -> {
+					if (errQ) {
+						assertEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry);
+					} else {
+						assertNotEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry);
+					}
+				}, () -> {
+					if (errQ) {
+						assertEquals(MQC.MQPER_PERSISTENT, getMQmessage.persistence);
+					} else {
+						assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmessage.persistence);
+					}
+				},
+				// TODO getMQmessage.replyToQueueManagerName
+				() -> assertEquals(qmgrName(), getMQmessage.replyToQueueManagerName.trim()),
+				// TODO getMQmessage.replyToQueueName
+				() -> {
+					if (request) {
+						assertEquals("", getMQmessage.replyToQueueName.trim());
+					} else {
+						assertEquals(QUEUE.QL_DH_REP.getQName(), getMQmessage.replyToQueueName.trim());
+					}
+				}, () -> assertEquals(getXmlTag(toStringMQMessage(putMQmessage), "SERVICEID"),
+						getMQmessage.applicationIdData.trim()));
 
 	}
 
-	void lastCheck(MQMessage putMQmessage, MQMessage getMQmessage, String getMQname, int flg) throws Exception {
+// TODO booleanにする（フラグらへん）
+	void lastCheck(MQMessage putMQmessage, MQMessage getMQmessage, Boolean errflg, Boolean requestflg)
+			throws Exception {
 
-		lastCheckMqmd(putMQmessage, getMQmessage, getMQname.equals(QUEUE.QL_DH_ERR.getQName()), flg == 0);
-		lastCheckBody(putMQmessage, getMQmessage, flg == 0);
+		lastCheckMqmd(putMQmessage, getMQmessage, errflg, requestflg);
+		lastCheckBody(putMQmessage, getMQmessage, requestflg);
 	}
 }
