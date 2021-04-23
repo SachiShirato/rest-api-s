@@ -67,8 +67,8 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				toStringMQMessage(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
 
 		List<String> list = new ArrayList<>();
-		//TODO
-		list.add("REQ_PARM");
+		// TODO
+		list.add("D");
 
 		if (request) {
 			list.add("RC");
@@ -323,6 +323,9 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 				putDisabled(QUEUE.QL_DH_ERR.getQName());
 
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
+
+				// FIXME 待たないとうまくいかない
+				Thread.sleep(1000);
 
 			} finally {
 
