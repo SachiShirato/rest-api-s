@@ -16,8 +16,10 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQPutMessageOptions;
 import com.ibm.msg.client.wmq.compat.base.internal.MQQueue;
 import com.ibm.msg.client.wmq.compat.base.internal.MQQueueManager;
 
-public interface MQTest {
-//TODO 下記二つをいれないで実行したケースを増やす　・　なにか入るはず
+//TODO MQTest → MQExecutor　(白済)
+public interface MQExecutor {
+	// TODO 下記二つをいれないで実行したケースを増やす ・ なにか入るはず
+
 	int PRIORITY_5 = 5;
 	int CHARACTER_SET_1208 = 1208;
 
@@ -95,7 +97,8 @@ public interface MQTest {
 		}
 	}
 
-	default String toStringMQMessage(MQMessage msg) throws IOException {
+	// TODO messageToStringがいいです (白済)
+	default String messageToString(MQMessage msg) throws IOException {
 
 		if (msg == null)
 			return null;
@@ -172,12 +175,12 @@ public interface MQTest {
 
 	default String mqGetString(String accessQueueName) throws IOException, MQException {
 
-		return toStringMQMessage(mqGet(accessQueueName, new MQGetMessageOptions(), new MQMessage()));
+		return messageToString(mqGet(accessQueueName, new MQGetMessageOptions(), new MQMessage()));
 	}
 
 	default String mqGetWaitString(String accessQueueName) throws IOException, MQException {
 
-		return toStringMQMessage(mqGetWait(accessQueueName));
+		return messageToString(mqGetWait(accessQueueName));
 	}
 
 	default MQMessage mqGetWait(String accessQueueName) throws MQException {
@@ -274,6 +277,8 @@ public interface MQTest {
 
 		this.alterQueue(qName, new int[] { MQC.MQIA_INHIBIT_PUT }, new int[] { MQC.MQQA_PUT_ALLOWED });
 	}
+
+//TODO (白　感謝)	
 
 	/**
 	 * キュー属性を PUT(DISABLED)に変更する。

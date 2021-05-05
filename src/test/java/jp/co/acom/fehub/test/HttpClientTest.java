@@ -31,11 +31,11 @@ import com.example.api.ItemRestController;
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
-import jp.co.acom.fehub.mq.QMFH01Test;
+import jp.co.acom.fehub.mq.QMFH01;
 import jp.co.acom.fehub.mq.QUEUE;
-import jp.co.acom.fehub.xml.XMLCENTERTest;
+import jp.co.acom.fehub.xml.XMLCenter;
 
-public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
+public class HttpClientTest implements QMFH01, XMLCenter {
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -62,12 +62,12 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
 
 		Document putMQmessageDocument = changeStringToDocument(
-				toStringMQMessage(putMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
+				messageToString(putMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
 		Document getMQmessageDocument = changeStringToDocument(
-				toStringMQMessage(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
+				messageToString(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
 
 		List<String> list = new ArrayList<>();
-		// TODO
+		// TODO (取り込み済み？ 白)
 		list.add("D");
 
 		if (request) {
@@ -210,7 +210,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 			MQMessage getMQmessage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId);
 			lastCheckMqmd(putMQmessage, getMQmessage, true, true);
-			assertEquals(toStringMQMessage(putMQmessage), toStringMQMessage(getMQmessage));
+			assertEquals(messageToString(putMQmessage), messageToString(getMQmessage));
 		}
 
 		Stream<Arguments> params_ParseError() throws Exception {
@@ -343,7 +343,7 @@ public class HttpClientTest implements QMFH01Test, XMLCENTERTest {
 
 			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId);
 			lastCheckMqmd(putMQmessage, getMQmessage, false, false);
-			assertEquals(ItemRestController.STR_DF800, toStringMQMessage(getMQmessage));
+			assertEquals(ItemRestController.STR_DF800, messageToString(getMQmessage));
 		}
 
 		@ParameterizedTest

@@ -1,7 +1,5 @@
 package jp.co.acom.fehub.xml;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,7 +25,8 @@ import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.Diff;
 import org.xmlunit.diff.Difference;
 
-public interface XMLTest {
+//TODO XMLTest → XMLAnalyzer　（白　済）
+public interface XMLAnalyzer {
 
 	default Document changeStringToDocument(String xmlString)
 			throws ParserConfigurationException, SAXException, IOException {
@@ -66,18 +65,13 @@ public interface XMLTest {
 		}
 	}
 
-	
-
-
-
-
 	default String getXmlEvaluate(String path, Document document) throws XPathExpressionException {
 
 		return XPathFactory.newInstance().newXPath().evaluate(path, document);
 	}
 
 	default <T> boolean check(T putMQmessageDocument, T getMQmessageDocument, List<String> list) {
-		
+
 		Diff diff = DiffBuilder.compare(putMQmessageDocument).withTest(getMQmessageDocument)
 				.withNodeFilter(node -> !list.contains(node.getNodeName())).build();
 
@@ -87,7 +81,6 @@ public interface XMLTest {
 			System.out.println(iter.next().toString());
 			size++;
 		}
-		return(size == 0);
+		return (size == 0);
 	}
-
 }

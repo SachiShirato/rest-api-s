@@ -7,27 +7,23 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
-import jp.co.acom.fehub.mq.QMFH01Test;
+import jp.co.acom.fehub.mq.QMFH01;
 import jp.co.acom.fehub.mq.QUEUE;
 import jp.co.acom.fehub.xml.TsAttribute;
-import jp.co.acom.fehub.xml.XMLCENTERTest;
+import jp.co.acom.fehub.xml.XMLCenter;
 
-public class HttpClientMain implements QMFH01Test, XMLCENTERTest {
+public class HttpClientMain implements QMFH01, XMLCenter {
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -42,39 +38,29 @@ public class HttpClientMain implements QMFH01Test, XMLCENTERTest {
 	}
 
 	MQMessage setUpCreateMQ(String body) throws Exception {
-
-		MQMessage putMQmessage = createMQMessageRequest(body, GET_QUEUE_NAME);
-		return putMQmessage;
+		// TODO putMQmessageは不要 済
+		return createMQMessageRequest(body, GET_QUEUE_NAME);
 	}
 
-	String setUpCreateXML(String path) throws Exception {
-		return pathToString(path);
+	// TODO 不要になりました。 （白 済）
+	void checkBody_requestError(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+
+		lastCheckBody(putMQmessage, getMQmessage, true);
 	}
 
-	void lastCheckBody(MQMessage putMQmessage, MQMessage getMQmessage, boolean request)
-			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException, ParseException {
+	// TODO request → reply (白 済)
+	// TODO checkBody/checkBody_requestError (白 済)
+	// TODO throws多いので1つにまとめましょう。 済
+	void lastCheckBody(MQMessage putMQmessage, MQMessage getMQmessage, boolean reply) throws Exception {
 
-		String putMQmessageStr = toStringMQMessage(putMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t",
-				"");
-		String getMQmessageStr = toStringMQMessage(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t",
-				"");
-		Document putMQmessageDocument = changeStringToDocument(putMQmessageStr);
-		Document getMQmessageDocument = changeStringToDocument(getMQmessageStr);
-		List<String> list = new ArrayList<>();
-		list.add("RC");
-		list.add("D");
-		list.add("REPLY");
-		list.add("TIMESTAMP");
-//TODO DLとDFの分岐が必要  DLの時は、エンコーディングと対応外文字を置換 cdata とエンコーディングを別だしでチェックする		
+		// TODO replaceAllなので1発で置換できます。呼び出し先で実施していいかも (白 済)
+		Document putMQmessageDocument = changeStringToDocument(
+				messageToString(putMQmessage).replaceAll("[" + System.lineSeparator() + "\t]", ""));
+		Document getMQmessageDocument = changeStringToDocument(
+				messageToString(getMQmessage).replaceAll("[" + System.lineSeparator() + "\t]", ""));
 
-		assertTrue(check(putMQmessageDocument, getMQmessageDocument, list));
-		if (request) {
-			assertEquals("00", getTagData("RC", getMQmessageDocument));
-			assertEquals(getBetweenTag(getMQmessageStr, "D"), changeCode(getBetweenTag(putMQmessageStr, "D")));
-
-		} else {
-			assertEquals("03", getTagData("RC", getMQmessageDocument));
-		}
+		// TODO 1行で書きましょう。Arrays.asList(() 上のリストを下に追加 (白 済)
+		assertTrue(check(putMQmessageDocument, getMQmessageDocument, Arrays.asList("REPLY", "TIMESTAMP", "RC", "D")));
 		assertEquals(putMQmessage.replyToQueueManagerName.trim(), getTagData("R_PVR", getMQmessageDocument));
 		assertEquals(putMQmessage.replyToQueueName.trim(), getTagData("R_DST", getMQmessageDocument));
 
@@ -82,19 +68,17 @@ public class HttpClientMain implements QMFH01Test, XMLCENTERTest {
 		int getSize = getMQmessageDocument.getElementsByTagName("TS").getLength();
 
 		for (int i = 0; i < putSize; i++) {
-			for (TsAttribute t : TsAttribute.values()) {
+
+			for (TsAttribute t : TsAttribute.values())
 				assertEquals(getTimestampName(i + 1, t.getTName(), putMQmessageDocument),
 						getTimestampName(i + 1, t.getTName(), getMQmessageDocument));
-			}
+
 			assertEquals(getTimestampName(i + 1, putMQmessageDocument), getTimestampName(i + 1, getMQmessageDocument));
 		}
 
-		// TODO サイズチェック 正常4件
-		if (request) {
-			assertEquals(4, getSize - putSize);
-		} else {
-			assertEquals(3, getSize - putSize);
-		}
+		// TODO 1行で書きましょう ?のやつ (白　済)
+		assertEquals(reply ? 4 : 3, getSize - putSize);
+
 		for (int i = putSize; i < getSize; i++) {
 
 			for (TsAttribute t : TsAttribute.values()) {
@@ -102,29 +86,23 @@ public class HttpClientMain implements QMFH01Test, XMLCENTERTest {
 				String getEqual = getTimestampName(i + 1, t.getTName(), getMQmessageDocument);
 
 				switch (t) {
+
 				case KBN:
 					assertEquals(i <= putSize + 1 ? "1" : "2", getEqual);
 					break;
+
 				case LVL:
-					assertEquals(i <= putSize || i == getSize - 1 ? "1" : "2", getEqual);
+					// TODO i == putSize
+					assertEquals(i == putSize || i == getSize - 1 ? "1" : "2", getEqual);
 					break;
+
 				case SVC:
-					assertEquals(getXmlTag(toStringMQMessage(putMQmessage), "SERVICEID"), getEqual);
+					assertEquals(getXmlTag(messageToString(putMQmessage), "SERVICEID"), getEqual);
 					break;
+
 				case SVR:
-// TODO qmgrName()で書くように全般修正
-					if (request) {
-						assertEquals(qmgrName(), getEqual);
-					} else {
-						assertEquals("RSHUBF", getEqual.substring(0, 6));
-					}
-/**
- * sss
- * RSHUBFX
- * RSHUBFX
- * RSHUBF
- */
-					
+					// TODO 1行で書きましょう　（白　済）
+					assertEquals(reply ? qmgrName() : "RSHUBF", getEqual.substring(0, 6));
 					break;
 				}
 			}
@@ -132,52 +110,56 @@ public class HttpClientMain implements QMFH01Test, XMLCENTERTest {
 			assertTrue(isYmd(getTimestampName(i + 1, getMQmessageDocument)));
 		}
 
+		// TODO 1行で書きましょう。Arrays.asList(() 　（白　質問）
+		assertEquals(reply ? "00" : "03", getTagData("RC", getMQmessageDocument));
+		
+		if (reply) {
+			assertEquals(getBetweenTag(getMQmessageDocument, "D"),
+					changeCode(getBetweenTag(putMQmessageDocument, "D")));
+		}
 	}
 
-	void lastCheckMqmd(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean request)
+	// TODO request → reply　（白　済）
+	// TODO checkMqmd/checkMqmd_requestError
+	// TODO checkMqmd_replyParseError/checkMqmd_requestParseError
+	void lastCheckMqmd(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean reply)
 			throws IOException {
 
-//TODO      項目単位　昔見たいの
-		assertAll(() -> {
-			if (request) {
-				assertEquals(MQC.MQMT_REPLY, getMQmessage.messageType);
-			} else {
-				assertEquals(MQC.MQMT_REQUEST, getMQmessage.messageType);
-			}
-		}, () -> assertTrue(mqCheck(putMQmessage, getMQmessage)),
+		assertAll(
+
+				// TODO 1行で書きましょう
+				() -> assertEquals(reply ? MQC.MQMT_REPLY : MQC.MQMT_REQUEST, getMQmessage.messageType),
+				() -> assertTrue(mqCheck(putMQmessage, getMQmessage)),
 				() -> assertEquals(MQC.MQFMT_STRING.trim(), getMQmessage.format.trim()),
-				() -> assertEquals(putMQmessage.encoding, getMQmessage.encoding), () -> {
+				() -> assertEquals(putMQmessage.encoding, getMQmessage.encoding),
+
+				// TODO 1行で書きましょう　(白　質問)
+//				() -> assertEquals(errQ ? MQC.MQEI_UNLIMITED : !MQC.MQEI_UNLIMITED, getMQmessage.expiry),
+				() -> {
 					if (errQ) {
 						assertEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry);
 					} else {
 						assertNotEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry);
 					}
-				}, () -> {
-					if (errQ) {
-						assertEquals(MQC.MQPER_PERSISTENT, getMQmessage.persistence);
-					} else {
-						assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmessage.persistence);
-					}
 				},
-				// TODO getMQmessage.replyToQueueManagerName
-				() -> assertEquals(qmgrName(), getMQmessage.replyToQueueManagerName.trim()),
-				// TODO getMQmessage.replyToQueueName
-				() -> {
-					if (request) {
-						assertEquals("", getMQmessage.replyToQueueName.trim());
-					} else {
-						assertEquals(QUEUE.QL_DH_REP.getQName(), getMQmessage.replyToQueueName.trim());
-					}
-				}, () -> assertEquals(getXmlTag(toStringMQMessage(putMQmessage), "SERVICEID"),
-						getMQmessage.applicationIdData.trim()));
 
+				// TODO 1行で書きましょう　済
+				() -> assertEquals(errQ ? MQC.MQPER_PERSISTENT : MQC.MQPER_NOT_PERSISTENT, getMQmessage.persistence),
+				() -> assertEquals(qmgrName(), getMQmessage.replyToQueueManagerName.trim()),
+
+				// TODO 1行で書きましょう 済
+				() -> assertEquals(reply ? "" : QUEUE.QL_DH_REP.getQName(), getMQmessage.replyToQueueName.trim()),
+				() -> assertEquals(getXmlTag(messageToString(putMQmessage), "SERVICEID"),
+						getMQmessage.applicationIdData.trim())
+		);
 	}
 
-// TODO booleanにする（フラグらへん）
-	void lastCheck(MQMessage putMQmessage, MQMessage getMQmessage, Boolean errflg, Boolean requestflg)
+	// TODO Boolean → boolean errQ, boolean reply (白　済)
+	// TODO checkAll/checkAll_requestError
+	// TODO checkAll_replyParseError/checkAll_requestParseError
+	void lastCheck(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean reply)
 			throws Exception {
-
-		lastCheckMqmd(putMQmessage, getMQmessage, errflg, requestflg);
-		lastCheckBody(putMQmessage, getMQmessage, requestflg);
+		lastCheckMqmd(putMQmessage, getMQmessage, errQ, reply);
+		lastCheckBody(putMQmessage, getMQmessage, reply);
 	}
 }

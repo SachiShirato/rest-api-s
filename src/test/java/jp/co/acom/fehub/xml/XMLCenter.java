@@ -3,21 +3,21 @@ package jp.co.acom.fehub.xml;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 
-public interface XMLCENTERTest extends XMLTest {
-
+//TODO XMLCENTERTest → XMLCenter （白　済)
+//TODO TsAttribute をインナーイーナムとして取り込む（白　質問)
+public interface XMLCenter extends XMLAnalyzer {
 	String PATH = "/ts3.xml";
-
-	List<String> TS_LIST = Arrays.asList("@KBN", "@LVL", "@SVR", "@SVC");
-
+	
 	default String xmlGlbPath(String... path) {
 
 		String gblpath = "/CENTER/GLB_HEAD/";
@@ -46,9 +46,18 @@ public interface XMLCENTERTest extends XMLTest {
 
 			String ts = "TS[" + (i + 1) + "]";
 
-			for (int x = 0; x < TS_LIST.size(); x++) {
+//			for (int x = 0; x < TS_LIST.size(); x++) {
+//
+//				String tsName = TS_LIST.get(x);
+//
+//				if (!((getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), putMQmessage))
+//						.equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), getMQmessage))))
+//					return false;
+//			}
+//TODO 再確認			
+			for (TsAttribute name : TsAttribute.values()) {
 
-				String tsName = TS_LIST.get(x);
+				String tsName = name.toString();
 
 				if (!((getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), putMQmessage))
 						.equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), getMQmessage))))
@@ -65,10 +74,19 @@ public interface XMLCENTERTest extends XMLTest {
 
 	default boolean checkGetTs(Document getMQmessage) throws ParseException, XPathExpressionException {
 
-		return ("2".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(0)), getMQmessage))
-				&& ("1".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(1)), getMQmessage)))
-				&& ("RSHUBF ".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(2)), getMQmessage)))
-				&& ("S".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(3)), getMQmessage))));
+//		return ("2".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(0)), getMQmessage))
+//				&& ("1".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(1)), getMQmessage)))
+//				&& ("RSHUBF ".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(2)), getMQmessage)))
+//				&& ("S".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(3)), getMQmessage))));
+//	}
+
+		return ("2".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TsAttribute.KBN.getTName()), getMQmessage))
+				&& ("1".equals(
+						getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TsAttribute.LVL.getTName()), getMQmessage)))
+				&& ("RSHUBF ".equals(
+						getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TsAttribute.SVR.getTName()), getMQmessage)))
+				&& ("S".equals(
+						getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TsAttribute.SVC.getTName()), getMQmessage))));
 	}
 
 	default Date getTimestamp(Document getMQmessage) throws ParseException, XPathExpressionException {
@@ -138,6 +156,7 @@ public interface XMLCENTERTest extends XMLTest {
 		return getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[" + i + "]"), document);
 	}
 
+	// TODO Document使うのでは？(済 白)
 	default String getBetweenTag(String str, String tag) throws XPathExpressionException {
 		int start = str.indexOf("<" + tag + ">");
 		int end = str.indexOf("</" + tag + ">");
@@ -146,16 +165,42 @@ public interface XMLCENTERTest extends XMLTest {
 
 	}
 
+	default String getBetweenTag(Document str, String tag) throws XPathExpressionException, TransformerException {
+		return getBetweenTag(changeDocumentToString(str), tag);
+
+	}
+
+	// TODO Map使うと可読性上がります。 HashMapで比較 キーと値foreachでキーだけ回す
+	// TODO (白 質問）foreachは戻り値がないから、処理結果をひきつげない。
 	default String changeCode(String str) throws XPathExpressionException {
+		Map<String, String> map = new HashMap<>();
+		map.put("—", "―");
+		map.put("−", "－");
+		map.put("〜", "～");
+		map.put("‖", "∥");
+		map.put("¦", "￤");
+		map.put("~", "~");
 
-		String[][] codes = { { "—", "−", "〜", "‖", "¦", "~" }, { "―", "－", "～", "∥", "￤", "~" } };
+//改変願望		
+//		String str2 = str;
+//		int i = 0;
+//		map.forEach((key, value) -> {			
+//			str2 = str2.replace(key, value);			
+//			if (i == map.size()) {
+//				return str2;
+//			}			
+//			i++;
+//		});
 
-		for (int i = 0; i < codes[0].length; i++) {
-			str = str.replace(codes[0][i], codes[1][i]);
+//元々		String[][] codes = { { "—", "−", "〜", "‖", "¦", "~" }, { "―", "－", "～", "∥", "￤", "~" } };
+//		for (int i = 0; i < codes[0].length; i++) {
+//			str = str.replace(codes[0][i], codes[1][i]);
+//		}
+
+		for (String mKey : map.keySet()) {
+			str = str.replace(mKey, map.get(mKey));
 		}
-
 		return str;
-
 	}
 
 	default boolean isYmd(String ymd) {

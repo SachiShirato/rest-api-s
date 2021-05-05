@@ -18,67 +18,70 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 import jp.co.acom.fehub.mq.QUEUE;
 
 public class HttpClientIta extends HttpClientMain {
+	// TODO 定数 (白 済）
+	final private String normalPath = "/ts200.xml";
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
 	class StartingRizaTest {
-		// TODO パスをts3にする
-		String normalPath = "/ts200.xml";
+
+		// TODO (白 質問 外だせない）
+		Stream<Arguments> params_Normal() throws Exception {
+			return Stream.of(Arguments.of(pathToString(normalPath), QUEUE.QC_DH_REQ.getQName()),
+					Arguments.of(pathToString(normalPath), QUEUE.QL_DH_REQ.getQName()));
+		}
 
 		@ParameterizedTest
 		@MethodSource("params_Normal")
 		@DisplayName("test1and5and8_Normal")
 		void test1and5and8_Normal(String str, String q) throws Exception {
+
 			MQMessage putMQmessage = setUpCreateMQ(str);
 			mqput(q, putMQmessage);
-			MQMessage getMQmessage = mqGetWaitCorrelid(GET_QUEUE_NAME, putMQmessage.messageId);
-			if (getMQmessage == null) {
-				MQMessage getMQmessage2 = mqGetWaitMsgid(QUEUE.QA_DH_DL.getQName(), putMQmessage.correlationId);
-				lastCheckMqmd(putMQmessage, getMQmessage2, false, false);
-			} else {
-				lastCheck(putMQmessage, getMQmessage, false, true);
-			}
+			// TODO putMQmessage.replyToQueueNameの方がカッコいいかも。できなければ元に戻す。トリムがいる (白 済)
+			MQMessage getMQmessage = mqGetWaitCorrelid(putMQmessage.replyToQueueName.trim(), putMQmessage.messageId);
+			// TODO デッドロジックになってる。あと別ケースで! サービスID（XMLがDLはじまり 完全別テストケースへ (白 削除済)
+			lastCheck(putMQmessage, getMQmessage, false, true);
 
-		}
-
-		Stream<Arguments> params_Normal() throws Exception {
-			return Stream.of(Arguments.of(setUpCreateXML(normalPath), QUEUE.QC_DH_REQ.getQName()),
-					Arguments.of(setUpCreateXML(normalPath), QUEUE.QL_DH_REQ.getQName())
-
-			// TODO 消す不要ケース QC QL
-//					,
-//					Arguments.of(setRc(pathToString(normalPath), "")),
-//					Arguments.of(setRequestid(pathToString(normalPath), ""))
-			);
 		}
 
 		@ParameterizedTest
 		@DisplayName("test6_HTTPResponseError")
 		@MethodSource("params_HTTPResponseError")
 		void test6_HTTPResponseError(String str) throws Exception {
-
-			MQMessage putMQmessage = setUpCreateMQ(str);
-			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
+			// TODO putMQmessageは不要 取り込み済み（白）
+			mqput(QUEUE.QC_DH_REQ.getQName(), setUpCreateMQ(str));
 		}
 
 		Stream<Arguments> params_HTTPResponseError() throws Exception {
 
-			return Stream.of(Arguments.of(setServiceid(createMQMessageBody(), "DF999")),
-					Arguments.of(setServiceid(createMQMessageBody(), "DF300")),
-					Arguments.of(setServiceid(createMQMessageBody(), "DF400")),
-					Arguments.of(setServiceid(createMQMessageBody(), "DF500")));
+			// TODO createMQMessageBody()は使わない ｔｓ３使ってしまう。正常を参照
+			return Stream.of(Arguments.of(setServiceid(pathToString(normalPath), "DF999")),
+					Arguments.of(setServiceid(pathToString(normalPath), "DF400")),
+					Arguments.of(setServiceid(pathToString(normalPath), "DF500")));
 		}
 
+		// TODO タイムアウトは待機して終了した方がいいかと。別ケース。 DF300 別ケース→ちょっと待つスレットスリー (白 済)
 		@Test
-		@DisplayName("test7_NonXml")
-		protected void test7_NonXml() throws Exception {
+		@DisplayName("test6_HTTPResponseError_TimeOut")
+		void test6_HTTPResponseError_TimeOut() throws Exception {
+			// TODO putMQmessageは不要 取り込み済み（白）
+			mqput(QUEUE.QC_DH_REQ.getQName(), setUpCreateMQ(setServiceid(pathToString(normalPath), "DF300")));
+			Thread.sleep(10000);
+		}
 
-			MQMessage putMQmessage = setUpCreateMQ((setServiceid(createMQMessageBody(), "DF800")));
+		// TODO test7_ParseError 済み
+		@Test
+		@DisplayName("test7_ParseError")
+		protected void test7_ParseError() throws Exception {
+
+			// TODO createMQMessageBody()は使わない 済
+			MQMessage putMQmessage = setUpCreateMQ((setServiceid(pathToString(normalPath), "DF800")));
 			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
 
 			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId);
 			lastCheckMqmd(putMQmessage, getMQmessage, true, true);
-			assertEquals(ItemRestController.STR_DF800, toStringMQMessage(getMQmessage));
+			assertEquals(ItemRestController.STR_DF800, messageToString(getMQmessage));
 		}
 
 	}
@@ -87,14 +90,22 @@ public class HttpClientIta extends HttpClientMain {
 	@Nested
 	class StoppedRizaTest {
 
-		@Test
-		@DisplayName("test2_HTTPRequestError")
-		void test2_HTTPRequestError() throws Exception {
-
-			MQMessage putMQmessage = setUpCreateMQ(createMQMessageBody());
-			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
-			lastCheck(putMQmessage, mqGetWaitMsgid(GET_QUEUE_NAME, putMQmessage.correlationId), false, false);
+		// TODO せっかくなのでparams_Normal使いましょう 済
+		Stream<Arguments> params_Normal() throws Exception {
+			return Stream.of(Arguments.of(pathToString(normalPath), QUEUE.QC_DH_REQ.getQName()),
+					Arguments.of(pathToString(normalPath), QUEUE.QL_DH_REQ.getQName()));
 		}
 
+		@ParameterizedTest
+		@MethodSource("params_Normal")
+		@DisplayName("test2_HTTPRequestError")
+		void test2_HTTPRequestError(String str) throws Exception {
+
+			// TODO createMQMessageBody()は使わない パラメータ使う
+			MQMessage putMQmessage = setUpCreateMQ(str);
+			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
+
+			lastCheck(putMQmessage, mqGetWaitMsgid(GET_QUEUE_NAME, putMQmessage.correlationId), false, false);
+		}
 	}
 }
