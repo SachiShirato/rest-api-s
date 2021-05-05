@@ -1,5 +1,6 @@
 package jp.co.acom.fehub.test;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.stream.Stream;
@@ -40,9 +41,18 @@ public class HttpClientIta extends HttpClientMain {
 			mqput(q, putMQmessage);
 			// TODO putMQmessage.replyToQueueNameの方がカッコいいかも。できなければ元に戻す。トリムがいる (白 済)
 			MQMessage getMQmessage = mqGetWaitCorrelid(putMQmessage.replyToQueueName.trim(), putMQmessage.messageId);
-			// TODO デッドロジックになってる。あと別ケースで! サービスID（XMLがDLはじまり 完全別テストケースへ (白 削除済)
+			// TODO デッドロジックになってる。あと別ケースで! (白 削除済)
 			lastCheck(putMQmessage, getMQmessage, false, true);
 
+		}
+
+		// TODO サービスID（XMLがDLはじまり 完全別テストケースへ (白 済)
+		@Test
+		@DisplayName("test1and5and8_Normal_DL")
+		void test1and5and8_Normal_DL() throws Exception {
+			MQMessage putMQmessage = setUpCreateMQ(setServiceid(pathToString(normalPath), "DL200"));
+			mqput(QUEUE.QL_DH_REQ.getQName(), putMQmessage);
+			assertNotNull(mqGetWaitCorrelid(QUEUE.QA_DH_DL.getQName(), putMQmessage.messageId));
 		}
 
 		@ParameterizedTest
@@ -82,6 +92,20 @@ public class HttpClientIta extends HttpClientMain {
 			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId);
 			lastCheckMqmd(putMQmessage, getMQmessage, true, true);
 			assertEquals(ItemRestController.STR_DF800, messageToString(getMQmessage));
+		}
+
+		// TODO プライオリティーキャラクターセットなしver MQExecutorより (白 済)
+		@ParameterizedTest
+		@MethodSource("params_Normal")
+		@DisplayName("test1and5and8_Normal")
+		void test_Non_Priority_Characterset(String str, String q) throws Exception {
+			MQMessage putMQmessage = setUpCreateMQ(str);
+			putMQmessage.priority = 0;
+			putMQmessage.characterSet = 0;
+			mqput(q, putMQmessage);
+			MQMessage getMQmessage = mqGetWaitCorrelid(putMQmessage.replyToQueueName.trim(), putMQmessage.messageId);
+			lastCheckBody(putMQmessage, getMQmessage, false);
+//TODO ここから　MQMD
 		}
 
 	}

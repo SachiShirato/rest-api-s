@@ -7,9 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -134,7 +132,7 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 				() -> assertEquals(putMQmessage.encoding, getMQmessage.encoding),
 
 				// TODO 1行で書きましょう　(白　質問)
-//				() -> assertEquals(errQ ? MQC.MQEI_UNLIMITED : !MQC.MQEI_UNLIMITED, getMQmessage.expiry),
+//				() -> assertEquals(errQ ? MQC.MQEI_UNLIMITED : !(MQC.MQEI_UNLIMITED), getMQmessage.expiry),
 				() -> {
 					if (errQ) {
 						assertEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry);
