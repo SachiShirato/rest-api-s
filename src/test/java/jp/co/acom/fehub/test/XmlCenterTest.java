@@ -1,8 +1,6 @@
 package jp.co.acom.fehub.test;
 
 import static jp.co.acom.fehub.mq.QUEUE.getList;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -11,16 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
@@ -43,18 +37,23 @@ import com.example.api.ItemRestController;
 import com.ibm.msg.client.wmq.compat.base.internal.MQC;
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
-import jp.co.acom.fehub.mq.QMFH01Test;
+import jp.co.acom.fehub.mq.QMFH01;
 import jp.co.acom.fehub.mq.QUEUE;
-import jp.co.acom.fehub.xml.XMLCENTERTest;
+import jp.co.acom.fehub.xml.TsAttribute;
+import jp.co.acom.fehub.xml.XMLCenter;
 
-public class XmlCenterTest implements QMFH01Test, XMLCENTERTest {
+public class XmlCenterTest implements QMFH01, XMLCenter {
 
+	// TODO 存在意義が謎 （白）
+	// TODO テスト共通
 	@BeforeEach
 	void setUp() throws Exception {
 
 		mqtoEmpty(getList());
 	}
 
+	// TODO テスト共通
+	// TODO スーパークラス化
 	@AfterEach
 	void tearDown() throws Exception {
 
@@ -63,7 +62,9 @@ public class XmlCenterTest implements QMFH01Test, XMLCENTERTest {
 
 	MQMessage setUpCreateMQ(String body) throws Exception {
 
+		// TODO REP_Q抽出（単体テストも） キューを定数
 		MQMessage putMQmessage = createMQMessageRequest(body, QUEUE.QL_DW_REP.getQName());
+		// TODO 不要
 		putMQmessage.correlationId = getUnique24().getBytes();
 		return putMQmessage;
 	}
@@ -72,9 +73,9 @@ public class XmlCenterTest implements QMFH01Test, XMLCENTERTest {
 			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException, ParseException {
 
 		Document putMQmessageDocument = changeStringToDocument(
-				toStringMQMessage(putMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
+				messageToString(putMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
 		Document getMQmessageDocument = changeStringToDocument(
-				toStringMQMessage(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
+				messageToString(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
 
 		List<String> list = new ArrayList<>();
 		list.add("TIMESTAMP");
@@ -93,7 +94,7 @@ public class XmlCenterTest implements QMFH01Test, XMLCENTERTest {
 		}
 		assertTrue(size == 0);
 // ここまで
-
+		// TODO 逆！
 		if (request) {
 			assertEquals("00", (getXmlEvaluate(xmlGlbPath("RC"), getMQmessageDocument)));
 			assertEquals("QMFH01", getXmlEvaluate(xmlGlbPath("R_PVR"), getMQmessageDocument));
@@ -104,8 +105,8 @@ public class XmlCenterTest implements QMFH01Test, XMLCENTERTest {
 
 			for (int i = 0; i < putSize; i++) {
 				String ts = "TS[" + (i + 1) + "]";
-				for (int x = 0; x < TS_LIST.size(); x++) {
-					String tsName = TS_LIST.get(x);
+				for (TsAttribute t : TsAttribute.values()) {
+					String tsName = t.getTName();
 					assertEquals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), putMQmessageDocument),
 							(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), getMQmessageDocument)));
 				}
@@ -116,33 +117,34 @@ public class XmlCenterTest implements QMFH01Test, XMLCENTERTest {
 
 			for (int i = putSize; i < getSize; i++) {
 				String ts = "TS[" + (i + 1) + "]";
-				for (int x = 0; x < TS_LIST.size(); x++) {
-					String tsName = TS_LIST.get(x);
+				for (TsAttribute t : TsAttribute.values()) {
+					String tsName = t.getTName();
+					// TODO メゾット化
 					String getEqual = getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), getMQmessageDocument);
-
-					switch (x) {
-					case 0:
+					// TODO foreach
+					switch (tsName) {
+					case "@KBN":
 						if (i == putSize || i == putSize + 1) {
 							assertEquals("1", getEqual);
 						} else {
 							assertEquals("2", getEqual);
 						}
 						break;
-					case 1:
+					case "@LVL":
 						if (i == putSize || i == getSize - 1) {
 							assertEquals("1", getEqual);
 						} else {
 							assertEquals("2", getEqual);
 						}
 						break;
-					case 2:
+					case "@SVR":
 						if (i < putMQmessageDocument.getElementsByTagName("TS").getLength() + 2) {
 							assertEquals("RSHUBFX", getEqual);
 						} else {
 							assertEquals("QMFH01", getEqual);
 						}
 						break;
-					case 3:
+					case "@SVC":
 						assertEquals("DF200", getEqual);
 						break;
 
@@ -175,7 +177,7 @@ public class XmlCenterTest implements QMFH01Test, XMLCENTERTest {
 				() -> assertEquals(putMQmessage.encoding, getMQmessage.encoding),
 				() -> assertNotEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry),
 				() -> assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmessage.persistence),
-				() -> assertEquals(getXmlTag(toStringMQMessage(putMQmessage), "SERVICEID"),
+				() -> assertEquals(getXmlTag(messageToString(putMQmessage), "SERVICEID"),
 						getMQmessage.applicationIdData.trim())
 
 		);
@@ -209,10 +211,7 @@ public class XmlCenterTest implements QMFH01Test, XMLCENTERTest {
 			return Stream.of(Arguments.of(pathToString("/ts200.xml")), Arguments.of(setRc(createMQMessageBody(), "")),
 					Arguments.of(setRequestid(createMQMessageBody(), "")));
 		}
-		
-		
-		
-		
+
 		@ParameterizedTest
 		@DisplayName("test7_HTTPResponseError")
 		@MethodSource("params_HTTPResponseError")
@@ -228,10 +227,7 @@ public class XmlCenterTest implements QMFH01Test, XMLCENTERTest {
 					Arguments.of(setServiceid(createMQMessageBody(), "DF400")),
 					Arguments.of(setServiceid(createMQMessageBody(), "DF500")));
 		}
-		
-		
-		
-		
+
 		@Test
 		@DisplayName("test1and6_NonXml")
 		protected void test1and6_NonXml() throws Exception {
@@ -241,9 +237,8 @@ public class XmlCenterTest implements QMFH01Test, XMLCENTERTest {
 
 			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId);
 			lastCheckMqmd(putMQmessage, getMQmessage, false, false);
-			assertEquals(ItemRestController.STR_DF800, toStringMQMessage(getMQmessage));
+			assertEquals(ItemRestController.STR_DF800, messageToString(getMQmessage));
 		}
-
 
 	}
 
