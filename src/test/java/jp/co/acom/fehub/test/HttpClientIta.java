@@ -97,15 +97,14 @@ public class HttpClientIta extends HttpClientMain {
 		// TODO プライオリティーキャラクターセットなしver MQExecutorより (白 済)
 		@ParameterizedTest
 		@MethodSource("params_Normal")
-		@DisplayName("test1and5and8_Normal")
+		@DisplayName("test_Non_Priority_Characterset")
 		void test_Non_Priority_Characterset(String str, String q) throws Exception {
 			MQMessage putMQmessage = setUpCreateMQ(str);
 			putMQmessage.priority = 0;
 			putMQmessage.characterSet = 0;
 			mqput(q, putMQmessage);
 			MQMessage getMQmessage = mqGetWaitCorrelid(putMQmessage.replyToQueueName.trim(), putMQmessage.messageId);
-			lastCheckBody(putMQmessage, getMQmessage, false);
-//TODO ここから　MQMD
+			lastCheck(putMQmessage, getMQmessage, false, false);
 		}
 
 	}

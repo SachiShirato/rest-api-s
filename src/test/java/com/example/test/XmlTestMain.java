@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import jp.co.acom.fehub.mq.QMFH01Test;
-import jp.co.acom.fehub.xml.XMLCENTERTest;
+import jp.co.acom.fehub.mq.QMFH01;
+import jp.co.acom.fehub.xml.XMLCenter;
 
-public class XmlTestMain implements QMFH01Test, XMLCENTERTest {
+public class XmlTestMain implements QMFH01, XMLCenter {
 
 	@BeforeEach
 	void setUpAll() throws Exception {

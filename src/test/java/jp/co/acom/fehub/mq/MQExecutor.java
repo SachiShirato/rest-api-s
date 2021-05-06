@@ -114,9 +114,9 @@ public interface MQExecutor {
 	}
 
 	default boolean mqCheck(MQMessage putMQmessage, MQMessage getMQmessage) throws IOException {
-
+//TODO 白　修正した
 		return ((putMQmessage.priority == (getMQmessage.priority))
-				&& (putMQmessage.characterSet == (getMQmessage.characterSet)));
+				&& (CHARACTER_SET_1208 == (getMQmessage.characterSet)));
 	}
 
 	default void mqput(String accessQueueName, MQMessage putMessage) throws MQException {
