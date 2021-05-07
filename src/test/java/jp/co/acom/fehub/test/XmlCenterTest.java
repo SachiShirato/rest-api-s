@@ -39,7 +39,6 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
 import jp.co.acom.fehub.mq.QMFH01;
 import jp.co.acom.fehub.mq.QUEUE;
-import jp.co.acom.fehub.xml.TsAttribute;
 import jp.co.acom.fehub.xml.XMLCenter;
 
 public class XmlCenterTest implements QMFH01, XMLCenter {

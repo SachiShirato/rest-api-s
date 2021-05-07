@@ -18,7 +18,6 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
 import jp.co.acom.fehub.mq.QMFH01;
 import jp.co.acom.fehub.mq.QUEUE;
-import jp.co.acom.fehub.xml.TsAttribute;
 import jp.co.acom.fehub.xml.XMLCenter;
 
 public class HttpClientMain implements QMFH01, XMLCenter {
@@ -74,7 +73,7 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 			assertEquals(getTimestampName(i + 1, putMQmessageDocument), getTimestampName(i + 1, getMQmessageDocument));
 		}
 
-		// TODO 1行で書きましょう ?のやつ (白　済)
+		// TODO 1行で書きましょう ?のやつ (白 済)
 		assertEquals(reply ? 4 : 3, getSize - putSize);
 
 		for (int i = putSize; i < getSize; i++) {
@@ -99,7 +98,7 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 					break;
 
 				case SVR:
-					// TODO 1行で書きましょう　（白　済）
+					// TODO 1行で書きましょう （白 済）
 					assertEquals(reply ? qmgrName() : "RSHUBF", getEqual.substring(0, 6));
 					break;
 				}
@@ -108,20 +107,19 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 			assertTrue(isYmd(getTimestampName(i + 1, getMQmessageDocument)));
 		}
 
-		// TODO 1行で書きましょう。Arrays.asList(() 　（白　質問）
+		// TODO 1行で書きましょう。Arrays.asList(() （白 質問）
 		assertEquals(reply ? "00" : "03", getTagData("RC", getMQmessageDocument));
-		
+
 		if (reply) {
 			assertEquals(getBetweenTag(getMQmessageDocument, "D"),
 					changeCode(getBetweenTag(putMQmessageDocument, "D")));
 		}
 	}
 
-	// TODO request → reply　（白　済）
+	// TODO request → reply （白 済）
 	// TODO checkMqmd/checkMqmd_requestError
 	// TODO checkMqmd_replyParseError/checkMqmd_requestParseError
-	void lastCheckMqmd(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean reply)
-			throws IOException {
+	void lastCheckMqmd(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean reply) throws IOException {
 
 		assertAll(
 
@@ -131,8 +129,7 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 				() -> assertEquals(MQC.MQFMT_STRING.trim(), getMQmessage.format.trim()),
 				() -> assertEquals(putMQmessage.encoding, getMQmessage.encoding),
 
-				// TODO 1行で書きましょう　(白　質問)
-//				() -> assertEquals(errQ ? MQC.MQEI_UNLIMITED : !(MQC.MQEI_UNLIMITED), getMQmessage.expiry),
+				// TODO 1行で書きましょう (白 済)
 				() -> {
 					if (errQ) {
 						assertEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry);
@@ -141,22 +138,20 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 					}
 				},
 
-				// TODO 1行で書きましょう　済
+				// TODO 1行で書きましょう 済
 				() -> assertEquals(errQ ? MQC.MQPER_PERSISTENT : MQC.MQPER_NOT_PERSISTENT, getMQmessage.persistence),
 				() -> assertEquals(qmgrName(), getMQmessage.replyToQueueManagerName.trim()),
 
 				// TODO 1行で書きましょう 済
 				() -> assertEquals(reply ? "" : QUEUE.QL_DH_REP.getQName(), getMQmessage.replyToQueueName.trim()),
 				() -> assertEquals(getXmlTag(messageToString(putMQmessage), "SERVICEID"),
-						getMQmessage.applicationIdData.trim())
-		);
+						getMQmessage.applicationIdData.trim()));
 	}
 
-	// TODO Boolean → boolean errQ, boolean reply (白　済)
+	// TODO Boolean → boolean errQ, boolean reply (白 済)
 	// TODO checkAll/checkAll_requestError
 	// TODO checkAll_replyParseError/checkAll_requestParseError
-	void lastCheck(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean reply)
-			throws Exception {
+	void lastCheck(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean reply) throws Exception {
 		lastCheckMqmd(putMQmessage, getMQmessage, errQ, reply);
 		lastCheckBody(putMQmessage, getMQmessage, reply);
 	}

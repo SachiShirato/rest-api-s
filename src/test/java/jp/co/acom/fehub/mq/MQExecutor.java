@@ -18,7 +18,7 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQQueueManager;
 
 //TODO MQTest → MQExecutor　(白済)
 public interface MQExecutor {
-	// TODO 下記二つをいれないで実行したケースを増やす ・ なにか入るはず
+	// TODO 下記二つをいれないで実行したケースを増やす ・ なにか入るはず(priority初期値-1→0/charactersetはエラー（赤）)
 
 	int PRIORITY_5 = 5;
 	int CHARACTER_SET_1208 = 1208;

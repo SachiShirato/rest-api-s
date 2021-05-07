@@ -22,14 +22,19 @@ public class HttpClientIta extends HttpClientMain {
 	// TODO 定数 (白 済）
 	final private String normalPath = "/ts200.xml";
 
+	// TODO (白 済）
+	Stream<Arguments> params_Normal_Origin() throws Exception {
+		return Stream.of(Arguments.of(pathToString(normalPath), QUEUE.QC_DH_REQ.getQName()),
+				Arguments.of(pathToString(normalPath), QUEUE.QL_DH_REQ.getQName()));
+	}
+
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
 	class StartingRizaTest {
 
-		// TODO (白 質問 外だせない）
+		// TODO (白 済）
 		Stream<Arguments> params_Normal() throws Exception {
-			return Stream.of(Arguments.of(pathToString(normalPath), QUEUE.QC_DH_REQ.getQName()),
-					Arguments.of(pathToString(normalPath), QUEUE.QL_DH_REQ.getQName()));
+			return params_Normal_Origin();
 		}
 
 		@ParameterizedTest
@@ -65,7 +70,7 @@ public class HttpClientIta extends HttpClientMain {
 
 		Stream<Arguments> params_HTTPResponseError() throws Exception {
 
-			// TODO createMQMessageBody()は使わない ｔｓ３使ってしまう。正常を参照
+			// TODO createMQMessageBody()は使わない ｔｓ３使ってしまう。正常を参照 (白 済)
 			return Stream.of(Arguments.of(setServiceid(pathToString(normalPath), "DF999")),
 					Arguments.of(setServiceid(pathToString(normalPath), "DF400")),
 					Arguments.of(setServiceid(pathToString(normalPath), "DF500")));
@@ -94,7 +99,7 @@ public class HttpClientIta extends HttpClientMain {
 			assertEquals(ItemRestController.STR_DF800, messageToString(getMQmessage));
 		}
 
-		// TODO プライオリティーキャラクターセットなしver MQExecutorより (白 済)
+		// TODO プライオリティーキャラクターセットなしver MQExecutorより (白 済 不要ケース？)
 		@ParameterizedTest
 		@MethodSource("params_Normal")
 		@DisplayName("test_Non_Priority_Characterset")
@@ -115,8 +120,7 @@ public class HttpClientIta extends HttpClientMain {
 
 		// TODO せっかくなのでparams_Normal使いましょう 済
 		Stream<Arguments> params_Normal() throws Exception {
-			return Stream.of(Arguments.of(pathToString(normalPath), QUEUE.QC_DH_REQ.getQName()),
-					Arguments.of(pathToString(normalPath), QUEUE.QL_DH_REQ.getQName()));
+			return params_Normal_Origin();
 		}
 
 		@ParameterizedTest
@@ -124,7 +128,7 @@ public class HttpClientIta extends HttpClientMain {
 		@DisplayName("test2_HTTPRequestError")
 		void test2_HTTPRequestError(String str) throws Exception {
 
-			// TODO createMQMessageBody()は使わない パラメータ使う
+			// TODO createMQMessageBody()は使わない パラメータ使う (白 済)
 			MQMessage putMQmessage = setUpCreateMQ(str);
 			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
 

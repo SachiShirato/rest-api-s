@@ -5,7 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
@@ -13,11 +16,47 @@ import javax.xml.xpath.XPathExpressionException;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 
+import lombok.Getter;
+
 //TODO XMLCENTERTest → XMLCenter （白　済)
-//TODO TsAttribute をインナーイーナムとして取り込む（白　質問)
+//TODO TsAttribute をインナーイーナムとして取り込む（白　済)
 public interface XMLCenter extends XMLAnalyzer {
+
+	enum TsAttribute {
+
+		KBN("@KBN"),
+
+		LVL("@LVL"),
+
+		SVR("@SVR"),
+
+		SVC("@SVC");
+
+		@Getter
+		private String tName;
+
+		private TsAttribute(String tName) {
+			this.tName = tName;
+		}
+
+		public static List<String> getList() {
+			return Stream.of(values()).map(q -> q.getTName()).collect(Collectors.toList());
+		}
+	}
+
 	String PATH = "/ts3.xml";
-	
+	@SuppressWarnings("serial")
+	Map<String, String> map = new HashMap<String, String>() {
+		{
+			put("—", "―");
+			put("−", "－");
+			put("〜", "～");
+			put("‖", "∥");
+			put("¦", "￤");
+			put("~", "~");
+		}
+	};
+
 	default String xmlGlbPath(String... path) {
 
 		String gblpath = "/CENTER/GLB_HEAD/";
@@ -46,14 +85,6 @@ public interface XMLCenter extends XMLAnalyzer {
 
 			String ts = "TS[" + (i + 1) + "]";
 
-//			for (int x = 0; x < TS_LIST.size(); x++) {
-//
-//				String tsName = TS_LIST.get(x);
-//
-//				if (!((getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), putMQmessage))
-//						.equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", ts, tsName), getMQmessage))))
-//					return false;
-//			}
 //TODO 再確認			
 			for (TsAttribute name : TsAttribute.values()) {
 
@@ -73,13 +104,6 @@ public interface XMLCenter extends XMLAnalyzer {
 	}
 
 	default boolean checkGetTs(Document getMQmessage) throws ParseException, XPathExpressionException {
-
-//		return ("2".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(0)), getMQmessage))
-//				&& ("1".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(1)), getMQmessage)))
-//				&& ("RSHUBF ".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(2)), getMQmessage)))
-//				&& ("S".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TS_LIST.get(3)), getMQmessage))));
-//	}
-
 		return ("2".equals(getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TsAttribute.KBN.getTName()), getMQmessage))
 				&& ("1".equals(
 						getXmlEvaluate(xmlGlbPath("TIMESTAMP", "TS[4]", TsAttribute.LVL.getTName()), getMQmessage)))
@@ -170,32 +194,8 @@ public interface XMLCenter extends XMLAnalyzer {
 
 	}
 
-	// TODO Map使うと可読性上がります。 HashMapで比較 キーと値foreachでキーだけ回す
-	// TODO (白 質問）foreachは戻り値がないから、処理結果をひきつげない。
+	// TODO Map使うと可読性上がります。 HashMapで比較 キーと値foreachでキーだけ回す (白 済）
 	default String changeCode(String str) throws XPathExpressionException {
-		Map<String, String> map = new HashMap<>();
-		map.put("—", "―");
-		map.put("−", "－");
-		map.put("〜", "～");
-		map.put("‖", "∥");
-		map.put("¦", "￤");
-		map.put("~", "~");
-
-//改変願望		
-//		String str2 = str;
-//		int i = 0;
-//		map.forEach((key, value) -> {			
-//			str2 = str2.replace(key, value);			
-//			if (i == map.size()) {
-//				return str2;
-//			}			
-//			i++;
-//		});
-
-//元々		String[][] codes = { { "—", "−", "〜", "‖", "¦", "~" }, { "―", "－", "～", "∥", "￤", "~" } };
-//		for (int i = 0; i < codes[0].length; i++) {
-//			str = str.replace(codes[0][i], codes[1][i]);
-//		}
 
 		for (String mKey : map.keySet()) {
 			str = str.replace(mKey, map.get(mKey));
