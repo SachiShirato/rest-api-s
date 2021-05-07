@@ -16,11 +16,11 @@ import org.w3c.dom.Document;
 
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
-import jp.co.acom.fehub.mq.QMFH01Test;
+import jp.co.acom.fehub.mq.QMFH01;
 import jp.co.acom.fehub.mq.QUEUE;
-import jp.co.acom.fehub.xml.XMLCENTERTest;
+import jp.co.acom.fehub.xml.XMLCenter;
 
-public class MqXmlTestMain implements QMFH01Test, XMLCENTERTest {
+public class MqXmlTestMain implements QMFH01, XMLCenter {
 
 	@BeforeEach
 	void setUpAll() throws Exception {
@@ -38,8 +38,8 @@ public class MqXmlTestMain implements QMFH01Test, XMLCENTERTest {
 
 		MQMessage getMQmassage = mqGetWaitCorrelid(QUEUE.QL_DW_REP.getQName(), putMQmassage.messageId);
 
-		Document putMQmassageDocument = changeStringToDocument(toStringMQMessage(putMQmassage));
-		Document getMQmassageDocument = changeStringToDocument(toStringMQMessage(getMQmassage));
+		Document putMQmassageDocument = changeStringToDocument(messageToString(putMQmassage));
+		Document getMQmassageDocument = changeStringToDocument(messageToString(getMQmassage));
 		List<String> list = new ArrayList<>();
 		list.add("TIMESTAMP");
 		list.add("RC");

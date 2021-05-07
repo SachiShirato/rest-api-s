@@ -11,11 +11,11 @@ import org.w3c.dom.Document;
 
 import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
-import jp.co.acom.fehub.mq.QMFH01Test;
+import jp.co.acom.fehub.mq.QMFH01;
 import jp.co.acom.fehub.mq.QUEUE;
-import jp.co.acom.fehub.xml.XMLCENTERTest;
+import jp.co.acom.fehub.xml.XMLCenter;
 
-public class MqXmlTestMainSotuStopAPI implements QMFH01Test, XMLCENTERTest {
+public class MqXmlTestMainSotuStopAPI implements QMFH01, XMLCenter {
 
 	@BeforeEach
 	void setUpAll() throws Exception {
@@ -32,10 +32,10 @@ public class MqXmlTestMainSotuStopAPI implements QMFH01Test, XMLCENTERTest {
 		putMQmassage.replyToQueueName = QUEUE.QL_DW_REP.getQName();
 		putMQmassage.correlationId = getUnique24().getBytes();
 		putMQmassage.applicationIdData = getXmlEvaluate(xmlGlbPath("SERVICEID"),
-				changeStringToDocument(toStringMQMessage(putMQmassage)));
+				changeStringToDocument(messageToString(putMQmassage)));
 		mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmassage);
 		MQMessage getMQmassage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmassage.correlationId);
-		Document getMQmassageDocument = changeStringToDocument(toStringMQMessage(getMQmassage));
+		Document getMQmassageDocument = changeStringToDocument(messageToString(getMQmassage));
 		assertEquals("02",(getXmlEvaluate(xmlGlbPath("RC"), getMQmassageDocument)));
 	}
 
