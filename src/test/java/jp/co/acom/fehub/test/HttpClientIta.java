@@ -47,7 +47,7 @@ public class HttpClientIta extends HttpClientMain {
 			// TODO putMQmessage.replyToQueueNameの方がカッコいいかも。できなければ元に戻す。トリムがいる (白 済)
 			MQMessage getMQmessage = mqGetWaitCorrelid(putMQmessage.replyToQueueName.trim(), putMQmessage.messageId);
 			// TODO デッドロジックになってる。あと別ケースで! (白 削除済)
-			lastCheck(putMQmessage, getMQmessage, false, true);
+			checkMqmd_reply(putMQmessage, getMQmessage);
 
 		}
 
@@ -95,7 +95,7 @@ public class HttpClientIta extends HttpClientMain {
 			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
 
 			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId);
-			lastCheckMqmd(putMQmessage, getMQmessage, true, true);
+			checkMqmd_replyParseError(putMQmessage, getMQmessage);
 			assertEquals(ItemRestController.STR_DF800, messageToString(getMQmessage));
 		}
 
@@ -109,7 +109,7 @@ public class HttpClientIta extends HttpClientMain {
 			putMQmessage.characterSet = 0;
 			mqput(q, putMQmessage);
 			MQMessage getMQmessage = mqGetWaitCorrelid(putMQmessage.replyToQueueName.trim(), putMQmessage.messageId);
-			lastCheck(putMQmessage, getMQmessage, false, false);
+			checkAll_request(putMQmessage, getMQmessage);
 		}
 
 	}
@@ -132,7 +132,7 @@ public class HttpClientIta extends HttpClientMain {
 			MQMessage putMQmessage = setUpCreateMQ(str);
 			mqput(QUEUE.QC_DH_REQ.getQName(), putMQmessage);
 
-			lastCheck(putMQmessage, mqGetWaitMsgid(GET_QUEUE_NAME, putMQmessage.correlationId), false, false);
+			checkAll_request(putMQmessage, mqGetWaitMsgid(GET_QUEUE_NAME, putMQmessage.correlationId));
 		}
 	}
 }

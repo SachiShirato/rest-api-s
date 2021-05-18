@@ -40,10 +40,10 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 	}
 
 	// TODO 不要になりました。 （白 済）
-	void checkBody_requestError(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
-
-		lastCheckBody(putMQmessage, getMQmessage, true);
-	}
+//	void checkBody_requestError(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+//
+//		lastCheckBody(putMQmessage, getMQmessage, true);
+//	}
 
 	// TODO request → reply (白 済)
 	// TODO checkBody/checkBody_requestError (白 済)
@@ -155,4 +155,59 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 		lastCheckMqmd(putMQmessage, getMQmessage, errQ, reply);
 		lastCheckBody(putMQmessage, getMQmessage, reply);
 	}
+
+	void checkAll_replyParseError(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+		lastCheck(putMQmessage, getMQmessage, true, true);
+	}
+
+	void checkAll_requestParseError(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+		lastCheck(putMQmessage, getMQmessage, true, false);
+	}
+
+	void checkAll_reply(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+		lastCheck(putMQmessage, getMQmessage, false, true);
+	}
+
+	void checkAll_request(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+		lastCheck(putMQmessage, getMQmessage, false, false);
+	}
+
+	void checkMqmd_replyParseError(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+		lastCheckMqmd(putMQmessage, getMQmessage, true, true);
+//		TT MQMD
+	}
+
+	void checkMqmd_requestParseError(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+		lastCheckMqmd(putMQmessage, getMQmessage, true, false);
+//		TF MQMD
+	}
+
+	void checkMqmd_reply(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+		lastCheckMqmd(putMQmessage, getMQmessage, false, true);
+//		FT MQMD
+	}
+
+	void checkMqmd_request(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+		lastCheckMqmd(putMQmessage, getMQmessage, false, false);
+//		FF MQMD
+	}
+
+	void checkBody_replyParseError(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+//		TT BODY 
+	}
+
+	void checkBody_requestParseError(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+//		TF BODY 
+	}
+
+	void checkBody_reply(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+		lastCheckBody(putMQmessage, getMQmessage, true);
+//		FT BODY 
+	}
+
+	void checkBody_request(MQMessage putMQmessage, MQMessage getMQmessage) throws Exception {
+		lastCheckBody(putMQmessage, getMQmessage, false);
+//		FF BODY 
+	}
+
 }
