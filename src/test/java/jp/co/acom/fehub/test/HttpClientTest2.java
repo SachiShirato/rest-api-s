@@ -30,7 +30,7 @@ import com.ibm.msg.client.wmq.compat.base.internal.MQMessage;
 
 import jp.co.acom.fehub.mq.QUEUE;
 
-public class HttpClientTest extends HttpClientMain {
+public class HttpClientTest2 extends HttpClientMain {
 //
 //	MQMessage setUpCreateMQ(String body) throws Exception {
 //
@@ -40,84 +40,6 @@ public class HttpClientTest extends HttpClientMain {
 //
 //		return putMQmessage;
 //	}
-
-	void lastCheckBody(MQMessage putMQmessage, MQMessage getMQmessage, boolean request)
-			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
-
-		Document putMQmessageDocument = changeStringToDocument(
-				messageToString(putMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
-		Document getMQmessageDocument = changeStringToDocument(
-				messageToString(getMQmessage).replaceAll(System.lineSeparator(), "").replaceAll("\t", ""));
-
-		List<String> list = new ArrayList<>();
-		// TODO (取り込み済み？ 白)
-		list.add("D");
-
-		if (request) {
-			list.add("RC");
-			assertEquals("02", (getXmlEvaluate(xmlGlbPath("RC"), getMQmessageDocument)));
-		}
-
-		assertTrue(check(putMQmessageDocument, getMQmessageDocument, list));
-	}
-
-	void lastCheckMqmd(MQMessage putMQmessage, MQMessage getMQmessage, boolean errQ, boolean request) {
-
-		assertAll(
-
-				() -> {
-					if (request) {
-						assertEquals(putMQmessage.messageType, getMQmessage.messageType);
-					} else {
-						assertEquals(MQC.MQMT_REPLY, getMQmessage.messageType);
-					}
-				},
-
-				() -> {
-					if (request) {
-						assertEquals(putMQmessage.format.trim(), getMQmessage.format.trim());
-					} else {
-						assertEquals(MQC.MQFMT_STRING.trim(), getMQmessage.format.trim());
-					}
-				},
-
-				() -> assertTrue(mqCheck(putMQmessage, getMQmessage)),
-
-				() -> assertEquals(putMQmessage.encoding, getMQmessage.encoding),
-
-				() -> {
-					if (errQ) {
-						assertEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry);
-					} else {
-						assertNotEquals(MQC.MQEI_UNLIMITED, getMQmessage.expiry);
-					}
-				},
-
-				() -> {
-					if (errQ) {
-
-						assertEquals(MQC.MQPER_PERSISTENT, getMQmessage.persistence);
-
-					} else {
-
-						if (request) {
-							assertEquals(putMQmessage.persistence, getMQmessage.persistence);
-						} else {
-							assertEquals(MQC.MQPER_NOT_PERSISTENT, getMQmessage.persistence);
-						}
-					}
-				},
-
-				() -> assertEquals(putMQmessage.applicationIdData, getMQmessage.applicationIdData.trim())
-
-		);
-	}
-
-	void lastCheck(MQMessage putMQmessage, MQMessage getMQmessage, String getMQname, int flg) throws Exception {
-
-		lastCheckMqmd(putMQmessage, getMQmessage, getMQname == QUEUE.QL_DH_ERR.getQName(), flg == 0);
-		lastCheckBody(putMQmessage, getMQmessage, flg == 0);
-	}
 
 	@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 	@Nested
@@ -129,10 +51,11 @@ public class HttpClientTest extends HttpClientMain {
 		void test1and6_Normal(String str) throws Exception {
 
 			MQMessage putMQmessage = setUpCreateMQ(str);
+			// TODO 追加しました（白）
+			putMQmessage.applicationIdData = getXmlTag(str, "SERVICEID");
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
 
-			lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId),
-					QUEUE.QL_DW_REP.getQName(), 1);
+			checkAll_reply(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId));
 		}
 
 		Stream<Arguments> params_Normal() throws Exception {
@@ -148,17 +71,19 @@ public class HttpClientTest extends HttpClientMain {
 
 			MQMessage putMQmessage = setUpCreateMQ(str);
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
-
-			lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId),
-					QUEUE.QL_DW_REP.getQName(), 0);
+			checkAll_request(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId));
 		}
 
 		Stream<Arguments> params_ServiceidError() throws Exception {
 
 			return Stream.of(Arguments.of(setRc(setServiceid(createMQMessageBody(), "S"), "01")),
 					Arguments.of(setRc(setServiceid(createMQMessageBody(), "S"), "")),
-					Arguments.of(setServiceid(createMQMessageBody(), "S")),
-					Arguments.of(setServiceid(createMQMessageBody(), "")));
+					Arguments.of(setServiceid(createMQMessageBody(), "S"))
+
+			// TODO MQname:QL.DW.REP/件数:1 みかん（白）
+//					,
+//					Arguments.of(setServiceid(createMQMessageBody(), ""))
+			);
 		}
 
 		@ParameterizedTest
@@ -173,9 +98,8 @@ public class HttpClientTest extends HttpClientMain {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
-
-				lastCheck(putMQmessage, mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId),
-						QUEUE.QL_DH_ERR.getQName(), 0);
+				checkAll_requestParseError(putMQmessage,
+						mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId));
 
 			} finally {
 
@@ -190,10 +114,10 @@ public class HttpClientTest extends HttpClientMain {
 
 			MQMessage putMQmessage = setUpCreateMQ(str);
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
-
 			MQMessage getMQmessage = mqGetWaitCorrelid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId);
-			lastCheckMqmd(putMQmessage, getMQmessage, true, true);
+			checkMqmd_requestParseError(putMQmessage, getMQmessage);
 			assertEquals(messageToString(putMQmessage), messageToString(getMQmessage));
+
 		}
 
 		Stream<Arguments> params_ParseError() throws Exception {
@@ -284,8 +208,10 @@ public class HttpClientTest extends HttpClientMain {
 				putDisabled(QUEUE.QL_DW_REP.getQName());
 				mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
 
-				lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId),
-						QUEUE.QL_DH_ERR.getQName(), 1);
+//				lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId),
+//						QUEUE.QL_DH_ERR.getQName(), 1);
+				checkAll_replyParseError(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DH_ERR.getQName(), putMQmessage.correlationId));
+				
 
 			} finally {
 
@@ -325,7 +251,8 @@ public class HttpClientTest extends HttpClientMain {
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
 
 			MQMessage getMQmessage = mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId);
-			lastCheckMqmd(putMQmessage, getMQmessage, false, false);
+//			lastCheckMqmd(putMQmessage, getMQmessage, false, false);
+			checkMqmd_reply(putMQmessage, getMQmessage);			
 			assertEquals(ItemRestController.STR_DF800, messageToString(getMQmessage));
 		}
 
@@ -338,9 +265,9 @@ public class HttpClientTest extends HttpClientMain {
 			putMQmessage.persistence = MQC.MQPER_PERSISTENT;
 			putMQmessage.format = MQC.MQFMT_NONE;
 			mqput(QUEUE.QL_DH_HTTP_LSR.getQName(), putMQmessage);
-
-			lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId),
-					QUEUE.QL_DW_REP.getQName(), 1);
+			checkAll_reply(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId));	
+//			lastCheck(putMQmessage, mqGetWaitMsgid(QUEUE.QL_DW_REP.getQName(), putMQmessage.correlationId),
+//					QUEUE.QL_DW_REP.getQName(), 1);
 		}
 
 	}

@@ -47,7 +47,7 @@ public class HttpClientIta extends HttpClientMain {
 			// TODO putMQmessage.replyToQueueNameの方がカッコいいかも。できなければ元に戻す。トリムがいる (白 済)
 			MQMessage getMQmessage = mqGetWaitCorrelid(putMQmessage.replyToQueueName.trim(), putMQmessage.messageId);
 			// TODO デッドロジックになってる。あと別ケースで! (白 削除済)
-			checkMqmd_reply(putMQmessage, getMQmessage);
+			checkAll_reply(putMQmessage, getMQmessage);
 
 		}
 

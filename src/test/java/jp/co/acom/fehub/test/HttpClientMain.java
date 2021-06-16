@@ -58,8 +58,6 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 
 		// TODO 1行で書きましょう。Arrays.asList(() 上のリストを下に追加 (白 済)
 		assertTrue(check(putMQmessageDocument, getMQmessageDocument, Arrays.asList("REPLY", "TIMESTAMP", "RC", "D")));
-		assertEquals(putMQmessage.replyToQueueManagerName.trim(), getTagData("R_PVR", getMQmessageDocument));
-		assertEquals(putMQmessage.replyToQueueName.trim(), getTagData("R_DST", getMQmessageDocument));
 
 		int putSize = putMQmessageDocument.getElementsByTagName("TS").getLength();
 		int getSize = getMQmessageDocument.getElementsByTagName("TS").getLength();
@@ -72,47 +70,61 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 
 			assertEquals(getTimestampName(i + 1, putMQmessageDocument), getTimestampName(i + 1, getMQmessageDocument));
 		}
+//TODO 追加HC用（白）
+		if ((getSize - putSize) != 0) {
+			assertEquals(putMQmessage.replyToQueueManagerName.trim(), getTagData("R_PVR", getMQmessageDocument));
+			assertEquals(putMQmessage.replyToQueueName.trim(), getTagData("R_DST", getMQmessageDocument));
+			// TODO 1行で書きましょう ?のやつ (白 済)
+			assertEquals(reply ? 4 : 3, getSize - putSize);
 
-		// TODO 1行で書きましょう ?のやつ (白 済)
-		assertEquals(reply ? 4 : 3, getSize - putSize);
+			for (int i = putSize; i < getSize; i++) {
 
-		for (int i = putSize; i < getSize; i++) {
+				for (TsAttribute t : TsAttribute.values()) {
 
-			for (TsAttribute t : TsAttribute.values()) {
+					String getEqual = getTimestampName(i + 1, t.getTName(), getMQmessageDocument);
 
-				String getEqual = getTimestampName(i + 1, t.getTName(), getMQmessageDocument);
+					switch (t) {
 
-				switch (t) {
+					case KBN:
+						assertEquals(i <= putSize + 1 ? "1" : "2", getEqual);
+						break;
 
-				case KBN:
-					assertEquals(i <= putSize + 1 ? "1" : "2", getEqual);
-					break;
+					case LVL:
+						// TODO i == putSize
+						assertEquals(i == putSize || i == getSize - 1 ? "1" : "2", getEqual);
+						break;
 
-				case LVL:
-					// TODO i == putSize
-					assertEquals(i == putSize || i == getSize - 1 ? "1" : "2", getEqual);
-					break;
+					case SVC:
+						assertEquals(getXmlTag(messageToString(putMQmessage), "SERVICEID"), getEqual);
+						break;
 
-				case SVC:
-					assertEquals(getXmlTag(messageToString(putMQmessage), "SERVICEID"), getEqual);
-					break;
-
-				case SVR:
-					// TODO 1行で書きましょう （白 済）
-					assertEquals(reply ? qmgrName() : "RSHUBF", getEqual.substring(0, 6));
-					break;
+					case SVR:
+						// TODO 1行で書きましょう （白 済）
+						assertEquals(reply ? qmgrName() : "RSHUBF", getEqual.substring(0, 6));
+						break;
+					}
 				}
+
+				assertTrue(isYmd(getTimestampName(i + 1, getMQmessageDocument)));
 			}
 
-			assertTrue(isYmd(getTimestampName(i + 1, getMQmessageDocument)));
-		}
+			// TODO 1行で書きましょう。Arrays.asList(() （白 質問）
+			assertEquals(reply ? "00" : "03", getTagData("RC", getMQmessageDocument));
 
-		// TODO 1行で書きましょう。Arrays.asList(() （白 質問）
-		assertEquals(reply ? "00" : "03", getTagData("RC", getMQmessageDocument));
+			if (reply) {
+				assertEquals(getBetweenTag(getMQmessageDocument, "D"),
+						changeCode(getBetweenTag(putMQmessageDocument, "D")));
+			}
 
-		if (reply) {
-			assertEquals(getBetweenTag(getMQmessageDocument, "D"),
-					changeCode(getBetweenTag(putMQmessageDocument, "D")));
+			// TODO 追加HC用（白）
+		} else {
+			if (reply) {
+				assertEquals(getXmlEvaluate(xmlGlbPath("RC"), putMQmessageDocument),
+						getXmlEvaluate(xmlGlbPath("RC"), getMQmessageDocument));
+			} else {
+				assertEquals("02", getXmlEvaluate(xmlGlbPath("RC"), getMQmessageDocument));
+
+			}
 		}
 	}
 
@@ -142,10 +154,23 @@ public class HttpClientMain implements QMFH01, XMLCenter {
 				() -> assertEquals(errQ ? MQC.MQPER_PERSISTENT : MQC.MQPER_NOT_PERSISTENT, getMQmessage.persistence),
 				() -> assertEquals(qmgrName(), getMQmessage.replyToQueueManagerName.trim()),
 
-				// TODO 1行で書きましょう 済
-				() -> assertEquals(reply ? "" : QUEUE.QL_DH_REP.getQName(), getMQmessage.replyToQueueName.trim()),
-				() -> assertEquals(getXmlTag(messageToString(putMQmessage), "SERVICEID"),
-						getMQmessage.applicationIdData.trim()));
+				// TODO 追加HC用（白）  みかん　上合体したい
+				() -> {
+					if (messageToString(putMQmessage).equals(messageToString(getMQmessage))) {
+						assertEquals(reply ? "" : QUEUE.QL_DW_REP.getQName(), getMQmessage.replyToQueueName.trim());
+						assertEquals("", getMQmessage.applicationIdData.trim());
+
+					} else if (("S".equals(getXmlTag(messageToString(putMQmessage), "SERVICEID")))||("".equals(getMQmessage.applicationIdData.trim()))) {
+						assertEquals(reply ? "" : QUEUE.QL_DW_REP.getQName(), getMQmessage.replyToQueueName.trim());
+						assertEquals("", getMQmessage.applicationIdData.trim());
+					} else {
+
+						// TODO 1行で書きましょう 済
+						assertEquals(reply ? "" : QUEUE.QL_DH_REP.getQName(), getMQmessage.replyToQueueName.trim());
+						assertEquals(getXmlTag(messageToString(putMQmessage), "SERVICEID"),
+								getMQmessage.applicationIdData.trim());
+					}
+				});
 	}
 
 	// TODO Boolean → boolean errQ, boolean reply (白 済)
